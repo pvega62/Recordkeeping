@@ -2,7 +2,7 @@
   "openapi" : "3.0.0",
   "info" : {
     "title" : "GCPD Detainees API",
-    "description" : "This is a simple API designed to provide GCPD officers and staff access to their database of detainees. Only administrative staff can upload, delete or amend a detainee file. Authorized staff can retrieve a detainee file. To obtain authorization to this API, contact Barbara Gordon.",
+    "description" : "This is a simple API designed to provide GCPD officers and staff access to their database of detainees. Only administrative staff can upload, delete or amend a detainee file. Authorized staff can retrieve a detainee file.\n\n\nThis API uses oauth2 encryption. However, due to the sensitive nature of this database, you must contact Barbara Gordon to gain authorization.",
     "contact" : {
       "name" : "Barbara Gordon",
       "url" : "https://gcpd.gov.nj",

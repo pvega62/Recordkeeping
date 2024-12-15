@@ -22,7 +22,7 @@
     "description" : "SwaggerHub API Auto Mocking"
   } ],
   "tags" : [ {
-    "name" : "Admins",
+    "name" : "Admin",
     "description" : "Secured Admin-only calls"
   }, {
     "name" : "Staff",
@@ -127,7 +127,7 @@
         } ]
       },
       "post" : {
-        "tags" : [ "Admins" ],
+        "tags" : [ "Admin" ],
         "summary" : "adds a detainee to the database",
         "description" : "Adds a detainee to the Gotham City Police Department database.",
         "operationId" : "addDetainee",

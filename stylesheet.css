@@ -1,0 +1,13 @@
+@font-face {
+    font-family: 'BOOTLE';
+    src: url('BOOTLE.eot');
+    src: url('BOOTLE.eot?#iefix') format('embedded-opentype'),
+        url('BOOTLE.woff2') format('woff2'),
+        url('BOOTLE.woff') format('woff'),
+        url('BOOTLE.ttf') format('truetype'),
+        url('BOOTLE.svg#BOOTLE') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title> Recordkeeping</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+            crossorigin="anonymous"
+        />
+        <link
+            href="stylesheet.css"
+            rel="stylesheet"
+        />
+        <style>
+            @font-face {
+            font-family: 'FantiqueFourr';
+            src: url('fonts/FantiqueFourr.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                color: #F2F3F4;
+                background: linear-gradient(to bottom, #0C2340, #C4CED3);
+            }
+            p {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                margin-left: 50px; 
+                margin-right: 50px; 
+            }
+           .card-group {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                padding: 20px;
+                border-radius: inherit;
+            }
+            .card {
+                margin: 10px;
+                margin-bottom: 10px;
+                margin-left: 10px;
+                margin-right: 10px;
+                border-width: thick;
+                border: 2px solid #dee2e6;
+                border-radius: 0.5rem;
+            }
+
+            .card {
+                margin: 10px;
+                border: 2px solid #dee2e6;
+                border-radius: 1rem;
+                box-sizing: border-box; 
+                background-clip: border-box; 
+            }
+            h1 {
+                font-family: 'FantiqueFourr', Arial, sans-serif;
+                font-weight: normal;
+                font-style: normal;
+                text-align: center;
+                font-size: clamp(2.2rem, 10vw, 10rem); 
+                word-spacing: 1px;
+                letter-spacing: -1px;
+                margin-top: 20px;
+                margin-bottom: 20px;
+            }
+
+            h5 {
+                font-family: Arial, sans-serif;
+                font-weight: bold;
+                margin-bottom: 0.5rem;
+                text-align: center;;
+            }
+            .card-img-top {
+                width: 100%;
+                height: 180px;             
+                object-fit: contain;        
+                background: #f8f9fa;
+                border-top-left-radius: 0.5rem;
+                border-top-right-radius: 0.5rem;
+                display: block;
+                padding: 8px;
+                box-sizing: border-box;
+                cursor: pointer;
+                transition: box-shadow 0.2s;
+            }
+            .card-img-top:hover {
+                box-shadow: 0 0 10px #7c5ac5;
+            }
+            .card {
+                min-width: 0;
+                max-width: 320px;           
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .audio-player {
+                display: none;
+            }
+            .cover-container .audio-controls {
+                opacity: 0;
+                transition: opacity 0.2s;
+                pointer-events: none;
+            }
+            .cover-container:hover .audio-controls {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .play-pause-btn {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                background:#0C2340;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 48px;
+                height: 48px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2rem;
+                opacity: 0;
+                transition: opacity 0.2s;
+                cursor: pointer;
+                z-index: 2;
+                pointer-events: none;
+            }
+            .cover-container:hover .play-pause-btn {
+                opacity: 1;
+                pointer-events: auto;
+            }
+            .seekbar::-webkit-slider-thumb {
+                background: #0C2340;
+            }
+            .seekbar::-webkit-slider-runnable-track {
+                background: #dee2e6;
+            }
+            .seekbar {
+                accent-color: #0C2340;
+                height: 150px;
+                width: 100%;
+            }
+            .seekbar::-moz-range-thumb {
+                background: #0C2340;
+            }
+            .seekbar::-ms-thumb {
+                background: #0C2340;
+            }
+            .playlist-highlight {
+                color: #0C2340;
+                font-weight: bold;
+                text-align: center;
+                margin-top: 20px;
+                margin-bottom: 20px;}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1 class="text-center">Recordkeeping</h1>
+            <p class="text-center">This page is an online copy of my record collection. It was supposed to be simple list in HTML format but, <a href="https://youtube.com/clip/Ugkxh7tH0SZohwjV3au25c8AKX7mv6q8Hjti?si=xOSO2VV5uhsKXN6B" target="_blank"> <em>I never know when to stop!</em></a></p>
+            <p class="text-center"><i>It's easier than having to remember!</i></p>
+            <p class="text-center">(This is a living document. It'll be updated periodically as new records are added to my collection, <em>or as I get the urge to tinker with the code again.</em>)</p>
+            <div class="row justify-content-center">
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/preludetoakiss.m4a"
+                                 src="https://upload.wikimedia.org/wikipedia/en/6/6d/Duke_Ellington_Indigos_LP.jpg" 
+                                 alt="Cover of Ellington Indigos"
+                                  />
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Ellington Indigos</h5>
+                            <ul class="card-text">
+                                <li>Artist: Duke Ellington</li>
+                                <li>Year: 1958</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 1/5/2023</li>
+                                <li>Featured Song: Prelude to a Kiss</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/wonderfultime.m4a"
+                                 src="https://upload.wikimedia.org/wikipedia/en/9/9c/Album_The_Andy_Williams_Christmas_Album_cover.jpg" 
+                                 alt="Cover of The Andy Williams Christmas Album" />
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The Andy Williams Christmas Album</h5>
+                            <ul class="card-text">
+                                <li>Artist: Andy Williams</li>
+                                <li>Year: 1963</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Gift from Franny and Michael</li>
+                                <li>Date of Purchase: 12/25/2021</li>
+                                <li>Featured Song: It's the Most Wonderful Time of the Year</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/rolloverbeethoven.m4a"
+                                 src="https://upload.wikimedia.org/wikipedia/en/e/ec/TheBeatlesSecondAlbumreissuecover.jpg" 
+                                 alt="Cover of The Beatles' Second Album [US]"
+                                  />
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The Beatles' Second Album [US]</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1964</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: NYC Grand Bazaar Market</li>
+                                <li>Date of Purchase: 1/2/2023</li>
+                                <li>Featured Song: Roll Over Beethoven</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/ringostheme.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/e4/AHardDaysNightUSalbumcover.jpg" alt="Cover of A Hard Day's Night">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">A Hard Day's Night (US Soundtrack)</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1964</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 12/5/2022</li>
+                                <li>Featured Song: Ringo's Theme (This Boy)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/hideyourlove.m4a" src="https://upload.wikimedia.org/wikipedia/en/d/d7/The_Beatles_-_Help%21.png" alt="Cover of Help!">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Help!</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1965</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 12/21/2020</li>
+                                <li>Featured Song: You've Got to Hide Your Love Away</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/help007.m4a" src="https://upload.wikimedia.org/wikipedia/en/5/5c/HelpUSalbumcover.jpg" alt="Cover of Help! (US Soundtrack)">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Help! (US Soundtrack)</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1965</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 12/4/2022</li>
+                                <li>Featured Song: Help! (Soundtrack version with a <em>bondian</em> introduction.)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/thinkforyourself.m4a" src="https://upload.wikimedia.org/wikipedia/en/5/5b/Rubber_Soul.png" alt="Cover of Rubber Soul (US)">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Rubber Soul (US)</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1965</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 10/21/2021</li>
+                                <li>Featured Song: Think for Yourself</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/tomorrowneverknows.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/ec/Revolver_%28album_cover%29.jpg" alt="Cover of Revolver">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Revolver</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1966</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/15/2021</li>
+                                <li>Featured Song: Tomorrow Never Knows</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/girlfromipanema.m4a" src="https://upload.wikimedia.org/wikipedia/en/c/ca/Francisandantonio.jpg" alt="Cover of Francis Albert Sinatra & Antonio Carlos Jobim    ">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Francis Albert Sinatra & Antonio Carlos Jobim</h5>
+                            <ul class="card-text">
+                                <li>Artist: Francis Albert Sinatra & Antonio Carlos Jobim</li>
+                                <li>Year: 1967</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Hana Mission Thrift Store Belleville</li>
+                                <li>Date of Purchase: 3/18/2023</li>
+                                <li>Featured Song: The Girl from Ipanema</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/goodmorning.m4a" src="https://upload.wikimedia.org/wikipedia/en/5/50/Sgt._Pepper%27s_Lonely_Hearts_Club_Band.jpg" alt="Cover of Sgt. Pepper's Lonely Hearts Club Band">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Sgt. Pepper's Lonely Hearts Club Band</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1967</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Best Buy</li>
+                                <li>Date of Purchase: 12/19/2020</li>
+                                <li>Featured Song: Good Morning Good Morning</li>
+                                <li> Fun Fact: This has been my morning alarm since at least the 9th grade. It's also the first record I bought. Picked it up at the Best Buy on Union Square alongside an ok Victrola suitcase player.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/iwill.m4a" src="https://upload.wikimedia.org/wikipedia/commons/2/20/TheBeatles68LP.jpg" alt="Cover of The White Album">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The White Album</h5>
+                            <ul class="card-text">  
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1968</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/15/2021</li>
+                                <li>Featured Song: I Will</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/teddyboy.m4a" src="https://upload.wikimedia.org/wikipedia/en/3/39/Paul_McCartney_-_McCartney.jpg" alt="Cover of McCartney">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">McCartney</h5>
+                            <ul class="card-text">
+                                <li>Artist: Paul McCartney</li>
+                                <li>Year: 1970</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 4/24/2023</li>
+                                <li>Featured Song: Teddy Boy</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/imemine.m4a" src="https://upload.wikimedia.org/wikipedia/en/7/7a/The_Beatles_-_Let_It_Be.png" alt="Cover of Let it Be">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Let it Be</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1970</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 1/5/2023</li>
+                                <li>Featured Song: I Me Mine</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/monkberrymoon.m4a" src="https://upload.wikimedia.org/wikipedia/en/b/bd/RamMcCartneyalbumcover.jpg" alt="Cover of Ram">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Ram</h5>
+                            <ul class="card-text">
+                                <li>Artist: Paul and Linda McCartney</li>
+                                <li>Year: 1971</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/15/2021</li>
+                                <li>Featured Song: Monkberry Moon Delight</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/dearfriend.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/e9/Wings%2C_Wild_Life_%281971%29.png" alt="Cover of Wild Life">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Wild Life</h5>
+                            <ul class="card-text">      
+                                <li>Artist: Wings</li>
+                                <li>Year: 1971</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 12/11/2022</li>
+                                <li>Featured Song: Dear Friend</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/bridgeover.m4a" src="https://upload.wikimedia.org/wikipedia/en/c/c6/Sggreatesthits.jpg" alt="Cover of Simon and Garfunkel's Greatest Hits">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Simon and Garfunkel's Greatest Hits</h5>
+                            <ul class="card-text">      
+                                <li>Artist: Simon and Garfunkel</li>
+                                <li>Year: 1972</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 10/19/2021</li>
+                                <li>Featured Song: Bridge Over Troubled Water</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/littlelamb.m4a" src="https://upload.wikimedia.org/wikipedia/en/7/72/Wings%2C_Red_Rose_Speedway_%281973%29.png" alt="Cover of Red Rose Speedway">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Red Rose Speedway</h5>
+                            <ul class="card-text">      
+                                <li>Artist: Wings</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 2/25/2021</li>
+                                <li>Featured Song: Little Lamb Dragonfly</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/paperbackwriter.m4a" src="https://upload.wikimedia.org/wikipedia/en/8/81/Beatles19621966.jpg" alt="Cover of The Beatles' 1962-1966">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The Beatles' 1962-1966</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: thebeatles.com</li>
+                                <li>Date of Purchase: 10/26/2023</li>
+                                <li>Featured Song: Paperback Writer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/revolution.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/17/Beatles19671970.jpg" alt="Cover of The Beatles' 1967-1970">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The Beatles' 1967-1970</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: thebeatles.com</li>
+                                <li>Date of Purchase: 10/26/2023</li>
+                                <li>Featured Song: Revolution</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/materialworld.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/ec/LITMW_album_cover_%28clean%29.jpg" alt="Cover of Living in the Material World">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Living in the Material World</h5>
+                            <ul class="card-text">
+                                <li>Artist: George Harrison</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 4/24/2023</li>
+                                <li>Featured Song: Living in the Material World </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/deanandi.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/12/10ccalbum.jpg" alt="Cover of 10cc">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">10cc</h5>
+                            <ul class="card-text">
+                                <li>Artist: 10cc</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: NYC Grand Bazaar Market</li>
+                                <li>Date of Purchase: 1/23/2022</li>
+                                <li>Featured Song: The Dean and I</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/intuition.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/11/JohnLennon-albums-mindgames.jpg" alt="Cover of Mind Games">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Mind Games</h5>
+                            <ul class="card-text">
+                                <li>Artist: John Lennon</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 1/30/2023</li>
+                                <li>Featured Song: Intuition</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/sunshinelife.m4a" src="https://upload.wikimedia.org/wikipedia/en/c/c9/RingoCover.jpg" alt="Cover of Ringo">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Ringo</h5>
+                            <ul class="card-text">
+                                <li>Artist: Ringo Starr</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 12/11/2022</li>
+                                <li>Featured Song: Sunshine Life for Me (Sail Away Raymond)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">     
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/1985.m4a" src="https://upload.wikimedia.org/wikipedia/en/f/f4/Paul_McCartney_%26_Wings-Band_on_the_Run_album_cover.jpg" alt="Cover of Band on the Run">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Band on the Run</h5>
+                            <ul class="card-text">  
+                                <li>Artist: Wings</li>
+                                <li>Year: 1973</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 12/11/2022</li>
+                                <li>Featured Song: Nineteen Hundred and Eighty-Five</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/darkhorse.m4a" src="https://upload.wikimedia.org/wikipedia/en/b/b9/DarkHorseCover.jpg" alt="Cover of Dark Horse">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Dark Horse</h5>
+                            <ul class="card-text">
+                                <li>Artist: George Harrison</li>
+                                <li>Year: 1974</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 1/5/2023</li>
+                                <li>Featured Song: Dark Horse</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/goodtime.m4a" src="https://upload.wikimedia.org/wikipedia/en/8/81/PaulSimonStillCrazyAfterAllTheseYearsCover.jpg" alt="Cover of Still Crazy After All These Years">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Still Crazy After All These Years</h5>
+                            <ul class="card-text">
+                                <li>Artist: Paul Simon</li>
+                                <li>Year: 1975</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Kearny Flea Market</li>
+                                <li>Date of Purchase: 11/16/2021</li>
+                                <li>Featured Song: Have a Good Time</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/lovewithmycar.m4a" src="https://upload.wikimedia.org/wikipedia/en/4/4d/Queen_A_Night_At_The_Opera.png" alt="Cover of A Night at the Opera">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">A Night at the Opera</h5>
+                            <ul class="card-text">
+                                <li>Artist: Queen</li>
+                                <li>Year: 1975</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 12/20/2020</li>
+                                <li>Featured Song: I'm in Love with My Car</li>
+                            </ul>
+                            <p class="text-center"><i>For my car lovin' brothers.</i></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/fame.m4a" src="https://upload.wikimedia.org/wikipedia/en/d/d3/Changes_one-cover.gif" alt="Cover of ChangesOneBowie">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">ChangesOneBowie</h5>
+                            <ul class="card-text">  
+                                <li>Artist: David Bowie</li>
+                                <li>Year: 1976</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/28/2021</li>
+                                <li>Featured Song: Fame</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/thissong.m4a" src="https://upload.wikimedia.org/wikipedia/en/9/93/3313Cover.jpg" alt="Cover of Thirty Three and 1/3">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Thirty Three & 1/3</h5>
+                            <ul class="card-text">
+                                <li>Artist: George Harrison</li>
+                                <li>Year: 1976</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 10/26/2021</li>
+                                <li>Featured Song: This Song</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/sleepingsidewalk.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/ea/Queen_News_Of_The_World.png" alt="Cover of News of the World">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">News of the World</h5>
+                            <ul class="card-text">
+                                <li>Artist: Queen</li>
+                                <li>Year: 1977</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Gift from Lucas</li>
+                                <li>Date of Purchase: 3/25/2021</li>
+                                <li>Featured Song: Sleeping on the Sidewalk</li>
+                                <li>Fun Fact: The robot on the album cover is <a href="https://www.youtube.com/watch?v=dOZuIV2FZTc" target="_blank">Frank</a>.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/wegotogether.m4a" src="https://upload.wikimedia.org/wikipedia/en/2/29/GreaseOST.jpg" alt="Cover of Grease">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Grease</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Cast of Grease</li>
+                                <li>Year: 1978</li>
+                                <li># of LPs: 1/2*</li>
+                                <li>Place of Purchase: Hana Mission Thrift Store Belleville</li>
+                                <li>Date of Purchase:3/18/2023</li>
+                                <li>Featured Song: We Go Together</li>
+                            </ul>
+                            <p class="text-center"><small>*This is a double LP, but the store only had the 2nd LP. <em>But it was literally $1.</em></small></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/funit.m4a" src="https://upload.wikimedia.org/wikipedia/en/0/06/Queen_Jazz.png" alt="Cover of Jazz">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Jazz</h5>
+                            <ul class="card-text">
+                                <li>Artist: Queen</li>
+                                <li>Year: 1978</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 3/19/2021</li>
+                                <li>Featured Song: Fun It</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/blowaway.m4a" src="https://upload.wikimedia.org/wikipedia/en/e/e0/GHCover.jpg" alt="Cover of George Harrison">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">George Harrison</h5>
+                            <ul class="card-text">
+                                <li>Artist: George Harrison</li>
+                                <li>Year: 1979</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 10/11/2021</li>
+                                <li>Featured Song: Blow Away</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/spiniton.m4a" src="https://upload.wikimedia.org/wikipedia/en/2/27/BackEggCover.jpg" alt="Cover of Back to the Egg">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Back to the Egg</h5>
+                            <ul class="card-text">
+                                <li>Artist: Wings</li>
+                                <li>Year: 1979</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 10/11/2021</li>
+                                <li>Featured Song: Spin it On</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/allthoseyearsago.m4a" src="https://upload.wikimedia.org/wikipedia/en/9/9f/SomewhereinEnglandCover.jpg" alt="Cover of Somewhere in England">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Somewhere in England</h5>
+                            <ul class="card-text">
+                                <li>Artist: George Harrison</li>
+                                <li>Year: 1981</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 10/19/2021</li>
+                                <li>Featured Song: All Those Years Ago</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/nowimhere.m4a" src="https://upload.wikimedia.org/wikipedia/en/0/02/Queen_Greatest_Hits.png" alt="Cover of Greatest Hits">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Greatest Hits</h5>
+                            <ul class="card-text">
+                                <li>Artist: Queen</li>
+                                <li>Year: 1981</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: Target</li>
+                                <li>Date of Purchase: 10/1/2021</li>
+                                <li>Featured Song: Now I'm Here</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/dj.m4a" src="https://upload.wikimedia.org/wikipedia/en/9/96/Changestwobowie_%28David_Bowie_album_-_cover_art%29.jpg" alt="Cover of ChangesTwoBowie">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">ChangesTwoBowie</h5>
+                            <ul class="card-text">
+                                <li>Artist: David Bowie</li>
+                                <li>Year: 1981</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Bowie75 Pop-Up</li>
+                                <li>Date of Purchase: 10/30/2021</li>
+                                <li>Featured Song: D.J</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/pyt.m4a" src="https://upload.wikimedia.org/wikipedia/en/5/55/Michael_Jackson_-_Thriller.png" alt="Cover of Thriller">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Thriller</h5>
+                            <ul class="card-text">
+                                <li>Artist: Michael Jackson</li>
+                                <li>Year: 1982</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Gift from Lucas</li>
+                                <li>Date of Purchase: 12/25/2023</li>
+                                <li>Featured Song: P.Y.T (Pretty Young Thing)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/allthetime.m4a" src="https://i.scdn.co/image/ab67616d00001e0206ed450e2e0be2a08eea3c4f" alt="Cover of James Bond 13 Original Themes">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">James Bond 13 Original Themes</h5>
+                            <ul class="card-text">
+                                <li>Artist: Various Artists</li>
+                                <li>Year: 1985</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 10/19/2021</li>
+                                <li>Featured Song: We've Got All the Time in the World</li>
+                            </ul>
+                            <p class="text-left"><em> I almost put "Live and Let Die" up there instead, but "On Her Majesty's Secret Service" is my favorite Bond movie.</em></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/getback.m4a" src="https://upload.wikimedia.org/wikipedia/commons/a/a0/Past_Maters.PNG" alt="Cover of Past Masters">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Past Masters</h5>
+                            <ul class="card-text">
+                                <li>Artist: The Beatles</li>
+                                <li>Year: 1988</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/21/2021</li>
+                                <li>Featured Song: Get Back</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/breakfree.m4a" src="https://upload.wikimedia.org/wikipedia/en/3/38/Queen_-_Greatest_Hits_2.png" alt="Cover of Greatest Hits II">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Greatest Hits II</h5>
+                            <ul class="card-text">
+                                <li>Artist: Queen</li>
+                                <li>Year: 1991</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: Best Buy</li>
+                                <li>Date of Purchase: 1/8/2021</li>
+                                <li>Featured Song: I Want to Break Free</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/corodominicano.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/1f/GenerationnextAventura.jpg" alt="Cover of Generation Next">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Generation Next</h5>
+                            <ul class="card-text">
+                                <li>Artist: Aventura</li>
+                                <li>Year: 1999</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 1/19/2022</li>
+                                <li>Featured Song: El Coro Dominicano</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/windowpane.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/16/Damnation_cover.jpg" alt="Cover of Damnation">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Damnation</h5>
+                            <ul class="card-text">
+                                <li>Artist: Opeth</li>
+                                <li>Year: 2003</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Gift from Osvaldo and Gaby</li>
+                                <li>Date of Purchase: 3/26/2024</li>
+                                <li>Featured Song: Windowpane</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/graduation.m4a" src="https://upload.wikimedia.org/wikipedia/en/a/a3/Kanyewest_collegedropout.jpg" alt="Cover of The College Dropout">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">The College Dropout</h5>
+                            <ul class="card-text">
+                                <li>Artist: Kanye West</li>
+                                <li>Year: 2004</li>
+                                <li># of LPs: 2</li>
+                                <li>Place of Purchase: Amazon</li>
+                                <li>Date of Purchase: 11/5/2021</li>
+                                <li>Featured Song: Graduation Day</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/debatede4.m4a" src="https://upload.wikimedia.org/wikipedia/en/6/68/Romeosantosforumalvol1.jpg" alt="Cover of Formula Vol. 1">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">Formula Vol. 1</h5>
+                            <ul class="card-text">
+                                <li>Artist: Romeo Santos</li>
+                                <li>Year: 2011</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: eBay</li>
+                                <li>Date of Purchase: 1/5/2023</li>
+                                <li>Featured Song: Debate de 4</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-4">
+                    <div class="card h-100">
+                        <div class="cover-container" style="position: relative;">
+                            <img class="card-img-top" data-audio="songs/squabbleup.m4a" src="https://upload.wikimedia.org/wikipedia/en/9/93/Kendrick_Lamar_-_GNX.png" alt="Cover of GNX">
+                            <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
+                            
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-center">GNX</h5>
+                            <ul class="card-text">
+                                <li>Artist: Kendrick Lamar</li>
+                                <li>Year: 2024</li>
+                                <li># of LPs: 1</li>
+                                <li>Place of Purchase: Gift from Abraham</li>
+                                <li>Date of Purchase: 3/8/2024</li>
+                                <li>Featured Song: squabble up</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center playlist-highlight"> Here's a playlist of some of the songs featured on this page: </p>
+            <br>
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/playlist/6grPfcp0lpQOUnTy8BRBmn?utm_source=generator" width="100%" height="652" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </body>
+</html>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    let currentAudio = null;
+
+    document.querySelectorAll('.card-img-top').forEach(function(img) {
+        if (!img.parentElement.classList.contains('cover-container')) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'cover-container';
+            wrapper.style.position = 'relative';
+            img.parentElement.insertBefore(wrapper, img);
+            wrapper.appendChild(img);
+
+            const btn = document.createElement('button');
+            btn.className = 'play-pause-btn';
+            btn.setAttribute('aria-label', 'Play/Pause');
+            btn.innerHTML = '&#9658;';
+            wrapper.appendChild(btn);
+        }
+    });
+
+    document.querySelectorAll('.cover-container').forEach(function(container) {
+        const img = container.querySelector('.card-img-top');
+
+        if (img && img.dataset.audio && !container.querySelector('.audio-player')) {
+            const audio = document.createElement('audio');
+            audio.className = 'audio-player';
+            const source = document.createElement('source');
+            source.src = img.dataset.audio;
+            source.type = 'audio/mpeg';
+            audio.appendChild(source);
+            container.appendChild(audio);
+        }
+
+        if (!container.querySelector('.audio-controls')) {
+            const controls = document.createElement('div');
+            controls.className = 'audio-controls';
+            controls.style.cssText = 'width:100%;position:absolute;left:0;bottom:0;padding:8px;box-sizing:border-box;';
+            const seekbar = document.createElement('input');
+            seekbar.type = 'range';
+            seekbar.className = 'seekbar';
+            seekbar.value = 0;
+            seekbar.min = 0;
+            seekbar.step = 1;
+            seekbar.style.width = '100%';
+            seekbar.style.height = '10px';
+            controls.appendChild(seekbar);
+            container.appendChild(controls);
+        }
+
+        const audio = container.querySelector('.audio-player');
+        const btn = container.querySelector('.play-pause-btn');
+        const seekbar = container.querySelector('.seekbar');
+
+        if (btn && audio) {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (currentAudio && currentAudio !== audio) {
+                    currentAudio.pause();
+                }
+                if (audio.paused) {
+                    audio.play();
+                    btn.innerHTML = '&#10073;&#10073;'; 
+                } else {
+                    audio.pause();
+                    btn.innerHTML = '&#9658;'; 
+                    currentAudio = null;
+                }
+            });
+
+            audio.addEventListener('play', function() {
+                btn.innerHTML = '&#10073;&#10073;';
+                if (currentAudio && currentAudio !== audio) {
+                    currentAudio.pause();
+                }
+                currentAudio = audio;
+            });
+            audio.addEventListener('pause', function() {
+                btn.innerHTML = '&#9658;';
+                if (currentAudio === audio) {
+                    currentAudio = null;
+                }
+            });
+        }
+
+        if (seekbar && audio) {
+            audio.addEventListener('loadedmetadata', function() {
+                seekbar.max = Math.floor(audio.duration);
+            });
+            audio.addEventListener('timeupdate', function() {
+                seekbar.value = Math.floor(audio.currentTime);
+            });
+            seekbar.addEventListener('input', function() {
+                audio.currentTime = seekbar.value;
+            });
+        }
+    });
+});
+</script>
+    </body>
+</html>

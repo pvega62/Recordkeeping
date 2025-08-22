@@ -1,8 +1,1 @@
-# Gloria
-Me and my bitch got a complicated relationship. 
-
-My woman and my right hand, my saint and my sin.
-
-Ain't no bitch like my bitch 'cause that bitch been my pen.
-
--K. ✍🏾
+This is a website I created to showcase my record collection. And to showcase my ability in HTML, CSS, and JavaScript, I built it from the ground up using these technologies.

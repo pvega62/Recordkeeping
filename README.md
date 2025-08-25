@@ -1,1 +1,2 @@
+<!-- Vale off -->
 This is a website I created to showcase my record collection. And to showcase my ability in HTML, CSS, and JavaScript, I built it from the ground up using these technologies.

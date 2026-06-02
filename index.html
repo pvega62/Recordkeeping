@@ -157,10 +157,57 @@
                 font-weight: bold;
                 text-align: center;
                 margin-top: 20px;
-                margin-bottom: 20px;}
+                margin-bottom: 20px;
+            }
+            /* Custom navbar link colors */
+            .navbar-dark .navbar-nav .nav-link {
+                color: var(--nav-text-color, #ffffff) !important;
+            }
         </style>
     </head>
     <body>
+  <!-- Header and Navbar -->
+  <header class="sticky-top">
+    <div class="container-fluid px-0">
+  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #0C2340;" role="navigation" aria-label="Main navigation">
+      <a class="navbar-brand ms-3" href="https://pvega62.github.io/index.html">
+        <img src="https://pvega62.github.io/images/logo.png" alt="Logo" height="40">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav me-3">
+          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/index.html">Home</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Technical Writing
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="https://pvega62.github.io/technical-writing-hardware.html">Hardware</a></li>
+              <li><a class="dropdown-item" href="https://pvega62.github.io/software" target="_self">Software</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/uxwriting.html">UX Writing</a></li>
+          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/articlesandessays.html">Articles and Essays</a></li>
+          <li class="nav-item"><a class="nav-link about-link" href="https://pvega62.github.io/aboutme.html">About Me</a></li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Contact
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="https://www.linkedin.com/in/pvega62/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+              <li><a class="dropdown-item" href="https://github.com/pvega62/" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+              <li><a class="dropdown-item" href="mailto:vega.pedro962@gmail.com">Email</a></li>
+            </ul>
+          </li>
+          <li class="nav-item"><a class="nav-link active" href="https://pvega62.github.io/Recordkeeping/">Recordkeeping</a></li>
+        </ul>
+      </div>
+      </nav>
+    </div>
+  </header>
+
         <div class="container">
             <h1 class="text-center">Recordkeeping</h1>
             <p class="text-center">This page is an online copy of my record collection. It was supposed to be simple list in HTML format but, <a href="https://youtube.com/clip/Ugkxh7tH0SZohwjV3au25c8AKX7mv6q8Hjti?si=xOSO2VV5uhsKXN6B" target="_blank"> <em>I never know when to stop!</em></a></p>
@@ -622,7 +669,7 @@
                 <div class="col-md-3 mb-4">
                     <div class="card h-100">
                         <div class="cover-container" style="position: relative;">
-                            <img class="card-img-top" data-audio="songs/Intuition.m4a" src="https://upload.wikimedia.org/wikipedia/en/1/11/JohnLennon-albums-mindgames.jpg" alt="Cover of Mind Games">
+                            <img class="card-img-top" data-audio="songs/Intuition.m4a" src="img/mindgames.png" alt="Cover of Mind Games">
                             <button class="play-pause-btn" aria-label="Play/Pause">&#9658;</button>
                             
                         </div>
@@ -1228,8 +1275,43 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<script>
+// Dynamically change navbar background color based on scroll position to match the background gradient
+window.addEventListener('scroll', function() {
+    const navbar = document.querySelector('.navbar');
+    if (!navbar) return;
+    
+    const docHeight = document.documentElement.scrollHeight;
+    const scrollTop = window.scrollY;
+    
+    // Calculate how far down the document we are
+    const fraction = Math.min(Math.max(scrollTop / docHeight, 0), 1);
+    
+    // Interpolate between #0C2340 rgb(12,35,64) and #C4CED3 rgb(196,206,211)
+    const r = Math.round(12 + (196 - 12) * fraction);
+    const g = Math.round(35 + (206 - 35) * fraction);
+    const b = Math.round(64 + (211 - 64) * fraction);
+    
+    // Apply the exact color to the navbar so it always blends in
+    navbar.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+    
+    // Interpolate text color between white #ffffff rgb(255,255,255) and dark blue #0C2340 rgb(12,35,64)
+    const textR = Math.round(255 + (12 - 255) * fraction);
+    const textG = Math.round(255 + (35 - 255) * fraction);
+    const textB = Math.round(255 + (64 - 255) * fraction);
+    
+    // Update the CSS variable controlling the navbar link colors
+    document.documentElement.style.setProperty('--nav-text-color', `rgb(${textR}, ${textG}, ${textB})`);
+});
+</script>
+
 <footer>
   <p class="text-dark text-center">© 2025 Pedro Vega | Built with HTML • CSS • JS • GitHub Pages</p>
 </footer>
+
+<!-- Bootstrap JS Bundle with Popper (required for dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </body>
 </html>

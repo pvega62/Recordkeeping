@@ -9,5 +9,10 @@
     font-weight: normal;
     font-style: normal;
     font-display: swap;
+    color: #F58426
 }
 
+.bootle-text {
+    font-family: 'BOOTLE', sans-serif;
+    color: #F58426; /* Knicks Orange */
+}

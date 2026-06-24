@@ -311,6 +311,23 @@
                 border-top-color: #ffffff;
               }
             }
+            /* Narrow portrait fix — hide brand, tighten padding so all 6 icons fit */
+            @media (max-width: 480px) {
+              .mobile-nav .navbar-brand {
+                display: none !important;
+              }
+              .navbar.mobile-nav {
+                padding: 8px 12px;
+              }
+              .mobile-nav-icon,
+              .mobile-nav-icon-colored {
+                width: 20px;
+                height: 20px;
+              }
+              .mobile-nav .navbar-nav .nav-link {
+                padding: 8px 6px;
+              }
+            }
         </style>
     </head>
     <body>

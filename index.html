@@ -233,56 +233,182 @@
                 font-size: 1rem;
               }
             }
+            /* Liquid glass mobile navbar */
+            @media (max-width: 991.98px) {
+              body {
+                padding-bottom: 90px;
+                padding-top: 32px;
+              }
+              header.sticky-top {
+                background: transparent !important;
+                position: static !important;
+              }
+              .navbar.mobile-nav {
+                position: fixed;
+                bottom: 12px;
+                left: 16px;
+                right: 16px;
+                z-index: 1030;
+                border-radius: 30px;
+                background-color: rgba(0, 107, 182, 0.55);
+                backdrop-filter: blur(40px) saturate(200%);
+                -webkit-backdrop-filter: blur(40px) saturate(200%);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 12px 40px rgba(0, 0, 0, 0.25);
+                padding: 9px 17px;
+                transition: all 0.3s ease;
+              }
+              .mobile-nav .dropdown-menu {
+                top: auto;
+                bottom: 100%;
+                margin-bottom: 16px;
+                background-color: rgba(0, 107, 182, 0.75);
+                backdrop-filter: blur(40px) saturate(200%);
+                -webkit-backdrop-filter: blur(40px) saturate(200%);
+                border-radius: 24px;
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.4), 0 -10px 40px rgba(0, 0, 0, 0.25);
+                padding: 8px;
+              }
+              .mobile-nav-icon {
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+                filter: brightness(0) invert(1);
+              }
+              .mobile-nav-icon-colored {
+                width: 24px;
+                height: 24px;
+                object-fit: contain;
+              }
+              .mobile-nav .dropdown-item {
+                color: #fff;
+                border-radius: 12px;
+                transition: background-color 0.2s ease;
+              }
+              .mobile-nav .dropdown-item:hover, .mobile-nav .dropdown-item:active {
+                background-color: rgba(255, 255, 255, 0.15) !important;
+                color: #fff;
+              }
+              .mobile-nav .navbar-nav {
+                margin: 0;
+              }
+              .mobile-nav .navbar-nav .nav-link {
+                font-weight: 500;
+                text-align: center;
+                padding: 12px;
+                border-radius: 14px;
+                transition: background-color 0.2s ease;
+              }
+              .mobile-nav .navbar-nav .nav-link:active {
+                background-color: rgba(255, 255, 255, 0.1);
+              }
+              .mobile-nav .navbar-nav .nav-link,
+              .mobile-nav .navbar-nav .nav-link:visited {
+                color: #ffffff !important;
+              }
+              .mobile-nav .dropdown-toggle::after {
+                border-top-color: #ffffff;
+              }
+            }
         </style>
     </head>
     <body>
   <!-- Header and Navbar -->
   <header class="sticky-top">
     <div class="container-fluid px-0">
-  <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #006BB6;" role="navigation" aria-label="Main navigation">
-      <a class="navbar-brand ms-3" href="https://pvega62.github.io/index.html">
-        <img src="https://pvega62.github.io/images/logo.png" alt="Logo" height="40">
-      </a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-        <ul class="navbar-nav me-3">
-          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/index.html">Portfolio homepage</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Technical writing
+
+      <!-- Desktop Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-dark d-none d-lg-flex" style="background-color: transparent;" role="navigation" aria-label="Desktop navigation">
+        <a class="navbar-brand ms-3" href="https://pvega62.github.io/index.html">
+          <img src="images/logo.png" alt="Logo" height="40">
+        </a>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDesktop">
+          <ul class="navbar-nav me-3">
+            <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/index.html">Portfolio homepage</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDesktop1" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Technical writing
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownDesktop1">
+                <li><a class="dropdown-item" href="https://pvega62.github.io/technical-writing-hardware.html">Hardware</a></li>
+                <li><a class="dropdown-item" href="https://pvega62.github.io/software" target="_self">Software</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/uxwriting.html">UX writing</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/articlesandessays.html">Articles and essays</a></li>
+            <li class="nav-item"><a class="nav-link about-link" href="https://pvega62.github.io/aboutme.html">About me</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownDesktop2" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Contact
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownDesktop2">
+                <li><a class="dropdown-item" href="https://www.linkedin.com/in/pvega62/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+                <li><a class="dropdown-item" href="https://github.com/pvega62/" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+                <li><a class="dropdown-item" href="mailto:vega.pedro962@gmail.com">Email</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link active" href="https://pvega62.github.io/Recordkeeping/">Recordkeeping</a></li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Mobile Navbar (App Tab Bar) -->
+      <nav class="navbar navbar-expand navbar-dark mobile-nav d-flex d-lg-none" role="navigation" aria-label="Mobile navigation">
+        <a class="navbar-brand ms-2 me-1" href="https://pvega62.github.io/index.html">
+          <img src="images/icon-logo.png" alt="Logo" height="40">
+        </a>
+        <ul class="navbar-nav flex-row w-100 justify-content-around me-2">
+          <li class="nav-item dropup d-flex align-items-center">
+            <a class="nav-link dropdown-toggle px-2 d-flex align-items-center" href="#" id="navbarDropdown1" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Technical writing" title="Technical writing">
+              <img src="images/icon-tech-writing.svg" alt="" class="mobile-nav-icon">
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
               <li><a class="dropdown-item" href="https://pvega62.github.io/technical-writing-hardware.html">Hardware</a></li>
               <li><a class="dropdown-item" href="https://pvega62.github.io/software" target="_self">Software</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/uxwriting.html">UX writing</a></li>
-          <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/articlesandessays.html">Articles and essays</a></li>
-          <li class="nav-item"><a class="nav-link about-link" href="https://pvega62.github.io/aboutme.html">About me</a></li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Contact
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link px-2 d-flex align-items-center" href="https://pvega62.github.io/uxwriting.html" aria-label="UX writing" title="UX writing">
+              <img src="images/icon-ux-writing.svg" alt="" class="mobile-nav-icon">
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link px-2 d-flex align-items-center" href="https://pvega62.github.io/articlesandessays.html" aria-label="Articles and essays" title="Articles and essays">
+              <img src="images/icon-articles.svg" alt="" class="mobile-nav-icon">
+            </a>
+          </li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link about-link px-2 d-flex align-items-center" href="https://pvega62.github.io/aboutme.html" aria-label="About me" title="About me">
+              <img src="images/icon-vector1.svg" alt="" class="mobile-nav-icon" style="transform: scaleY(-1);">
+            </a>
+          </li>
+          <li class="nav-item dropup d-flex align-items-center">
+            <a class="nav-link dropdown-toggle px-2 d-flex align-items-center" href="#" id="navbarDropdown2" role="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Contact" title="Contact">
+              <img src="images/icon-vector2.svg" alt="" class="mobile-nav-icon" style="transform: scaleY(-1);">
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown2">
               <li><a class="dropdown-item" href="https://www.linkedin.com/in/pvega62/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
               <li><a class="dropdown-item" href="https://github.com/pvega62/" target="_blank" rel="noopener noreferrer">GitHub</a></li>
               <li><a class="dropdown-item" href="mailto:vega.pedro962@gmail.com">Email</a></li>
             </ul>
           </li>
-          <li class="nav-item"><a class="nav-link active" href="https://pvega62.github.io/Recordkeeping/">Recordkeeping</a></li>
+          <li class="nav-item d-flex align-items-center">
+            <a class="nav-link px-2 d-flex align-items-center active" href="https://pvega62.github.io/Recordkeeping/" aria-label="Recordkeeping" title="Recordkeeping">
+              <img src="images/icon-recordkeeping.svg" alt="" class="mobile-nav-icon-colored">
+            </a>
+          </li>
         </ul>
-      </div>
       </nav>
+
     </div>
   </header>
 <!-- Knicks Ticker Barrier -->
   <a href="https://www.youtube.com/watch?v=3A2phIf8A1I" style="text-decoration: none; display: block;" aria-label="Link for Knicks ticker page">
   <div class="knicks-ticker" role="region" aria-label="Knicks victory ticker" tabindex="0">
     <div class="marquee-wrapper">
-      <span class="marquee-content"><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span></span>
-      <span class="marquee-content" aria-hidden="true"><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="https://pvega62.github.io/images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="https://pvega62.github.io/images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span></span>
+      <span class="marquee-content"><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span></span>
+      <span class="marquee-content" aria-hidden="true"><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span><span>THE NEW YORK KNICKS ARE CHAMPIONS OF THE WORLD! 🗽<img src="images/larry.svg" alt="Larry O'Brien Trophy" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 0.3em;" /><span>ALIEN THREAT: NEUTRALIZED</span><img src="images/noufos.svg" alt="No UFOs" style="height: 1.2em; vertical-align: text-bottom; margin-left: 0.3em; margin-right: 1.5rem;" /></span></span>
     </div>
   </div>
   </a>
@@ -1391,6 +1517,40 @@ window.addEventListener('scroll', function() {
 
 <!-- Bootstrap JS Bundle with Popper (required for dropdowns) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+  (function () {
+    // Gradient stops: #006BB6 (0,107,182) → #F58426 (245,132,38)
+    var c1 = { r: 0,   g: 107, b: 182 };
+    var c2 = { r: 245, g: 132, b: 38  };
+
+    function lerp(a, b, t) { return Math.round(a + (b - a) * t); }
+
+    function updateNavColor() {
+      var nav = document.querySelector('.mobile-nav');
+      if (!nav || window.innerWidth >= 992) return;
+
+      var scrollTop  = window.scrollY || window.pageYOffset;
+      var docHeight  = document.documentElement.scrollHeight - window.innerHeight;
+      var t = docHeight > 0 ? Math.min(Math.max(scrollTop / docHeight, 0), 1) : 0;
+
+      var r = lerp(c1.r, c2.r, t);
+      var g = lerp(c1.g, c2.g, t);
+      var b = lerp(c1.b, c2.b, t);
+
+      nav.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.55)';
+
+      document.querySelectorAll('.mobile-nav .dropdown-menu').forEach(function (m) {
+        m.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.75)';
+      });
+    }
+
+    window.addEventListener('scroll', updateNavColor, { passive: true });
+    window.addEventListener('resize', updateNavColor, { passive: true });
+    document.addEventListener('DOMContentLoaded', updateNavColor);
+    updateNavColor();
+  })();
+</script>
 
 </body>
 </html>

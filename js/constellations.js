@@ -25,18 +25,33 @@
 
   var width = 0;
   var height = 0;
+  var isMobile = window.innerWidth < 768;
   var dpr = 1;
 
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     width = window.innerWidth;
     height = window.innerHeight;
+    isMobile = window.innerWidth < 768;
     canvas.width = Math.floor(width * dpr);
     canvas.height = Math.floor(height * dpr);
     canvas.style.width = width + 'px';
     canvas.style.height = height + 'px';
     ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.scale(dpr, dpr);
+
+    if (typeof constellations !== 'undefined' && constellations.length) {
+      for (var c = 0; c < constellations.length; c++) {
+        var it = constellations[c];
+        it.scale = isMobile ? it.mobileScale : it.desktopScale;
+        var minX = (it.minXRatio !== undefined ? it.minXRatio : 0.02) * width;
+        var maxX = (it.maxXRatio !== undefined ? it.maxXRatio : 0.98) * width;
+        var minY = isMobile ? it.mobileMinY : it.desktopMinY;
+        var maxY = isMobile ? it.mobileMaxY : it.desktopMaxY;
+        it.x = Math.max(minX, Math.min(maxX, it.x));
+        it.y = Math.max(minY, Math.min(maxY, it.y));
+      }
+    }
   }
 
   resize();
@@ -106,7 +121,7 @@
   }, { passive: true });
 
   // Ambient starfield configuration
-  var isMobile = window.innerWidth < 768;
+  isMobile = window.innerWidth < 768;
   var STAR_COUNT = isMobile ? 55 : 95;
   var stars = [];
 
@@ -215,36 +230,53 @@
   }
 
   // =========================================================================
-  // 6 FEATURED CONSTELLATIONS WITH DISTINCT COLOR PALETTES
+  // 7 FEATURED CONSTELLATIONS WITH DISTINCT HIGHLIGHTED PALETTES
   // (All text labels removed to eliminate visual distraction)
-  // 1. Lyra        - Radiant Topaz Gold (#FFD700 - Featuring Vega)
-  // 2. Aries       - Vivid Crimson Rose (#FF2E63)
-  // 3. Libra       - Radiant Emerald Jade (#00F5A0)
-  // 4. Scorpio     - Blazing Amber Flame (#FF7A00 - Featuring Antares)
-  // 5. Gemini      - Electric Diamond Cyan (#00D2FF - Castor & Pollux)
-  // 6. Sagittarius - Cosmic Amethyst Magenta (#D946EF - The Teapot)
+  // 1. Lyra    - Radiant Topaz Gold (#FFD700 - Featuring Vega)
+  // 2. Aries   - Vivid Crimson Rose (#FF2E63 - Featuring Hamal)
+  // 3. Pisces  - Radiant Aquamarine Cyan (#00E6FF - The Circlet & Alrescha Knot)
+  // 4. Taurus  - Solar Amber Flame (#FF9F1C - Featuring Aldebaran & Pleiades)
+  // 5. Gemini  - Electric Diamond Cyan (#00D2FF - Twin beacons Castor & Pollux)
+  // =========================================================================
+  // 7 FEATURED CONSTELLATIONS WITH DISTINCT HIGHLIGHTED PALETTES
+  // (Positioned strictly in open celestial sky zones above the cards)
+  // 1. Lyra    - Radiant Topaz Gold (#FFD700 - Vega & Harp) -> Far-Left Upper Sky
+  // 2. Pisces  - Radiant Aquamarine Cyan (#00E6FF - Circlet & Knot) -> Left-Center Upper Sky
+  // 3. Gemini  - Electric Diamond Cyan (#00D2FF - Castor & Pollux) -> Center Sky
+  // 4. Aries   - Vivid Crimson Rose (#FF2E63 - Hamal & Horn) -> Right-Center Upper Sky
+  // 5. Taurus  - Solar Amber Flame (#FF9F1C - Aldebaran & Pleiades) -> Far-Right Upper Sky
+  // 6. Libra   - Radiant Emerald Jade (#00F5A0 - Zubeneschamali Scales) -> Mid-Left Sky (Above Cards)
+  // 7. Scorpio - Blazing Crimson Amber (#FF5722 - Antares & Tail) -> Mid-Right Sky (Above Cards)
   // =========================================================================
   var constellations = [
     // -------------------------------------------------------------
-    // 1. LYRA (The Celestial Harp of Music) - Radiant Topaz Gold
+    // 1. LYRA (The Celestial Harp) - Far-Left Upper Sky
     // -------------------------------------------------------------
     {
       id: 'lyra',
       color: { r: 255, g: 215, b: 0, hex: '#FFD700' },
-      x: width * 0.18,
-      y: height * 0.18,
-      vx: 0.05,
-      vy: -0.03,
-      angle: 0.22,
-      vAngle: 0.0005,
-      scale: isMobile ? 0.80 : 1.10,
+      desktopScale: 0.90,
+      mobileScale: 0.56,
+      scale: isMobile ? 0.56 : 0.90,
+      x: isMobile ? width * 0.14 : width * 0.08,
+      y: isMobile ? 80 : 85,
+      vx: 0.02,
+      vy: -0.01,
+      angle: 0.18,
+      vAngle: 0.0002,
+      minXRatio: 0.02,
+      maxXRatio: 0.20,
+      desktopMinY: 60,
+      desktopMaxY: 135,
+      mobileMinY: 60,
+      mobileMaxY: 110,
       nodes: [
-        { id: 'vega',    x: 0,   y: 0,   r: 5.2, name: 'Vega', isMajor: true },
-        { id: 'epsilon', x: 28,  y: -22, r: 2.6, name: 'ε Lyrae' },
-        { id: 'zeta',    x: 34,  y: 18,  r: 2.8, name: 'ζ Lyrae' },
-        { id: 'delta',   x: 68,  y: 12,  r: 2.6, name: 'δ Lyrae' },
-        { id: 'beta',    x: 62,  y: 56,  r: 3.6, name: 'Sheliak', isMajor: true },
-        { id: 'gamma',   x: 98,  y: 48,  r: 3.4, name: 'Sulafat' }
+        { id: 'vega',    x: 0,   y: 0,   r: 5.4, name: 'Vega', isMajor: true },
+        { id: 'epsilon', x: 28,  y: -22, r: 2.8, name: 'ε Lyrae' },
+        { id: 'zeta',    x: 34,  y: 18,  r: 3.0, name: 'ζ Lyrae' },
+        { id: 'delta',   x: 70,  y: 12,  r: 2.8, name: 'δ Lyrae' },
+        { id: 'beta',    x: 64,  y: 58,  r: 3.8, name: 'Sheliak', isMajor: true },
+        { id: 'gamma',   x: 100, y: 50,  r: 3.6, name: 'Sulafat', isMajor: true }
       ],
       edges: [
         [0, 1],
@@ -257,54 +289,80 @@
     },
 
     // -------------------------------------------------------------
-    // 2. ARIES (The Ram) - Crimson Rose
+    // 2. PISCES (The Fishes & Cord) - Left-Center Upper Sky
     // -------------------------------------------------------------
     {
-      id: 'aries',
-      color: { r: 255, g: 46, b: 99, hex: '#FF2E63' },
-      x: width * 0.82,
-      y: height * 0.18,
-      vx: -0.05,
-      vy: -0.02,
-      angle: 0.15,
-      vAngle: 0.0005,
-      scale: isMobile ? 0.78 : 1.05,
+      id: 'pisces',
+      color: { r: 0, g: 230, b: 255, hex: '#00E6FF' },
+      desktopScale: 0.80,
+      mobileScale: 0.50,
+      scale: isMobile ? 0.50 : 0.80,
+      x: isMobile ? width * 0.16 : width * 0.19,
+      y: isMobile ? 155 : 155,
+      vx: 0.018,
+      vy: 0.01,
+      angle: -0.12,
+      vAngle: -0.0002,
+      minXRatio: 0.06,
+      maxXRatio: 0.28,
+      desktopMinY: 125,
+      desktopMaxY: 200,
+      mobileMinY: 120,
+      mobileMaxY: 185,
       nodes: [
-        { id: 'mesarthim', x: -55, y: 28,  r: 2.8, name: 'Mesarthim' },
-        { id: 'sheratan',  x: -30, y: 16,  r: 3.4, name: 'Sheratan' },
-        { id: 'hamal',     x: 2,   y: -2,  r: 4.4, name: 'Hamal', isMajor: true },
-        { id: 'bharani',   x: 42,  y: -14, r: 3.0, name: 'Bharani' },
-        { id: 'botein',    x: 76,  y: -8,  r: 2.6, name: 'Botein' }
+        // Western Circlet loop
+        { id: 'gamma_psc', x: -80, y: -45, r: 3.4, name: 'γ Piscium' },
+        { id: '7_psc',     x: -60, y: -60, r: 2.8, name: '7 Piscium' },
+        { id: 'theta_psc', x: -38, y: -50, r: 3.2, name: 'θ Piscium' },
+        { id: 'iota_psc',  x: -42, y: -30, r: 3.4, name: 'ι Piscium' },
+        { id: 'lambda_psc',x: -64, y: -26, r: 3.2, name: 'λ Piscium' },
+        // Western Ribbon
+        { id: 'omega_psc', x: -30, y: -8,  r: 3.0, name: 'ω Piscium' },
+        { id: 'delta_psc', x: -15, y: 18,  r: 3.2, name: 'δ Piscium' },
+        // Knot
+        { id: 'alrescha',  x: 10,  y: 42,  r: 4.8, name: 'Alrescha', isMajor: true },
+        // Northern Ribbon & Fish
+        { id: 'nu_psc',    x: 28,  y: 16,  r: 3.0, name: 'ν Piscium' },
+        { id: 'mu_psc',    x: 44,  y: -10, r: 3.2, name: 'μ Piscium' },
+        { id: 'zeta_psc',  x: 60,  y: -32, r: 3.4, name: 'ζ Piscium' },
+        { id: 'eps_psc',   x: 74,  y: -54, r: 3.8, name: 'ε Piscium', isMajor: true }
       ],
       edges: [
-        [0, 1],
-        [1, 2],
-        [2, 3],
-        [3, 4]
+        [0, 1], [1, 2], [2, 3], [3, 4], [4, 0],
+        [3, 5], [5, 6], [6, 7],
+        [7, 8], [8, 9], [9, 10], [10, 11]
       ]
     },
 
     // -------------------------------------------------------------
-    // 3. GEMINI (The Celestial Twins) - Electric Diamond Cyan
+    // 3. GEMINI (The Celestial Twins) - High Celestial Arch Above Title
     // -------------------------------------------------------------
     {
       id: 'gemini',
       color: { r: 0, g: 210, b: 255, hex: '#00D2FF' },
-      x: width * 0.86,
-      y: height * 0.50,
-      vx: 0.05,
-      vy: 0.05,
+      desktopScale: 0.72,
+      mobileScale: 0.35,
+      scale: isMobile ? 0.35 : 0.72,
+      x: width * 0.50,
+      y: isMobile ? 68 : 62,
+      vx: 0.012,
+      vy: 0.008,
       angle: -0.15,
-      vAngle: -0.0003,
-      scale: isMobile ? 0.74 : 0.98,
+      vAngle: -0.0002,
+      minXRatio: 0.38,
+      maxXRatio: 0.62,
+      desktopMinY: 48,
+      desktopMaxY: 82,
+      mobileMinY: 56,
+      mobileMaxY: 78,
       nodes: [
-        { id: 'castor',  x: -36, y: -78, r: 4.5, name: 'Castor', isMajor: true },
-        { id: 'pollux',  x: 28,  y: -68, r: 4.7, name: 'Pollux', isMajor: true },
+        { id: 'castor',  x: -36, y: -78, r: 4.8, name: 'Castor', isMajor: true },
+        { id: 'pollux',  x: 28,  y: -68, r: 5.0, name: 'Pollux', isMajor: true },
         { id: 'mebsuta', x: -44, y: -26, r: 3.4, name: 'Mebsuta' },
-        { id: 'wasat',   x: 20,  y: -16, r: 3.4, name: 'Wasat' },
-        { id: 'mekbuda', x: 12,  y: 28,  r: 3.0, name: 'Mekbuda' },
-        { id: 'alhena',  x: 4,   y: 72,  r: 4.0, name: 'Alhena', isMajor: true },
-        { id: 'tejat',   x: -54, y: 22,  r: 3.2, name: 'Tejat' },
+        { id: 'wasat',   x: 20,  y: -16, r: 3.6, name: 'Wasat' },
+        { id: 'mekbuda', x: 12,  y: 28,  r: 3.2, name: 'Mekbuda' },
+        { id: 'alhena',  x: 4,   y: 72,  r: 4.2, name: 'Alhena', isMajor: true },
+        { id: 'tejat',   x: -54, y: 22,  r: 3.4, name: 'Tejat' },
         { id: 'propus',  x: -64, y: 58,  r: 3.0, name: 'Propus' }
       ],
       edges: [
@@ -315,25 +373,110 @@
     },
 
     // -------------------------------------------------------------
-    // 4. LIBRA (The Scales) - Emerald Jade
+    // 4. ARIES (The Ram) - Right-Center Upper Sky
+    // -------------------------------------------------------------
+    {
+      id: 'aries',
+      color: { r: 255, g: 46, b: 99, hex: '#FF2E63' },
+      desktopScale: 0.84,
+      mobileScale: 0.52,
+      scale: isMobile ? 0.52 : 0.84,
+      x: isMobile ? width * 0.84 : width * 0.81,
+      y: isMobile ? 155 : 155,
+      vx: -0.018,
+      vy: -0.01,
+      angle: 0.15,
+      vAngle: 0.0002,
+      minXRatio: 0.72,
+      maxXRatio: 0.92,
+      desktopMinY: 125,
+      desktopMaxY: 200,
+      mobileMinY: 120,
+      mobileMaxY: 185,
+      nodes: [
+        { id: 'mesarthim', x: -55, y: 28,  r: 3.0, name: 'Mesarthim' },
+        { id: 'sheratan',  x: -30, y: 16,  r: 3.6, name: 'Sheratan', isMajor: true },
+        { id: 'hamal',     x: 2,   y: -2,  r: 4.8, name: 'Hamal', isMajor: true },
+        { id: 'bharani',   x: 42,  y: -14, r: 3.2, name: 'Bharani' },
+        { id: 'botein',    x: 76,  y: -8,  r: 2.8, name: 'Botein' }
+      ],
+      edges: [
+        [0, 1],
+        [1, 2],
+        [2, 3],
+        [3, 4]
+      ]
+    },
+
+    // -------------------------------------------------------------
+    // 5. TAURUS (The Bull & Pleiades) - Far-Right Upper Sky
+    // -------------------------------------------------------------
+    {
+      id: 'taurus',
+      color: { r: 255, g: 159, b: 28, hex: '#FF9F1C' },
+      desktopScale: 0.80,
+      mobileScale: 0.50,
+      scale: isMobile ? 0.50 : 0.80,
+      x: isMobile ? width * 0.86 : width * 0.92,
+      y: isMobile ? 80 : 85,
+      vx: -0.018,
+      vy: 0.01,
+      angle: 0.16,
+      vAngle: 0.0002,
+      minXRatio: 0.80,
+      maxXRatio: 0.98,
+      desktopMinY: 60,
+      desktopMaxY: 135,
+      mobileMinY: 60,
+      mobileMaxY: 110,
+      nodes: [
+        { id: 'aldebaran', x: 0,   y: 0,   r: 5.6, name: 'Aldebaran', isMajor: true },
+        { id: 'ain',       x: -24, y: -30, r: 3.8, name: 'Ain', isMajor: true },
+        { id: 'gamma_tau', x: -48, y: -12, r: 3.6, name: 'Prima Hyadum' },
+        { id: 'delta_tau', x: -28, y: -6,  r: 3.2, name: 'δ Tauri' },
+        { id: 'theta_tau', x: -12, y: 10,  r: 3.2, name: 'θ Tauri' },
+        { id: 'elnath',    x: 56,  y: -72, r: 4.6, name: 'Elnath', isMajor: true },
+        { id: 'tianguan',  x: 74,  y: -18, r: 3.8, name: 'Tianguan', isMajor: true },
+        { id: 'alcyone',   x: -92, y: -42, r: 3.8, name: 'Alcyone', isMajor: true },
+        { id: 'maia',      x: -98, y: -52, r: 2.8, name: 'Maia' },
+        { id: 'electra',   x: -106,y: -40, r: 2.8, name: 'Electra' },
+        { id: 'atlas',     x: -84, y: -36, r: 2.8, name: 'Atlas' }
+      ],
+      edges: [
+        [0, 4], [4, 3], [3, 2], [2, 1],
+        [1, 5], [0, 6],
+        [7, 8], [8, 9], [9, 10], [10, 7]
+      ]
+    },
+
+    // -------------------------------------------------------------
+    // 6. LIBRA (The Scales) - Lower-Left Flank (Above Cards)
     // -------------------------------------------------------------
     {
       id: 'libra',
       color: { r: 0, g: 245, b: 160, hex: '#00F5A0' },
-      x: width * 0.20,
-      y: height * 0.68,
-      vx: -0.05,
-      vy: 0.04,
-      angle: -0.2,
-      vAngle: -0.0004,
-      scale: isMobile ? 0.78 : 1.05,
+      desktopScale: 0.82,
+      mobileScale: 0.52,
+      scale: isMobile ? 0.52 : 0.82,
+      x: isMobile ? width * 0.18 : width * 0.14,
+      y: isMobile ? 240 : 235,
+      vx: -0.015,
+      vy: 0.015,
+      angle: -0.20,
+      vAngle: -0.0002,
+      minXRatio: 0.04,
+      maxXRatio: 0.26,
+      desktopMinY: 195,
+      desktopMaxY: 270,
+      mobileMinY: 195,
+      mobileMaxY: 270,
       nodes: [
-        { id: 'zubeneschamali', x: 0,   y: -52, r: 4.4, name: 'Zubeneschamali', isMajor: true },
-        { id: 'zubenelgenubi',  x: -52, y: 10,  r: 4.0, name: 'Zubenelgenubi', isMajor: true },
-        { id: 'zubenelhakrabi', x: 42,  y: 16,  r: 3.2, name: 'Zubenelhakrabi' },
-        { id: 'brachium',       x: -2,  y: 64,  r: 3.4, name: 'Brachium' },
-        { id: 'upsilon',        x: -26, y: 38,  r: 2.6, name: 'υ Librae' },
-        { id: 'tau',            x: 24,  y: 44,  r: 2.6, name: 'τ Librae' }
+        { id: 'zubeneschamali', x: 0,   y: -52, r: 4.6, name: 'Zubeneschamali', isMajor: true },
+        { id: 'zubenelgenubi',  x: -52, y: 10,  r: 4.2, name: 'Zubenelgenubi', isMajor: true },
+        { id: 'zubenelhakrabi', x: 42,  y: 16,  r: 3.4, name: 'Zubenelhakrabi' },
+        { id: 'brachium',       x: -2,  y: 64,  r: 3.6, name: 'Brachium', isMajor: true },
+        { id: 'upsilon',        x: -26, y: 38,  r: 2.8, name: 'υ Librae' },
+        { id: 'tau',            x: 24,  y: 44,  r: 2.8, name: 'τ Librae' }
       ],
       edges: [
         [0, 1],
@@ -344,63 +487,40 @@
     },
 
     // -------------------------------------------------------------
-    // 5. SAGITTARIUS (The Teapot) - Cosmic Magenta
-    // -------------------------------------------------------------
-    {
-      id: 'sagittarius',
-      color: { r: 217, g: 70, b: 239, hex: '#D946EF' },
-      x: width * 0.50,
-      y: height * 0.64,
-      vx: -0.04,
-      vy: 0.05,
-      angle: 0.2,
-      vAngle: 0.0004,
-      scale: isMobile ? 0.74 : 1.0,
-      nodes: [
-        { id: 'kaus_bor',  x: 0,   y: -46, r: 4.0, name: 'Kaus Borealis', isMajor: true },
-        { id: 'kaus_med',  x: -30, y: -14, r: 3.5, name: 'Kaus Media' },
-        { id: 'phi',       x: 30,  y: -14, r: 3.4, name: 'φ Sagittarii' },
-        { id: 'alnasl',    x: -68, y: 2,   r: 3.8, name: 'Alnasl', isMajor: true },
-        { id: 'kaus_aus',  x: -20, y: 40,  r: 4.6, name: 'Kaus Australis', isMajor: true },
-        { id: 'ascella',   x: 38,  y: 34,  r: 4.0, name: 'Ascella', isMajor: true },
-        { id: 'nunki',     x: 58,  y: -34, r: 4.2, name: 'Nunki', isMajor: true },
-        { id: 'tau',       x: 56,  y: 8,   r: 3.2, name: 'τ Sagittarii' }
-      ],
-      edges: [
-        [0, 1], [0, 2], [1, 2],
-        [1, 3], [3, 4],
-        [1, 4], [4, 5], [5, 2],
-        [2, 6], [6, 7], [7, 5]
-      ]
-    },
-
-    // -------------------------------------------------------------
-    // 6. SCORPIO (The Scorpion) - Blazing Amber Flame
+    // 7. SCORPIO (The Scorpion) - Lower-Right Flank (Above Cards)
     // -------------------------------------------------------------
     {
       id: 'scorpio',
-      color: { r: 255, g: 122, b: 0, hex: '#FF7A00' },
-      x: width * 0.80,
-      y: height * 0.68,
-      vx: -0.06,
-      vy: -0.04,
-      angle: 0.1,
-      vAngle: 0.0004,
-      scale: isMobile ? 0.72 : 0.95,
+      color: { r: 255, g: 87, b: 34, hex: '#FF5722' },
+      desktopScale: 0.78,
+      mobileScale: 0.48,
+      scale: isMobile ? 0.48 : 0.78,
+      x: isMobile ? width * 0.82 : width * 0.87,
+      y: isMobile ? 240 : 235,
+      vx: -0.015,
+      vy: -0.012,
+      angle: 0.12,
+      vAngle: 0.0002,
+      minXRatio: 0.74,
+      maxXRatio: 0.96,
+      desktopMinY: 195,
+      desktopMaxY: 270,
+      mobileMinY: 195,
+      mobileMaxY: 270,
       nodes: [
-        { id: 'acrab',    x: -38, y: -64, r: 3.2, name: 'Acrab' },
-        { id: 'dschubba', x: -18, y: -48, r: 3.5, name: 'Dschubba' },
-        { id: 'pi',       x: -42, y: -32, r: 2.8, name: 'π Scorpii' },
-        { id: 'antares',  x: 2,   y: -18, r: 5.0, name: 'Antares', isMajor: true },
-        { id: 'tau',      x: 14,  y: 6,   r: 2.8, name: 'τ Scorpii' },
-        { id: 'epsilon',  x: 20,  y: 32,  r: 3.2, name: 'Larawag' },
-        { id: 'mu',       x: 18,  y: 54,  r: 2.8, name: 'μ Scorpii' },
-        { id: 'zeta',     x: 8,   y: 76,  r: 3.0, name: 'ζ Scorpii' },
-        { id: 'eta',      x: -16, y: 88,  r: 3.0, name: 'η Scorpii' },
-        { id: 'sargas',   x: -38, y: 80,  r: 3.6, name: 'Sargas' },
-        { id: 'iota',     x: -56, y: 60,  r: 2.8, name: 'ι Scorpii' },
-        { id: 'shaula',   x: -48, y: 34,  r: 4.2, name: 'Shaula', isMajor: true },
-        { id: 'lesath',   x: -60, y: 32,  r: 3.0, name: 'Lesath' }
+        { id: 'acrab',    x: -38, y: -64, r: 3.4, name: 'Acrab' },
+        { id: 'dschubba', x: -18, y: -48, r: 3.6, name: 'Dschubba', isMajor: true },
+        { id: 'pi',       x: -42, y: -32, r: 3.0, name: 'π Scorpii' },
+        { id: 'antares',  x: 2,   y: -18, r: 5.8, name: 'Antares', isMajor: true },
+        { id: 'tau',      x: 14,  y: 6,   r: 3.0, name: 'τ Scorpii' },
+        { id: 'epsilon',  x: 20,  y: 32,  r: 3.4, name: 'Larawag' },
+        { id: 'mu',       x: 18,  y: 54,  r: 3.0, name: 'μ Scorpii' },
+        { id: 'zeta',     x: 8,   y: 76,  r: 3.2, name: 'ζ Scorpii' },
+        { id: 'eta',      x: -16, y: 88,  r: 3.2, name: 'η Scorpii' },
+        { id: 'sargas',   x: -38, y: 80,  r: 3.8, name: 'Sargas', isMajor: true },
+        { id: 'iota',     x: -56, y: 60,  r: 3.0, name: 'ι Scorpii' },
+        { id: 'shaula',   x: -48, y: 34,  r: 4.4, name: 'Shaula', isMajor: true },
+        { id: 'lesath',   x: -60, y: 32,  r: 3.2, name: 'Lesath' }
       ],
       edges: [
         [0, 1], [2, 1],
@@ -420,21 +540,28 @@
       item.y += item.vy;
       item.angle += item.vAngle;
 
-      // Soft orbital deflection away from center text zone (Recordkeeping title & intro)
-      var tdx = item.x - width * 0.50;
-      var tdy = (item.y - 180) * 2.2;
-      var textDist = Math.sqrt(tdx * tdx + tdy * tdy);
-      if (textDist < 300 && textDist > 0) {
-        var force = (1 - textDist / 300) * 0.70;
-        item.x += (tdx / textDist) * force;
-        item.y += (tdy / textDist) * (force * 0.45);
+      // Sector and open sky barrier physics:
+      // Constrain constellations within their open sky sector above the cards
+      var minX = (item.minXRatio !== undefined ? item.minXRatio : 0.02) * width;
+      var maxX = (item.maxXRatio !== undefined ? item.maxXRatio : 0.98) * width;
+      var minY = isMobile ? item.mobileMinY : item.desktopMinY;
+      var maxY = isMobile ? item.mobileMaxY : item.desktopMaxY;
+
+      if (item.x < minX) {
+        item.x = minX;
+        item.vx = Math.abs(item.vx);
+      } else if (item.x > maxX) {
+        item.x = maxX;
+        item.vx = -Math.abs(item.vx);
       }
 
-      var pad = 200;
-      if (item.x < -pad) item.x = width + pad;
-      else if (item.x > width + pad) item.x = -pad;
-      if (item.y < -pad) item.y = height + pad;
-      else if (item.y > height + pad) item.y = -pad;
+      if (item.y < minY) {
+        item.y = minY;
+        item.vy = Math.abs(item.vy);
+      } else if (item.y > maxY) {
+        item.y = maxY;
+        item.vy = -Math.abs(item.vy);
+      }
 
       var cosA = Math.cos(item.angle);
       var sinA = Math.sin(item.angle);
@@ -464,86 +591,67 @@
         });
       }
 
-      var pulse = 0.55 + 0.25 * Math.sin(time * 0.0022 + c * 1.2) + hoverBoost;
-      pulse = Math.min(1.0, pulse);
+      var pulse = 0.42 + 0.08 * Math.sin(time * 0.002 + c * 1.2) + hoverBoost;
 
-      // Intelligent text readability dampener:
-      // If a constellation is near the text zone, attenuate it so it never obscures reading
-      var isOverText = textDist < 270;
-      if (isOverText) {
-        pulse *= 0.15; // Whisper-light ghosting if ever near text
-      }
-
+      // 1. Soft atmospheric under-glow along constellation edges (ensures distinct shape against deep space)
+      ctx.beginPath();
       for (var e = 0; e < item.edges.length; e++) {
         var p1 = worldNodes[item.edges[e][0]];
         var p2 = worldNodes[item.edges[e][1]];
-
-        ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + (pulse * 0.32) + ')';
-        ctx.lineWidth = isMobile ? 2.5 : 3.5;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + (pulse * 0.80) + ')';
-        ctx.lineWidth = isMobile ? 1.1 : 1.5;
-        ctx.stroke();
-
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = 'rgba(255, 255, 255, ' + (pulse * 0.45) + ')';
-        ctx.lineWidth = 0.7;
-        ctx.stroke();
       }
+      ctx.strokeStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + (pulse * 0.18) + ')';
+      ctx.lineWidth = isMobile ? 2.0 : 2.5;
+      ctx.stroke();
 
+      // 2. Clean, clearly identifiable constellation filaments (discernible asterism without glare)
+      ctx.beginPath();
+      for (var e = 0; e < item.edges.length; e++) {
+        var p1 = worldNodes[item.edges[e][0]];
+        var p2 = worldNodes[item.edges[e][1]];
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+      }
+      ctx.strokeStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + (pulse * 0.88) + ')';
+      ctx.lineWidth = isMobile ? 0.95 : 1.15;
+      ctx.stroke();
+
+      // 3. Star nodes with luminous cores, chromatic halos, and delicate micro-glints on major stars
       for (var i = 0; i < worldNodes.length; i++) {
         var wn = worldNodes[i];
-        var glowR = wn.r * (wn.isMajor ? (isOverText ? 3.0 : 4.8) : 3.2);
+        var starR = wn.isMajor ? (isMobile ? 2.2 : 2.7) : (isMobile ? 1.3 : 1.6);
 
-        var g = ctx.createRadialGradient(wn.x, wn.y, 0, wn.x, wn.y, glowR);
-        g.addColorStop(0, 'rgba(' + col.r + ',' + col.g + ',' + col.b + ', 0.90)');
-        g.addColorStop(0.35, 'rgba(' + col.r + ',' + col.g + ',' + col.b + ', ' + (pulse * 0.45) + ')');
+        // Soft chromatic radial halo
+        var haloR = starR * 3.0;
+        var g = ctx.createRadialGradient(wn.x, wn.y, 0, wn.x, wn.y, haloR);
+        g.addColorStop(0, 'rgba(' + col.r + ',' + col.g + ',' + col.b + ', ' + (pulse * 0.55) + ')');
         g.addColorStop(1, 'rgba(' + col.r + ',' + col.g + ',' + col.b + ', 0)');
 
         ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(wn.x, wn.y, glowR, 0, Math.PI * 2);
+        ctx.arc(wn.x, wn.y, haloR, 0, Math.PI * 2);
         ctx.fill();
 
+        // Brilliant pinpoint star core
         ctx.beginPath();
-        ctx.arc(wn.x, wn.y, isOverText ? wn.r * 0.85 : wn.r, 0, Math.PI * 2);
-        ctx.fillStyle = '#ffffff';
+        ctx.arc(wn.x, wn.y, starR, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, ' + (0.75 + pulse * 0.20) + ')';
         ctx.fill();
 
+        // Subtle micro-glints on major landmark stars (Vega, Aldebaran, Antares, Castor, Pollux)
         if (wn.isMajor) {
-          var flareMult = isOverText ? 2.2 : 5.0;
-          var flareLen = wn.r * flareMult * (1 + 0.22 * Math.sin(time * 0.003 + i));
-          ctx.strokeStyle = 'rgba(' + col.r + ',' + col.g + ',' + col.b + ',' + (isOverText ? 0.40 : 0.85) + ')';
-          ctx.lineWidth = isOverText ? 0.9 : 1.3;
+          var glintLen = isMobile ? 4.5 : 6.0;
+          ctx.strokeStyle = 'rgba(255, 255, 255, ' + (0.35 + pulse * 0.25) + ')';
+          ctx.lineWidth = 0.8;
           ctx.beginPath();
-          ctx.moveTo(wn.x - flareLen, wn.y);
-          ctx.lineTo(wn.x + flareLen, wn.y);
-          ctx.moveTo(wn.x, wn.y - flareLen);
-          ctx.lineTo(wn.x, wn.y + flareLen);
-          ctx.stroke();
-
-          var subLen = flareLen * 0.45;
-          ctx.strokeStyle = isOverText ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.5)';
-          ctx.lineWidth = isOverText ? 0.6 : 0.9;
-          ctx.beginPath();
-          ctx.moveTo(wn.x - subLen, wn.y - subLen);
-          ctx.lineTo(wn.x + subLen, wn.y + subLen);
-          ctx.moveTo(wn.x - subLen, wn.y + subLen);
-          ctx.lineTo(wn.x + subLen, wn.y - subLen);
+          ctx.moveTo(wn.x - glintLen, wn.y);
+          ctx.lineTo(wn.x + glintLen, wn.y);
+          ctx.moveTo(wn.x, wn.y - glintLen);
+          ctx.lineTo(wn.x, wn.y + glintLen);
           ctx.stroke();
         }
       }
-
-      // (No text labels rendered - completely distraction-free starry background)
     }
   }
 

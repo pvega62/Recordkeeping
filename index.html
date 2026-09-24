@@ -57,6 +57,204 @@
             z-index: 0;
         }
 
+        #tardis-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+        }
+
+        #tardis-canvas.active {
+            opacity: 0.85;
+        }
+
+        /* Floating Doctor Who Theme Audio Pill */
+        #tardis-audio-badge {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 14px 8px 14px;
+            border-radius: 9999px;
+            background: rgba(0, 45, 85, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(135, 206, 250, 0.55);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 107, 182, 0.5);
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            pointer-events: none;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+
+        #tardis-audio-badge.visible {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Rotating dwlogo.svg on its vertical axis */
+        .dwlogo-spin-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 600px;
+            width: 20px;
+            height: 34px;
+            flex-shrink: 0;
+        }
+
+        .dwlogo-spinning {
+            width: 16px;
+            height: 32px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 6px rgba(56, 189, 248, 0.85));
+            animation: dwlogo-axis-spin 4s linear infinite;
+            transform-style: preserve-3d;
+            will-change: transform;
+        }
+
+        @keyframes dwlogo-axis-spin {
+            0% {
+                transform: rotateY(0deg);
+            }
+            100% {
+                transform: rotateY(360deg);
+            }
+        }
+
+        .tardis-badge-title {
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            font-weight: 600;
+            color: #e0f7fa;
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+        }
+
+        /* Glassmorphic Play/Pause Toggle Button */
+        #tardis-badge-toggle {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.28) 0%, rgba(0, 56, 101, 0.85) 100%);
+            border: 1.5px solid rgba(135, 206, 250, 0.75);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            padding: 0;
+            position: relative;
+            transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+                        border-color 0.2s ease,
+                        box-shadow 0.2s ease,
+                        background 0.2s ease;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.35);
+            flex-shrink: 0;
+            color: #ffffff;
+        }
+
+        #tardis-badge-toggle:hover {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.5) 0%, rgba(0, 107, 182, 0.95) 100%);
+            border-color: #38bdf8;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.85), inset 0 1px 2px rgba(255, 255, 255, 0.5);
+        }
+
+        #tardis-badge-toggle:active {
+            transform: scale(0.94);
+        }
+
+        .tardis-icon-pause,
+        .tardis-icon-play {
+            width: 13px;
+            height: 13px;
+            fill: #ffffff;
+            filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.9));
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        #tardis-badge-toggle.is-playing .tardis-icon-pause {
+            display: block;
+        }
+
+        #tardis-badge-toggle.is-playing .tardis-icon-play {
+            display: none;
+        }
+
+        #tardis-badge-toggle.is-paused .tardis-icon-pause {
+            display: none;
+        }
+
+        #tardis-badge-toggle.is-paused .tardis-icon-play {
+            display: block;
+            margin-left: 2px;
+        }
+
+        #tardis-badge-toggle.is-paused {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.7) 0%, rgba(15, 23, 42, 0.85) 100%);
+            border-color: rgba(148, 163, 184, 0.5);
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.3);
+        }
+
+        #tardis-badge-close {
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 0 4px;
+            line-height: 1;
+            transition: color 0.2s, transform 0.15s;
+        }
+
+        #tardis-badge-close:hover {
+            color: #ffffff;
+            transform: scale(1.15);
+        }
+
+        @media (max-width: 991.98px) {
+            #tardis-audio-badge {
+                bottom: 84px;
+                right: 14px;
+                padding: 6px 12px 6px 12px;
+                font-size: 0.8rem;
+                gap: 9px;
+            }
+
+            #tardis-badge-toggle {
+                width: 28px;
+                height: 28px;
+            }
+
+            .tardis-icon-pause,
+            .tardis-icon-play {
+                width: 11px;
+                height: 11px;
+            }
+
+            .dwlogo-spin-container {
+                width: 16px;
+                height: 30px;
+            }
+
+            .dwlogo-spinning {
+                width: 14px;
+                height: 28px;
+            }
+        }
+
         header, .knicks-ticker, .container, footer {
             position: relative;
             z-index: 1;
@@ -89,6 +287,7 @@
             margin-bottom: 5px;
             margin-left: 50px;
             margin-right: 50px;
+            text-shadow: 0 1px 8px rgba(0, 0, 0, 0.75);
         }
 
         .card-group {
@@ -128,6 +327,7 @@
             margin-top: 20px;
             margin-bottom: 20px;
             color: #F58426;
+            text-shadow: 0 2px 14px rgba(0, 0, 0, 0.8), 0 1px 3px rgba(0, 0, 0, 0.9);
         }
 
         h5 {
@@ -227,12 +427,182 @@
             background: #006BB6;
         }
 
-        .playlist-highlight {
-            color: #006BB6;
-            font-weight: bold;
-            text-align: center;
-            margin-top: 20px;
-            margin-bottom: 20px;
+        /* Spotify Playlist Accordion Widget */
+        .spotify-accordion-wrapper {
+            width: 100%;
+            max-width: 960px;
+            margin: 32px auto 40px auto;
+            border-radius: 16px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(0, 107, 182, 0.5);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35), 0 0 20px rgba(0, 107, 182, 0.2);
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .spotify-accordion-wrapper:hover {
+            border-color: rgba(29, 185, 84, 0.65);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 24px rgba(29, 185, 84, 0.25);
+        }
+
+        .spotify-accordion-trigger {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 16px 22px;
+            background: transparent;
+            border: none;
+            color: #ffffff;
+            cursor: pointer;
+            text-align: left;
+            transition: background 0.25s ease;
+            user-select: none;
+        }
+
+        .spotify-accordion-trigger:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .spotify-accordion-trigger:focus-visible {
+            outline: 2px solid #1DB954;
+            outline-offset: -2px;
+        }
+
+        .spotify-accordion-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        .spotify-icon-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: rgba(29, 185, 84, 0.15);
+            border: 1px solid rgba(29, 185, 84, 0.4);
+            flex-shrink: 0;
+            transition: transform 0.3s ease, background 0.3s ease;
+        }
+
+        .spotify-accordion-wrapper:hover .spotify-icon-badge {
+            transform: scale(1.08);
+            background: rgba(29, 185, 84, 0.25);
+        }
+
+        .spotify-text-group {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+
+        .spotify-accordion-heading {
+            font-size: 1.12rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.01em;
+            line-height: 1.25;
+        }
+
+        .spotify-accordion-subheading {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.35;
+        }
+
+        .spotify-action-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .spotify-status-badge {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+            padding: 5px 12px;
+            border-radius: 9999px;
+            background: rgba(0, 107, 182, 0.3);
+            border: 1px solid rgba(135, 206, 250, 0.4);
+            color: #bae6fd;
+            transition: background 0.25s, color 0.25s, border-color 0.25s;
+        }
+
+        .spotify-accordion-wrapper.is-open .spotify-status-badge {
+            background: rgba(29, 185, 84, 0.25);
+            border-color: rgba(29, 185, 84, 0.6);
+            color: #86efac;
+        }
+
+        .spotify-chevron {
+            color: #94a3b8;
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .spotify-accordion-trigger:hover .spotify-chevron {
+            color: #ffffff;
+        }
+
+        .spotify-accordion-wrapper.is-open .spotify-chevron {
+            transform: rotate(180deg);
+            color: #1DB954;
+        }
+
+        .spotify-accordion-panel {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: max-height 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+        }
+
+        .spotify-accordion-wrapper.is-open .spotify-accordion-panel {
+            max-height: 720px;
+            opacity: 1;
+        }
+
+        .spotify-accordion-inner {
+            padding: 4px 18px 18px 18px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        @media (max-width: 576px) {
+            .spotify-accordion-trigger {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+
+            .spotify-icon-badge {
+                width: 36px;
+                height: 36px;
+            }
+
+            .spotify-accordion-heading {
+                font-size: 1rem;
+            }
+
+            .spotify-accordion-subheading {
+                font-size: 0.78rem;
+            }
+
+            .spotify-status-badge {
+                display: none;
+            }
+
+            .spotify-accordion-inner {
+                padding: 4px 10px 14px 10px;
+            }
         }
 
         /* Custom navbar link colors */
@@ -291,16 +661,28 @@
             }
         }
 
-        /* Liquid glass mobile navbar */
+        /* Liquid glass mobile navbar & top ticker positioning */
         @media (max-width: 991.98px) {
             body {
                 padding-bottom: 90px;
-                padding-top: 32px;
+                padding-top: 0 !important;
             }
 
             header.sticky-top {
                 background: transparent !important;
                 position: static !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                height: 0 !important;
+                min-height: 0 !important;
+                border: 0 !important;
+            }
+
+            .knicks-ticker-link {
+                display: block;
+                margin-top: 0 !important;
+                padding: 0 !important;
+                text-decoration: none;
             }
 
             .navbar.mobile-nav {
@@ -385,6 +767,10 @@
 
         /* Mobile full-screen swipeable showcase carousel for Recordkeeping cards */
         @media (max-width: 767.98px) {
+            .container.mt-4 {
+                margin-top: 1.75rem !important;
+            }
+
             p {
                 margin-left: 16px !important;
                 margin-right: 16px !important;
@@ -529,63 +915,73 @@
             }
         }
 
-        /* Mobile View Mode Inconspicuous Icon Toggle */
+        /* Mobile View Mode Prominent Icon Toggle */
         .view-mode-toggle-wrapper {
             display: flex;
             justify-content: center;
-            margin-top: 0.25rem;
-            margin-bottom: 0.6rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.85rem;
         }
 
         .view-mode-toggle {
             display: inline-flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 2px;
-            gap: 2px;
+            background: rgba(0, 45, 85, 0.78);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(135, 206, 250, 0.45);
+            border-radius: 24px;
+            padding: 3px;
+            gap: 4px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 12px rgba(0, 107, 182, 0.3);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .view-mode-toggle:hover {
+            border-color: rgba(135, 206, 250, 0.75);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 16px rgba(0, 107, 182, 0.45);
         }
 
         .view-toggle-btn {
             border: none !important;
             background: transparent !important;
-            color: rgba(255, 255, 255, 0.5) !important;
-            padding: 4px !important;
-            border-radius: 16px !important;
-            transition: all 0.2s ease !important;
+            color: rgba(224, 242, 254, 0.75) !important;
+            padding: 5px !important;
+            border-radius: 20px !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
             display: inline-flex !important;
             align-items: center !important;
             justify-content: center !important;
             cursor: pointer !important;
-            width: 32px !important;
-            height: 28px !important;
+            width: 36px !important;
+            height: 32px !important;
             box-shadow: none !important;
         }
 
         .view-toggle-btn svg {
-            width: 17px;
-            height: 17px;
+            width: 18px;
+            height: 18px;
             stroke-width: 2.2;
-            transition: opacity 0.2s ease;
+            transition: transform 0.2s ease, opacity 0.2s ease;
         }
 
         .view-toggle-btn.active {
-            background: rgba(255, 255, 255, 0.2) !important;
+            background: linear-gradient(135deg, #006BB6 0%, #0088e8 100%) !important;
             color: #ffffff !important;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
+            box-shadow: 0 2px 8px rgba(0, 107, 182, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.4) !important;
         }
 
         .view-toggle-btn.active svg {
             stroke: #ffffff;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+            transform: scale(1.05);
         }
 
         .view-toggle-btn:not(.active):hover,
         .view-toggle-btn:not(.active):active {
-            background: rgba(255, 255, 255, 0.1) !important;
-            color: rgba(255, 255, 255, 0.85) !important;
+            background: rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
+            transform: scale(1.05);
         }
 
         /* Mobile vertical scroll mode (original layout) */
@@ -698,6 +1094,26 @@
 
 <body>
     <canvas id="constellation-canvas" aria-hidden="true"></canvas>
+    <canvas id="tardis-canvas" aria-hidden="true"></canvas>
+    <!-- Floating Doctor Who Theme Audio Pill -->
+    <div id="tardis-audio-badge" aria-live="polite" role="status">
+        <span class="dwlogo-spin-container" aria-hidden="true" title="Doctor Who">
+            <img src="images/dwlogo.svg" alt="Doctor Who Logo" class="dwlogo-spinning" />
+        </span>
+        <span class="tardis-badge-title">Doctor Who Theme</span>
+        <button id="tardis-badge-toggle" class="is-playing" type="button" aria-label="Pause Doctor Who theme" title="Pause / Resume theme">
+            <!-- Pause Icon (shown when playing) -->
+            <svg class="tardis-icon-pause" viewBox="0 0 24 24" aria-hidden="true">
+                <rect x="5" y="3" width="4.5" height="18" rx="2"></rect>
+                <rect x="14.5" y="3" width="4.5" height="18" rx="2"></rect>
+            </svg>
+            <!-- Play Icon (shown when paused) -->
+            <svg class="tardis-icon-play" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 3.8c0-.7.8-1.1 1.4-.7l13.2 7.5c.6.4.6 1.3 0 1.7L7.4 19.8c-.6.4-1.4 0-1.4-.7V3.8z"></path>
+            </svg>
+        </button>
+        <button id="tardis-badge-close" type="button" aria-label="Stop and dismiss" title="Stop and dismiss">✕</button>
+    </div>
     <!-- Header and Navbar -->
     <header class="sticky-top">
         <div class="container-fluid px-0">
@@ -812,7 +1228,7 @@
         </div>
     </header>
     <!-- Knicks Ticker Barrier -->
-    <a href="https://www.youtube.com/watch?v=3A2phIf8A1I" style="text-decoration: none; display: block;"
+    <a class="knicks-ticker-link" href="https://www.youtube.com/watch?v=3A2phIf8A1I" style="text-decoration: none; display: block;"
         aria-label="Link for Knicks ticker page">
         <div class="knicks-ticker" role="region" aria-label="Knicks victory ticker" tabindex="0">
             <div class="marquee-wrapper">
@@ -2082,16 +2498,55 @@
                 </div>
             </div>
         </div>
-        <p class="text-center playlist-highlight"> Here's a playlist of some of the songs featured on this page: </p>
-        <br>
-        <iframe data-testid="embed-iframe" style="border-radius:12px"
-            src="https://open.spotify.com/embed/playlist/6grPfcp0lpQOUnTy8BRBmn?utm_source=generator" width="100%"
-            height="652" frameBorder="0" allowfullscreen=""
-            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        <!-- Spotify Playlist Accordion Widget -->
+        <div class="spotify-accordion-wrapper">
+            <button id="spotify-accordion-btn" class="spotify-accordion-trigger" type="button" aria-expanded="false" aria-controls="spotify-accordion-panel">
+                <div class="spotify-accordion-title-wrap">
+                    <span class="spotify-icon-badge" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="22" height="22" fill="#1DB954">
+                            <path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/>
+                        </svg>
+                    </span>
+                    <div class="spotify-text-group">
+                        <span class="spotify-accordion-heading">Recordkeeping</span>
+                        <span class="spotify-accordion-subheading">A playlist of the featured songs on this page</span>
+                    </div>
+                </div>
+                <div class="spotify-action-group">
+                    <span class="spotify-status-badge">Click to Open</span>
+                    <svg class="spotify-chevron" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"></polyline>
+                    </svg>
+                </div>
+            </button>
+            <div id="spotify-accordion-panel" class="spotify-accordion-panel" role="region" aria-labelledby="spotify-accordion-btn">
+                <div class="spotify-accordion-inner">
+                    <iframe data-testid="embed-iframe" style="border-radius:12px"
+                        src="https://open.spotify.com/embed/playlist/6grPfcp0lpQOUnTy8BRBmn?utm_source=generator" width="100%"
+                        height="652" frameBorder="0" allowfullscreen=""
+                        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
     </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Spotify Playlist Accordion Toggle
+        const spotifyWrapper = document.querySelector('.spotify-accordion-wrapper');
+        const spotifyBtn = document.getElementById('spotify-accordion-btn');
+        const spotifyBadge = document.querySelector('.spotify-status-badge');
+
+        if (spotifyBtn && spotifyWrapper) {
+            spotifyBtn.addEventListener('click', function () {
+                const isOpen = spotifyWrapper.classList.toggle('is-open');
+                spotifyBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+                if (spotifyBadge) {
+                    spotifyBadge.textContent = isOpen ? 'Click to Close' : 'Click to Open';
+                }
+            });
+        }
+
         let currentAudio = null;
 
         document.querySelectorAll('.card-img-top').forEach(function (img) {
@@ -2354,7 +2809,483 @@
     })();
 </script>
 
-<script src="js/constellations.js?v=seamless1"></script>
+<script src="js/constellations.js?v=zodiac11"></script>
+<!-- 3D TARDIS WebGL Implementation (Three.js UMD) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
+<script>
+    // 3D TARDIS Easter Egg with Doctor Who Theme on Click/Tap in Flight
+    (function () {
+        var canvas = document.getElementById('tardis-canvas');
+        if (!canvas) return;
+
+        // 1. Audio setup
+        var themeAudio = new Audio('songs/doctorwho.m4a?v=' + Date.now());
+        themeAudio.preload = 'auto';
+
+        // Floating Audio Pill Elements
+        var badge = document.getElementById('tardis-audio-badge');
+        var badgeToggle = document.getElementById('tardis-badge-toggle');
+        var badgeClose = document.getElementById('tardis-badge-close');
+
+        function setBadgePlayingState(isPlaying) {
+            if (!badgeToggle) return;
+            if (isPlaying) {
+                badgeToggle.classList.add('is-playing');
+                badgeToggle.classList.remove('is-paused');
+                badgeToggle.setAttribute('aria-label', 'Pause Doctor Who theme');
+            } else {
+                badgeToggle.classList.remove('is-playing');
+                badgeToggle.classList.add('is-paused');
+                badgeToggle.setAttribute('aria-label', 'Resume Doctor Who theme');
+            }
+        }
+
+        if (badgeToggle) {
+            badgeToggle.addEventListener('click', function (e) {
+                e.stopPropagation();
+                if (themeAudio.paused) {
+                    // Pause any playing album tracks
+                    document.querySelectorAll('audio').forEach(function (a) {
+                        if (a !== themeAudio) a.pause();
+                    });
+                    document.querySelectorAll('.play-pause-btn').forEach(function (btn) {
+                        btn.innerHTML = '&#9658;';
+                    });
+                    themeAudio.play().catch(function (err) {
+                        console.warn('Playback error:', err);
+                    });
+                } else {
+                    themeAudio.pause();
+                }
+            });
+        }
+
+        if (badgeClose) {
+            badgeClose.addEventListener('click', function (e) {
+                e.stopPropagation();
+                themeAudio.pause();
+                themeAudio.currentTime = 0;
+                if (badge) badge.classList.remove('visible');
+            });
+        }
+
+        themeAudio.addEventListener('play', function () {
+            if (badge) badge.classList.add('visible');
+            setBadgePlayingState(true);
+        });
+
+        themeAudio.addEventListener('pause', function () {
+            setBadgePlayingState(false);
+        });
+
+        themeAudio.addEventListener('ended', function () {
+            if (badge) badge.classList.remove('visible');
+            setBadgePlayingState(false);
+        });
+
+        // Automatically pause theme and dismiss badge if any album audio is played
+        document.addEventListener('play', function (e) {
+            if (e.target !== themeAudio && !themeAudio.paused) {
+                themeAudio.pause();
+                themeAudio.currentTime = 0;
+                if (badge) badge.classList.remove('visible');
+            }
+        }, true);
+
+        // Pause audio if tab is hidden
+        document.addEventListener('visibilitychange', function () {
+            if (document.hidden && !themeAudio.paused) {
+                themeAudio.pause();
+            }
+        });
+
+        // 2. Scene, Camera, Renderer
+        var scene = new THREE.Scene();
+        var width = window.innerWidth;
+        var height = window.innerHeight;
+        var camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+        camera.position.set(0, 0, 32);
+
+        var renderer = new THREE.WebGLRenderer({
+            canvas: canvas,
+            alpha: true,
+            antialias: true,
+            powerPreference: 'high-performance'
+        });
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+        renderer.setSize(width, height);
+        if (renderer.outputEncoding !== undefined) {
+            renderer.outputEncoding = THREE.sRGBEncoding;
+        }
+
+        // 3. Balanced Muted Lighting
+        var ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        var keyLight = new THREE.DirectionalLight(0xffffff, 0.85);
+        keyLight.position.set(12, 16, 20);
+        scene.add(keyLight);
+
+        var rimLight = new THREE.DirectionalLight(0x445566, 0.4);
+        rimLight.position.set(-15, -10, -12);
+        scene.add(rimLight);
+
+        // Top lantern beacon light
+        var beaconLight = new THREE.PointLight(0xfffaea, 0, 15);
+
+        // Glowing halo sprite texture
+        function createGlowTexture() {
+            var c = document.createElement('canvas');
+            c.width = 64;
+            c.height = 64;
+            var ctx = c.getContext('2d');
+            var g = ctx.createRadialGradient(32, 32, 0, 32, 32, 32);
+            g.addColorStop(0, 'rgba(255, 255, 255, 1)');
+            g.addColorStop(0.2, 'rgba(235, 250, 255, 0.95)');
+            g.addColorStop(0.5, 'rgba(180, 230, 255, 0.4)');
+            g.addColorStop(1, 'rgba(0, 0, 0, 0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, 64, 64);
+            return new THREE.CanvasTexture(c);
+        }
+
+        var glowSprite = new THREE.Sprite(new THREE.SpriteMaterial({
+            map: createGlowTexture(),
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        }));
+
+        // 4. Model container
+        var tardisGroup = new THREE.Group();
+        scene.add(tardisGroup);
+
+        var tardisMesh = null;
+        var lampMesh = null;
+        var hitBox = null;
+        var isFlying = false;
+        var flightStartTime = 0;
+        var flightDuration = 9000; // 9 seconds per flight
+        var animFrameId = null;
+        var hitFlashTime = 0;
+        var nextFlightTimer = null;
+
+        function scheduleNextFlight(delay) {
+            if (nextFlightTimer) clearTimeout(nextFlightTimer);
+            nextFlightTimer = setTimeout(triggerFlight, delay !== undefined ? delay : 12000);
+        }
+
+        var loader = new THREE.GLTFLoader();
+        loader.load(
+            'images/tardis.glb?v=' + Date.now(),
+            function (gltf) {
+                tardisMesh = gltf.scene;
+
+                // Color mappings in sRGB space
+                var pantoneBlue = new THREE.Color('#003865').convertSRGBToLinear();
+                var windowCyan = new THREE.Color('#e0f7fa').convertSRGBToLinear();
+                var darkTrim = new THREE.Color('#111111').convertSRGBToLinear();
+
+                tardisMesh.traverse(function (child) {
+                    if (child.isMesh && child.material) {
+                        child.material = child.material.clone();
+                        var matName = child.material.name || '';
+                        var meshName = child.name || '';
+
+                        // 1. TARDIS Main Body (Pantone 2955 C: #003865)
+                        if (
+                            matName === 'Material.002' ||
+                            matName === 'Material.003' ||
+                            matName === 'Material.004' ||
+                            meshName.indexOf('Cube_Material003') !== -1 ||
+                            meshName.indexOf('Cube_Material002') !== -1 ||
+                            meshName.indexOf('Cube_Material004') !== -1
+                        ) {
+                            child.material.color.copy(pantoneBlue);
+                            child.material.emissive.set(0x000000);
+                            child.material.roughness = 0.65;
+                            child.material.metalness = 0.0;
+                        }
+                        // 2. Windows & Sign Text (Soft cool cyan-white: #e0f7fa)
+                        else if (matName === 'Material.001' || meshName.indexOf('Material001') !== -1) {
+                            child.material.color.copy(windowCyan);
+                            child.material.emissive.set(0x000000);
+                            child.material.roughness = 0.45;
+                            child.material.metalness = 0.0;
+                        }
+                        // 3. Top Roof Lantern Lamp Glass Bulb (Cube_Material007_0)
+                        else if (meshName.indexOf('Cube_Material007') !== -1) {
+                            lampMesh = child;
+                            child.material = new THREE.MeshBasicMaterial({ color: 0xffffff });
+                        }
+                        // 4. Door Phone Sign Plate & Details
+                        else if (meshName.indexOf('Cube_Material005') !== -1) {
+                            child.material.color.copy(windowCyan);
+                            child.material.emissive.set(0x000000);
+                            child.material.roughness = 0.5;
+                        }
+                        // 5. Sign Backing & Door Phone Lettering
+                        else {
+                            child.material.color.copy(darkTrim);
+                            child.material.emissive.set(0x000000);
+                            child.material.roughness = 0.8;
+                            child.material.metalness = 0.0;
+                        }
+
+                        child.material.needsUpdate = true;
+                    }
+                });
+
+                // Center geometry pivot inside tardisGroup
+                var box = new THREE.Box3().setFromObject(tardisMesh);
+                var center = box.getCenter(new THREE.Vector3());
+                var size = box.getSize(new THREE.Vector3());
+
+                tardisMesh.position.set(-center.x, -center.y, -center.z);
+                tardisGroup.add(tardisMesh);
+
+                // Position beacon light & halo sprite directly at top lantern (y = 1.35)
+                beaconLight.position.set(0, 1.35, 0);
+                tardisGroup.add(beaconLight);
+
+                glowSprite.position.set(0, 1.35, 0);
+                glowSprite.scale.set(0.6, 0.6, 1);
+                tardisGroup.add(glowSprite);
+
+                // Generous invisible hit sphere for seamless click / mobile touch targeting
+                var hitBoxGeom = new THREE.SphereGeometry(2.4, 16, 16);
+                var hitBoxMat = new THREE.MeshBasicMaterial({
+                    transparent: true,
+                    opacity: 0,
+                    depthWrite: false
+                });
+                hitBox = new THREE.Mesh(hitBoxGeom, hitBoxMat);
+                tardisGroup.add(hitBox);
+
+                // Scale to match subtle ~80px profile
+                var maxDim = Math.max(size.x, size.y, size.z);
+                var targetScale = 3.8 / maxDim;
+                tardisGroup.scale.set(targetScale, targetScale, targetScale);
+
+                tardisGroup.visible = false;
+
+                // Launch initial flight immediately as page loads
+                triggerFlight();
+            },
+            undefined,
+            function (err) {
+                console.warn('TARDIS 3D model could not be loaded:', err);
+            }
+        );
+
+        function resize() {
+            if (!renderer || !camera) return;
+            var w = window.innerWidth;
+            var h = window.innerHeight;
+            camera.aspect = w / h;
+            camera.updateProjectionMatrix();
+            renderer.setSize(w, h);
+        }
+        window.addEventListener('resize', resize, { passive: true });
+
+        // 5. Interactive Raycaster for Clicks and Mobile Touch
+        var raycaster = new THREE.Raycaster();
+        var mouse = new THREE.Vector2();
+
+        function checkTardisHit(clientX, clientY) {
+            if (!isFlying || !tardisMesh || !tardisGroup.visible) return false;
+            var rect = canvas.getBoundingClientRect();
+            mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+            mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+            raycaster.setFromCamera(mouse, camera);
+
+            var targets = [tardisGroup];
+            if (hitBox) targets.push(hitBox);
+            var intersects = raycaster.intersectObjects(targets, true);
+            return intersects.length > 0;
+        }
+
+        function toggleDoctorWhoTheme() {
+            hitFlashTime = performance.now();
+            if (themeAudio.paused) {
+                // Pause all other audio on page
+                document.querySelectorAll('audio').forEach(function (a) {
+                    if (a !== themeAudio) a.pause();
+                });
+                document.querySelectorAll('.play-pause-btn').forEach(function (btn) {
+                    btn.innerHTML = '&#9658;';
+                });
+
+                themeAudio.currentTime = 0;
+                themeAudio.play().catch(function (err) {
+                    console.warn('Audio playback error:', err);
+                });
+            } else {
+                themeAudio.pause();
+            }
+        }
+
+        // Desktop and Mobile event listeners
+        window.addEventListener('click', function (e) {
+            if (checkTardisHit(e.clientX, e.clientY)) {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleDoctorWhoTheme();
+                return;
+            }
+
+            // Do not intercept clicks on links, buttons, inputs, or Knicks ticker
+            if (e.target.closest('a, button, input, select, textarea, .knicks-ticker')) {
+                return;
+            }
+
+            // Clicking "Recordkeeping" headline summons TARDIS manually if not flying
+            if (!isFlying && e.target && e.target.tagName === 'H1') {
+                triggerFlight();
+            }
+        }, true);
+
+        window.addEventListener('touchstart', function (e) {
+            if (e.touches && e.touches[0]) {
+                var touch = e.touches[0];
+                if (checkTardisHit(touch.clientX, touch.clientY)) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    toggleDoctorWhoTheme();
+                }
+            }
+        }, { capture: true, passive: false });
+
+        // Hover cursor styling for desktop
+        var isHovering = false;
+        window.addEventListener('mousemove', function (e) {
+            if (!isFlying || !tardisMesh || !tardisGroup.visible) {
+                if (isHovering) {
+                    document.body.style.cursor = '';
+                    isHovering = false;
+                }
+                return;
+            }
+            if (checkTardisHit(e.clientX, e.clientY)) {
+                if (!isHovering) {
+                    document.body.style.cursor = 'pointer';
+                    isHovering = true;
+                }
+            } else if (isHovering) {
+                document.body.style.cursor = '';
+                isHovering = false;
+            }
+        }, { passive: true });
+
+        // 6. Flight Animation Loop
+        var flightDirection = 1;
+
+        function triggerFlight() {
+            if (!tardisMesh || isFlying) return;
+            if (nextFlightTimer) clearTimeout(nextFlightTimer);
+            isFlying = true;
+            flightStartTime = performance.now();
+            tardisGroup.visible = true;
+            canvas.classList.add('active');
+
+            // Alternate flight direction: left-to-right, then right-to-left
+            flightDirection = -flightDirection;
+            var dir = flightDirection;
+
+            // Elevated flight path: flies across the upper sky
+            var yOffset = 2.4 + (Math.random() - 0.5) * 0.8;
+
+            function animate(now) {
+                var elapsed = now - flightStartTime;
+                var p = Math.min(elapsed / flightDuration, 1);
+
+                var vFov = (camera.fov * Math.PI) / 180;
+                var visH = 2 * Math.tan(vFov / 2) * camera.position.z;
+                var visW = visH * camera.aspect;
+
+                // 1. Position: Fly smoothly across upper celestial sky
+                var startX = dir > 0 ? -visW * 0.62 : visW * 0.62;
+                var endX = dir > 0 ? visW * 0.62 : -visW * 0.62;
+                tardisGroup.position.x = startX + (endX - startX) * p;
+
+                // Gentle vertical drift in the upper sky
+                tardisGroup.position.y = yOffset + Math.sin(p * Math.PI) * 0.9;
+
+                // 3D Depth: graceful background arc
+                tardisGroup.position.z = -7 + Math.sin(p * Math.PI) * 3;
+
+                // 2. Rotation: Smooth spin around vertical axis
+                tardisGroup.rotation.y = p * Math.PI * 16 * dir;
+
+                // Subtle flight bank
+                tardisGroup.rotation.z = -0.14 * dir + Math.sin(p * Math.PI * 3) * 0.03;
+                tardisGroup.rotation.x = Math.sin(p * Math.PI * 2) * 0.05;
+
+                // Materialize (phase in at start) and dematerialize (phase out at end)
+                var matAlpha = 1.0;
+                if (p < 0.12) {
+                    matAlpha = p / 0.12;
+                } else if (p > 0.88) {
+                    matAlpha = (1 - p) / 0.12;
+                }
+                canvas.style.opacity = (0.85 * matAlpha).toFixed(3);
+
+                // 3. Lantern strobe & Hit Reaction
+                var pulse = Math.pow(Math.max(0, Math.cos(tardisGroup.rotation.y)), 2.5);
+
+                // Celebratory flash and spin burst when tapped
+                var isHitBurst = (now - hitFlashTime) < 1400;
+                var hitFactor = isHitBurst ? (1 - (now - hitFlashTime) / 1400) : 0;
+                if (hitFactor > 0) {
+                    pulse = Math.max(pulse, hitFactor);
+                    tardisGroup.rotation.y += hitFactor * 0.08 * dir;
+                }
+
+                // Bulb pulse
+                if (lampMesh && lampMesh.material) {
+                    var b = 0.2 + pulse * 0.65 + hitFactor * 0.35;
+                    lampMesh.material.color.setRGB(b, b, b);
+                }
+
+                // Halo flare
+                if (glowSprite) {
+                    var s = 0.35 + pulse * 0.8 + hitFactor * 1.2;
+                    glowSprite.scale.set(s, s, 1);
+                    glowSprite.material.opacity = Math.min(1, pulse * 0.65 + hitFactor * 0.35);
+                }
+
+                // Roof light
+                if (beaconLight) {
+                    beaconLight.intensity = pulse * 1.8 + hitFactor * 4.0;
+                }
+
+                renderer.render(scene, camera);
+
+                if (p < 1) {
+                    animFrameId = requestAnimationFrame(animate);
+                } else {
+                    isFlying = false;
+                    tardisGroup.visible = false;
+                    canvas.classList.remove('active');
+                    canvas.style.opacity = '0';
+                    if (isHovering) {
+                        document.body.style.cursor = '';
+                        isHovering = false;
+                    }
+                    renderer.clear();
+
+                    // Rematerialize in the background every 12 seconds
+                    scheduleNextFlight(12000);
+                }
+            }
+
+            animFrameId = requestAnimationFrame(animate);
+        }
+
+        window.triggerTardis = triggerFlight;
+    })();
+</script>
 </body>
 
 </html>

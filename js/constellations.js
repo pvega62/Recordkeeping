@@ -88,6 +88,9 @@
 
   // Mobile Touch Support
   window.addEventListener('touchstart', function (e) {
+    if (e.target && (e.target.closest('.card') || e.target.closest('button, a, input, select, textarea, .play-pause-btn, .view-toggle-btn'))) {
+      return;
+    }
     if (e.touches && e.touches[0]) {
       pointer.targetX = e.touches[0].clientX;
       pointer.targetY = e.touches[0].clientY;
@@ -116,7 +119,7 @@
 
   // Click triggers supernova shockwave
   window.addEventListener('click', function (e) {
-    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('.play-pause-btn') || e.target.closest('.view-toggle-btn'))) {
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'BUTTON' || e.target.closest('a') || e.target.closest('.play-pause-btn') || e.target.closest('.view-toggle-btn') || e.target.closest('.card'))) {
       return;
     }
     triggerSupernova(e.clientX, e.clientY);

@@ -2809,7 +2809,7 @@
     })();
 </script>
 
-<script src="js/constellations.js?v=zodiac12"></script>
+<script src="js/constellations.js?v=zodiac13"></script>
 <!-- 3D TARDIS WebGL Implementation (Three.js UMD) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
@@ -3084,7 +3084,6 @@
             var w = window.innerWidth;
             var h = window.innerHeight;
             camera.aspect = w / h;
-            camera.updateProjectionMatrix();
             renderer.setSize(w, h);
         }
         window.addEventListener('resize', resize, { passive: true });
@@ -3093,8 +3092,30 @@
         var raycaster = new THREE.Raycaster();
         var mouse = new THREE.Vector2();
 
-        function checkTardisHit(clientX, clientY) {
+        // Failsafe: Detect if click/tap point or target is a card or foreground UI element
+        function isCardOrForegroundElement(element, clientX, clientY) {
+            if (element && element.closest && element.closest('.card, .cover-container, .card-body, .play-pause-btn, .audio-controls, .seekbar, .view-mode-toggle, .mobile-nav, .knicks-ticker, #tardis-audio-badge, a, button, input, select, textarea')) {
+                return true;
+            }
+            if (typeof clientX === 'number' && typeof clientY === 'number') {
+                try {
+                    var topElem = document.elementFromPoint(clientX, clientY);
+                    if (topElem && topElem.closest && topElem.closest('.card, .cover-container, .card-body, .play-pause-btn, .audio-controls, .seekbar, .view-mode-toggle, .mobile-nav, .knicks-ticker, #tardis-audio-badge, a, button, input, select, textarea')) {
+                        return true;
+                    }
+                } catch (err) {}
+            }
+            return false;
+        }
+
+        function checkTardisHit(clientX, clientY, targetElement) {
             if (!isFlying || !tardisMesh || !tardisGroup.visible) return false;
+
+            // Failsafe: if TARDIS is behind a card, tapping the card interacts with the card itself
+            if (isCardOrForegroundElement(targetElement, clientX, clientY)) {
+                return false;
+            }
+
             var rect = canvas.getBoundingClientRect();
             mouse.x = ((clientX - rect.left) / rect.width) * 2 - 1;
             mouse.y = -((clientY - rect.top) / rect.height) * 2 + 1;
@@ -3128,7 +3149,12 @@
 
         // Desktop and Mobile event listeners
         window.addEventListener('click', function (e) {
-            if (checkTardisHit(e.clientX, e.clientY)) {
+            // Failsafe: if tapping a card or interactive element, prioritize the card
+            if (isCardOrForegroundElement(e.target, e.clientX, e.clientY)) {
+                return;
+            }
+
+            if (checkTardisHit(e.clientX, e.clientY, e.target)) {
                 e.preventDefault();
                 e.stopPropagation();
                 toggleDoctorWhoTheme();
@@ -3149,7 +3175,12 @@
         window.addEventListener('touchstart', function (e) {
             if (e.touches && e.touches[0]) {
                 var touch = e.touches[0];
-                if (checkTardisHit(touch.clientX, touch.clientY)) {
+                // Failsafe: if tapping a card or interactive element, prioritize the card
+                if (isCardOrForegroundElement(e.target, touch.clientX, touch.clientY)) {
+                    return;
+                }
+
+                if (checkTardisHit(touch.clientX, touch.clientY, e.target)) {
                     e.preventDefault();
                     e.stopPropagation();
                     toggleDoctorWhoTheme();
@@ -3167,7 +3198,7 @@
                 }
                 return;
             }
-            if (checkTardisHit(e.clientX, e.clientY)) {
+            if (checkTardisHit(e.clientX, e.clientY, e.target)) {
                 if (!isHovering) {
                     document.body.style.cursor = 'pointer';
                     isHovering = true;

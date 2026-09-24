@@ -1,11 +1,13 @@
 /**
  * Constellation & Celestial Engine for Recordkeeping
- * Featuring 6 distinctly colored Constellations (zero distracting text labels):
+ * Featuring 8 distinctly colored Constellations (zero distracting text labels):
  * - Lyra (✦ Radiant Topaz Gold - Featuring Vega)
+ * - Pisces (♓ Electric Cyan - Featuring Alrescha)
+ * - Gemini (♊ Electric Diamond Cyan - Featuring Castor & Pollux)
  * - Aries (♈ Vivid Crimson Rose)
+ * - Taurus (♉ Warm Amber Gold - Featuring Aldebaran)
  * - Libra (♎ Radiant Emerald Jade)
  * - Scorpio (♏ Blazing Amber Flame - Featuring Antares)
- * - Gemini (♊ Electric Diamond Cyan - Featuring Castor & Pollux)
  * - Sagittarius (♐ Cosmic Amethyst Magenta - The Teapot)
  * Plus ambient star field, diffraction flares, shooting stars, and touch/mouse interaction.
  */
@@ -527,6 +529,45 @@
         [1, 3],
         [3, 4], [4, 5], [5, 6], [6, 7], [7, 8], [8, 9], [9, 10],
         [10, 11], [11, 12]
+      ]
+    },
+
+    // -------------------------------------------------------------
+    // 8. SAGITTARIUS (The Archer / The Teapot) - Lower Sky Above Cards
+    // -------------------------------------------------------------
+    {
+      id: 'sagittarius',
+      color: { r: 224, g: 86, b: 253, hex: '#E056FD' },
+      desktopScale: 0.78,
+      mobileScale: 0.46,
+      scale: isMobile ? 0.46 : 0.78,
+      x: isMobile ? width * 0.50 : width * 0.50,
+      y: isMobile ? 285 : 315,
+      vx: 0.015,
+      vy: -0.01,
+      angle: -0.08,
+      vAngle: 0.0002,
+      minXRatio: 0.35,
+      maxXRatio: 0.65,
+      desktopMinY: 280,
+      desktopMaxY: 360,
+      mobileMinY: 260,
+      mobileMaxY: 325,
+      nodes: [
+        { id: 'alnasl',         x: -62, y: -2,  r: 3.6, name: 'Alnasl' },
+        { id: 'kaus_media',     x: -15, y: -18, r: 3.6, name: 'Kaus Media' },
+        { id: 'kaus_australis', x: -10, y: 36,  r: 5.4, name: 'Kaus Australis', isMajor: true },
+        { id: 'kaus_borealis',  x: 8,   y: -52, r: 3.8, name: 'Kaus Borealis', isMajor: true },
+        { id: 'phi_sgr',        x: 30,  y: -14, r: 3.4, name: 'φ Sagittarii' },
+        { id: 'nunki',          x: 68,  y: -32, r: 5.0, name: 'Nunki', isMajor: true },
+        { id: 'ascella',        x: 72,  y: 18,  r: 4.2, name: 'Ascella', isMajor: true },
+        { id: 'tau_sgr',        x: 35,  y: 32,  r: 3.2, name: 'τ Sagittarii' }
+      ],
+      edges: [
+        [0, 1], [0, 2],
+        [1, 2], [2, 7], [7, 4], [4, 1],
+        [1, 3], [3, 4],
+        [4, 5], [5, 6], [6, 7]
       ]
     }
   ];

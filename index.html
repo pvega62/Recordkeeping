@@ -766,7 +766,14 @@
         }
 
         /* Mobile full-screen swipeable showcase carousel for Recordkeeping cards */
+        .carousel-clone {
+            display: none !important;
+        }
+
         @media (max-width: 767.98px) {
+            .cards-carousel > .carousel-clone {
+                display: block !important;
+            }
             .container.mt-4 {
                 margin-top: 1.75rem !important;
             }
@@ -2718,15 +2725,21 @@
 </script>
 
 <script>
-    // Smooth drag-to-scroll helper for album carousel
+    // Smooth drag-to-scroll helper & Mobile Infinite Looping Carousel for album cards
     (function () {
         document.addEventListener('DOMContentLoaded', function () {
             var albumRow = document.getElementById('album-cards-row') || document.querySelector('.cards-carousel');
             if (!albumRow) return;
+
             var isDown = false;
+            var isTouchActive = false;
             var startX = 0;
             var scrollLeft = 0;
+            var checkTimeout = null;
+            var leftClones = [];
+            var rightClones = [];
 
+            // Mouse Drag-to-Scroll (Desktop / Pointer)
             albumRow.addEventListener('mousedown', function (e) {
                 if (!albumRow.classList.contains('cards-carousel')) return;
                 if (e.target.closest('button') || e.target.closest('a') || e.target.closest('input')) return;
@@ -2742,6 +2755,7 @@
                     isDown = false;
                     albumRow.style.cursor = '';
                     albumRow.style.userSelect = '';
+                    scheduleCheck();
                 }
             });
 
@@ -2752,6 +2766,189 @@
                 var walk = (x - startX) * 1.4;
                 albumRow.scrollLeft = scrollLeft - walk;
             });
+
+            // Infinite Looping Setup
+            var originalCards = Array.from(albumRow.children).filter(function (el) {
+                return el.classList.contains('col-md-3') && !el.classList.contains('carousel-clone');
+            });
+            if (originalCards.length < 2) return;
+
+            function configureClone(clone, originalCard) {
+                clone.classList.add('carousel-clone');
+                clone.setAttribute('aria-hidden', 'true');
+                clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+
+                // Remove duplicate audio element to avoid duplicate audio playback
+                var cloneAudio = clone.querySelector('.audio-player');
+                if (cloneAudio) cloneAudio.remove();
+
+                // Wire clone play button to original card's play button and audio
+                var cloneBtn = clone.querySelector('.play-pause-btn');
+                var origBtn = originalCard.querySelector('.play-pause-btn');
+                var origAudio = originalCard.querySelector('.audio-player');
+
+                if (cloneBtn && origBtn) {
+                    cloneBtn.setAttribute('tabindex', '-1');
+                    cloneBtn.addEventListener('click', function (e) {
+                        e.stopPropagation();
+                        origBtn.click();
+                    });
+                }
+
+                if (origAudio && cloneBtn) {
+                    origAudio.addEventListener('play', function () {
+                        cloneBtn.innerHTML = '&#10073;&#10073;';
+                    });
+                    origAudio.addEventListener('pause', function () {
+                        cloneBtn.innerHTML = '&#9658;';
+                    });
+                    if (!origAudio.paused) {
+                        cloneBtn.innerHTML = '&#10073;&#10073;';
+                    }
+                }
+
+                // Sync seekbar if present
+                var cloneSeekbar = clone.querySelector('.seekbar');
+                var origSeekbar = originalCard.querySelector('.seekbar');
+                if (cloneSeekbar && origAudio) {
+                    origAudio.addEventListener('timeupdate', function () {
+                        cloneSeekbar.value = Math.floor(origAudio.currentTime);
+                    });
+                    origAudio.addEventListener('loadedmetadata', function () {
+                        cloneSeekbar.max = Math.floor(origAudio.duration);
+                    });
+                    cloneSeekbar.addEventListener('input', function (e) {
+                        e.stopPropagation();
+                        origAudio.currentTime = cloneSeekbar.value;
+                        if (origSeekbar) origSeekbar.value = cloneSeekbar.value;
+                    });
+                }
+            }
+
+            // Create left clones (copies of all original cards to prepend)
+            originalCards.forEach(function (card) {
+                var clone = card.cloneNode(true);
+                configureClone(clone, card);
+                albumRow.insertBefore(clone, originalCards[0]);
+                leftClones.push(clone);
+            });
+
+            // Create right clones (copies of all original cards to append)
+            originalCards.forEach(function (card) {
+                var clone = card.cloneNode(true);
+                configureClone(clone, card);
+                albumRow.appendChild(clone);
+                rightClones.push(clone);
+            });
+
+            function getShiftDistance() {
+                if (!rightClones[0] || !originalCards[0]) return 0;
+                return rightClones[0].offsetLeft - originalCards[0].offsetLeft;
+            }
+
+            function centerOnCard(index) {
+                var card = originalCards[index] || originalCards[0];
+                var targetLeft = card.offsetLeft - (albumRow.clientWidth - card.offsetWidth) / 2;
+                albumRow.scrollLeft = targetLeft;
+            }
+
+            function checkLoopBoundary() {
+                if (window.innerWidth >= 768) return;
+                if (!albumRow.classList.contains('cards-carousel')) return;
+                if (isTouchActive || isDown) return;
+
+                var shift = getShiftDistance();
+                if (shift <= 0) return;
+
+                var firstCardCenter = originalCards[0].offsetLeft - (albumRow.clientWidth - originalCards[0].offsetWidth) / 2;
+                var lastCard = originalCards[originalCards.length - 1];
+                var lastCardCenter = lastCard.offsetLeft - (albumRow.clientWidth - lastCard.offsetWidth) / 2;
+                var threshold = (originalCards[0].offsetWidth || 300) * 0.4;
+                var currentScroll = albumRow.scrollLeft;
+
+                // Swiped right into right clones past the last original card
+                if (currentScroll > lastCardCenter + threshold) {
+                    albumRow.style.scrollSnapType = 'none';
+                    albumRow.style.scrollBehavior = 'auto';
+                    albumRow.scrollLeft = currentScroll - shift;
+                    void albumRow.offsetWidth; // Force synchronous reflow
+                    albumRow.style.scrollSnapType = '';
+                    albumRow.style.scrollBehavior = '';
+                }
+                // Swiped left into left clones before the first original card
+                else if (currentScroll < firstCardCenter - threshold) {
+                    albumRow.style.scrollSnapType = 'none';
+                    albumRow.style.scrollBehavior = 'auto';
+                    albumRow.style.scrollLeft = currentScroll + shift;
+                    void albumRow.offsetWidth; // Force synchronous reflow
+                    albumRow.style.scrollSnapType = '';
+                    albumRow.style.scrollBehavior = '';
+                }
+            }
+
+            function scheduleCheck() {
+                if (checkTimeout) clearTimeout(checkTimeout);
+                checkTimeout = setTimeout(checkLoopBoundary, 80);
+            }
+
+            function initPosition() {
+                if (window.innerWidth < 768 && albumRow.classList.contains('cards-carousel')) {
+                    var firstCardCenter = originalCards[0].offsetLeft - (albumRow.clientWidth - originalCards[0].offsetWidth) / 2;
+                    var lastCard = originalCards[originalCards.length - 1];
+                    var lastCardCenter = lastCard.offsetLeft - (albumRow.clientWidth - lastCard.offsetWidth) / 2;
+
+                    // Only center if uninitialized (at left clone edge or off-screen)
+                    if (albumRow.scrollLeft < firstCardCenter - 50 || albumRow.scrollLeft > lastCardCenter + 50) {
+                        centerOnCard(0);
+                    }
+                } else if (window.innerWidth >= 768) {
+                    albumRow.scrollLeft = 0;
+                }
+            }
+
+            requestAnimationFrame(initPosition);
+            setTimeout(initPosition, 100);
+            window.addEventListener('load', initPosition);
+
+            albumRow.addEventListener('touchstart', function () {
+                isTouchActive = true;
+            }, { passive: true });
+
+            albumRow.addEventListener('touchend', function () {
+                isTouchActive = false;
+                scheduleCheck();
+            }, { passive: true });
+
+            albumRow.addEventListener('touchcancel', function () {
+                isTouchActive = false;
+                scheduleCheck();
+            }, { passive: true });
+
+            if ('onscrollend' in window) {
+                albumRow.addEventListener('scrollend', function () {
+                    if (!isTouchActive && !isDown) {
+                        checkLoopBoundary();
+                    }
+                }, { passive: true });
+            }
+
+            albumRow.addEventListener('scroll', function () {
+                scheduleCheck();
+            }, { passive: true });
+
+            var resizeTimeout;
+            window.addEventListener('resize', function () {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function () {
+                    if (window.innerWidth >= 768) {
+                        albumRow.scrollLeft = 0;
+                    } else {
+                        checkLoopBoundary();
+                    }
+                }, 150);
+            }, { passive: true });
+
+            window.__recenterRecordkeepingCarousel = initPosition;
         });
     })();
 </script>
@@ -2785,6 +2982,9 @@
                     btnScroll.classList.remove('active');
                     btnScroll.setAttribute('aria-pressed', 'false');
                     if (hint) hint.style.display = 'block';
+                    if (window.__recenterRecordkeepingCarousel) {
+                        window.__recenterRecordkeepingCarousel();
+                    }
                 }
                 try {
                     localStorage.setItem(STORAGE_KEY, mode);

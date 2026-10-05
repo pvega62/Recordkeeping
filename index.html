@@ -26,6 +26,7 @@
     <meta name="twitter:image" content="https://pvega62.github.io/Recordkeeping/img/recordkeeping-logo.png">
     <meta name="twitter:image:alt" content="Recordkeeping">
 
+    <link rel="canonical" href="https://pvega62.github.io/Recordkeeping/">
     <link rel="icon" type="image/svg+xml" href="img/favicon1.svg">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
@@ -922,54 +923,365 @@
             }
         }
 
-        /* Mobile View Mode Prominent Icon Toggle */
-        .view-mode-toggle-wrapper {
+        /* Recordkeeping Controls: Streamlined Sort Dropdown & View Mode */
+        .recordkeeping-controls-wrapper {
             display: flex;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
-            margin-top: 0.5rem;
-            margin-bottom: 0.85rem;
+            width: 100%;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            z-index: 100;
+        }
+
+        .controls-action-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        /* Integrated Split Dropdown & Sort Controls */
+        .album-sort-split-group {
+            display: inline-flex;
+            align-items: stretch;
+            position: relative;
+            background: rgba(0, 45, 85, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(135, 206, 250, 0.45);
+            border-radius: 24px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 107, 182, 0.22);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            height: 38px;
+        }
+
+        .album-sort-split-group:hover,
+        .album-sort-split-group:focus-within,
+        .album-sort-split-group.show {
+            border-color: rgba(135, 206, 250, 0.85);
+            background: rgba(0, 58, 110, 0.9);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.42), 0 0 18px rgba(0, 107, 182, 0.45);
+        }
+
+        .album-sort-btn {
+            background: transparent !important;
+            border: none !important;
+            border-radius: 22px 0 0 22px !important;
+            color: #e0f2fe !important;
+            padding: 0 12px 0 15px !important;
+            font-size: 0.86rem !important;
+            font-weight: 600 !important;
+            line-height: 1 !important;
+            height: 100% !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            gap: 7px !important;
+            box-shadow: none !important;
+            transition: all 0.18s ease !important;
+            cursor: pointer !important;
+            user-select: none !important;
+        }
+
+        .album-sort-btn:hover,
+        .album-sort-btn:focus {
+            background: rgba(255, 255, 255, 0.08) !important;
+            color: #ffffff !important;
+        }
+
+        .sort-icon-lead {
+            width: 16px;
+            height: 16px;
+            stroke: #F58426;
+            stroke-width: 2.2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .sort-lead-label {
+            color: #93c5fd;
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 700;
+        }
+
+        #sort-current-display {
+            color: #ffffff;
+            font-weight: 600;
+        }
+
+        .album-sort-btn.dropdown-toggle::after {
+            vertical-align: middle;
+            margin-left: 5px;
+            border-top-color: #93c5fd;
+            transition: transform 0.2s ease;
+        }
+
+        .album-sort-btn[aria-expanded="true"]::after {
+            transform: rotate(180deg);
+        }
+
+        /* Integrated Quick Direction Toggle Button */
+        .sort-dir-quick-btn {
+            background: transparent !important;
+            border: none !important;
+            border-left: 1.5px solid rgba(135, 206, 250, 0.35) !important;
+            border-radius: 0 22px 22px 0 !important;
+            width: 38px !important;
+            height: 100% !important;
+            padding: 0 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            cursor: pointer !important;
+            color: #F58426 !important;
+            box-shadow: none !important;
+            transition: all 0.2s ease !important;
+            user-select: none !important;
+        }
+
+        .sort-dir-quick-btn:hover,
+        .sort-dir-quick-btn:focus {
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #ffb070 !important;
+        }
+
+        .sort-dir-quick-btn .sort-dir-icon {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .sort-dir-quick-btn[data-dir="desc"] .sort-dir-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Album Count Badge */
+        .album-count-badge {
+            background: rgba(245, 132, 38, 0.16);
+            border: 1.5px solid rgba(245, 132, 38, 0.55);
+            color: #ffd8a8;
+            padding: 0 14px;
+            height: 38px;
+            border-radius: 24px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            user-select: none;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        /* Dropdown Menu Aesthetics */
+        .album-sort-menu {
+            background: rgba(0, 26, 52, 0.96) !important;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(135, 206, 250, 0.45) !important;
+            border-radius: 16px !important;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.65), 0 0 24px rgba(0, 107, 182, 0.35) !important;
+            padding: 6px !important;
+            min-width: 230px !important;
+            z-index: 1055 !important;
+        }
+
+        .sort-menu-header {
+            color: #F58426 !important;
+            font-size: 0.72rem !important;
+            font-weight: 700 !important;
+            letter-spacing: 0.8px !important;
+            padding: 6px 12px 3px !important;
+            text-transform: uppercase !important;
+            user-select: none;
+        }
+
+        .sort-menu-divider {
+            border-color: rgba(135, 206, 250, 0.2) !important;
+            margin: 6px 4px !important;
+        }
+
+        /* Segmented Button Groups Inside Dropdown Menu */
+        .sort-menu-btn-group {
+            display: flex;
+            background: rgba(0, 15, 30, 0.65);
+            border: 1px solid rgba(135, 206, 250, 0.3);
+            border-radius: 10px;
+            padding: 3px;
+            gap: 4px;
+        }
+
+        .sort-menu-toggle-btn {
+            flex: 1;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 6px !important;
+            padding: 6px 8px !important;
+            border-radius: 8px !important;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
+            color: #bae6fd !important;
+            background: transparent !important;
+            border: none !important;
+            box-shadow: none !important;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            cursor: pointer !important;
+            user-select: none !important;
+            white-space: nowrap !important;
+        }
+
+        .sort-menu-toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.12) !important;
+            color: #ffffff !important;
+        }
+
+        .sort-menu-toggle-btn.active {
+            background: linear-gradient(135deg, #006BB6 0%, #0088e8 100%) !important;
+            color: #ffffff !important;
+            box-shadow: 0 2px 8px rgba(0, 107, 182, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.35) !important;
+        }
+
+        .sort-menu-toggle-btn .menu-btn-icon {
+            width: 14px;
+            height: 14px;
+            stroke-width: 2.2;
+            flex-shrink: 0;
+            transition: transform 0.2s ease;
+        }
+
+        .sort-menu-toggle-btn.active .menu-btn-icon {
+            stroke: #ffffff;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.6));
+        }
+
+        .sort-menu-item {
+            display: flex !important;
+            align-items: center !important;
+            justify-content: space-between !important;
+            padding: 8px 12px !important;
+            border-radius: 10px !important;
+            color: #e0f2fe !important;
+            font-size: 0.85rem !important;
+            font-weight: 500 !important;
+            background: transparent !important;
+            border: none !important;
+            width: 100% !important;
+            transition: all 0.18s ease !important;
+            cursor: pointer !important;
+            user-select: none !important;
+        }
+
+        .sort-menu-item:hover,
+        .sort-menu-item:focus {
+            background: rgba(255, 255, 255, 0.14) !important;
+            color: #ffffff !important;
+        }
+
+        .sort-menu-item.active {
+            background: linear-gradient(135deg, #006BB6 0%, #0088e8 100%) !important;
+            color: #ffffff !important;
+            font-weight: 600 !important;
+            box-shadow: 0 2px 10px rgba(0, 107, 182, 0.5) !important;
+        }
+
+        .item-icon {
+            width: 15px;
+            height: 15px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .item-check {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: #ffffff;
+            stroke-width: 2.4;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            display: none;
+            flex-shrink: 0;
+            filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.6));
+        }
+
+        .sort-menu-item.active .item-check {
+            display: inline-block;
+        }
+
+        /* Companion Mobile Carousel Toggle */
+        .view-mode-toggle-wrapper {
+            margin-top: 10px;
+            margin-bottom: 6px;
         }
 
         .view-mode-toggle {
             display: inline-flex;
             align-items: center;
-            background: rgba(0, 45, 85, 0.78);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
+            background: rgba(0, 45, 85, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1.5px solid rgba(135, 206, 250, 0.45);
             border-radius: 24px;
             padding: 3px;
             gap: 4px;
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), 0 0 12px rgba(0, 107, 182, 0.3);
-            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            height: 38px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 107, 182, 0.22);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .view-mode-toggle:hover {
-            border-color: rgba(135, 206, 250, 0.75);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45), 0 0 16px rgba(0, 107, 182, 0.45);
+            border-color: rgba(135, 206, 250, 0.85);
+            background: rgba(0, 58, 110, 0.9);
+            box-shadow: 0 6px 22px rgba(0, 0, 0, 0.42), 0 0 18px rgba(0, 107, 182, 0.45);
         }
 
         .view-toggle-btn {
             border: none !important;
             background: transparent !important;
-            color: rgba(224, 242, 254, 0.75) !important;
-            padding: 5px !important;
-            border-radius: 20px !important;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
+            color: rgba(224, 242, 254, 0.8) !important;
+            padding: 0 14px !important;
+            height: 100% !important;
+            border-radius: 18px !important;
+            font-size: 0.78rem !important;
+            font-weight: 600 !important;
             display: inline-flex !important;
             align-items: center !important;
-            justify-content: center !important;
+            gap: 6px !important;
             cursor: pointer !important;
-            width: 36px !important;
-            height: 32px !important;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1) !important;
             box-shadow: none !important;
+            user-select: none !important;
         }
 
         .view-toggle-btn svg {
-            width: 18px;
-            height: 18px;
+            width: 15px;
+            height: 15px;
             stroke-width: 2.2;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+            transition: transform 0.2s ease;
+        }
+
+        .view-toggle-btn:not(.active):hover,
+        .view-toggle-btn:not(.active):active {
+            background: rgba(255, 255, 255, 0.15) !important;
+            color: #ffffff !important;
         }
 
         .view-toggle-btn.active {
@@ -981,14 +1293,62 @@
         .view-toggle-btn.active svg {
             stroke: #ffffff;
             filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
-            transform: scale(1.05);
         }
 
-        .view-toggle-btn:not(.active):hover,
-        .view-toggle-btn:not(.active):active {
-            background: rgba(255, 255, 255, 0.15) !important;
-            color: #ffffff !important;
-            transform: scale(1.05);
+        /* Card sorting animation */
+        @keyframes cardSortFadeIn {
+            0% {
+                opacity: 0.5;
+                transform: translateY(6px) scale(0.99);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .card-sorting-anim {
+            animation: cardSortFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .card-sorting-anim {
+                animation: none !important;
+            }
+        }
+
+        /* Mobile controls responsive refinement */
+        @media (max-width: 767.98px) {
+            .recordkeeping-controls-wrapper {
+                margin-top: 0.5rem;
+                margin-bottom: 1.1rem;
+            }
+
+            .controls-action-row {
+                gap: 6px;
+            }
+
+            .album-sort-btn {
+                padding: 6px 13px !important;
+                font-size: 0.82rem !important;
+                gap: 6px !important;
+            }
+
+            .sort-dir-quick-btn {
+                width: 34px !important;
+                height: 34px !important;
+            }
+
+            .album-count-badge {
+                padding: 5px 11px;
+                font-size: 0.78rem;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .sort-lead-label {
+                display: none;
+            }
         }
 
         /* Mobile vertical scroll mode (original layout) */
@@ -1402,23 +1762,166 @@
         <p class="text-center"><i>It's easier than having to remember.</i></p>
         <p class="text-center">(This is a living document. It'll be updated periodically as new records are added to my collection.)</p>
 
-        <!-- Mobile View Mode Toggle (Inconspicuous, Icon-Only) -->
-        <div class="view-mode-toggle-wrapper d-flex d-md-none justify-content-center mb-2">
-            <div class="view-mode-toggle" role="group" aria-label="Album browsing mode">
-                <button type="button" class="btn view-toggle-btn active" id="btn-mode-carousel" data-mode="carousel" aria-pressed="true" aria-label="Swipe Carousel View" title="Swipe Carousel">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="7" y="4" width="10" height="16" rx="2"></rect>
-                        <path d="M3 8v8"></path>
-                        <path d="M21 8v8"></path>
-                    </svg>
-                </button>
-                <button type="button" class="btn view-toggle-btn" id="btn-mode-scroll" data-mode="scroll" aria-pressed="false" aria-label="Vertical Scroll View" title="Vertical Scroll">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <rect x="4" y="3" width="16" height="7" rx="2"></rect>
-                        <rect x="4" y="14" width="16" height="7" rx="2"></rect>
-                    </svg>
-                </button>
+        <!-- Album Sorting & View Controls -->
+        <div class="recordkeeping-controls-wrapper">
+            <!-- Streamlined Sorting & Count Row -->
+            <div class="controls-action-row">
+                <!-- Dropdown with Integrated Split Button Design -->
+                <div class="dropdown album-sort-split-group">
+                    <button class="btn album-sort-btn dropdown-toggle" type="button" id="albumSortDropdownBtn" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                        <svg class="sort-icon-lead" viewBox="0 0 24 24" aria-hidden="true">
+                            <line x1="4" y1="6" x2="20" y2="6"></line>
+                            <line x1="4" y1="12" x2="14" y2="12"></line>
+                            <line x1="4" y1="18" x2="8" y2="18"></line>
+                        </svg>
+                        <span class="sort-lead-label">Sort:</span>
+                        <span id="sort-current-display">Release Date</span>
+                    </button>
+
+                    <!-- Integrated Quick Order Toggle Button -->
+                    <button type="button" class="btn sort-dir-quick-btn" id="sort-dir-toggle" data-dir="asc" aria-label="Sort direction: Oldest release (click to reverse)" title="Toggle sort direction">
+                        <svg class="sort-dir-icon" viewBox="0 0 24 24" aria-hidden="true">
+                            <line x1="12" y1="19" x2="12" y2="5"></line>
+                            <polyline points="5 12 12 5 19 12"></polyline>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown Menu with Integrated View Mode & Order Buttons -->
+                    <ul class="dropdown-menu dropdown-menu-dark album-sort-menu" aria-labelledby="albumSortDropdownBtn">
+                        <!-- Integrated View Mode Buttons -->
+                        <li class="dropdown-header sort-menu-header">VIEW MODE</li>
+                        <li class="px-2 pb-1">
+                            <div class="sort-menu-btn-group" role="group" aria-label="View mode">
+                                <button type="button" class="btn sort-menu-toggle-btn view-mode-btn active" id="menu-btn-mode-carousel" data-mode="carousel" aria-pressed="true" title="Swipe Carousel">
+                                    <svg class="menu-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="7" y="4" width="10" height="16" rx="2"></rect>
+                                        <path d="M3 8v8"></path>
+                                        <path d="M21 8v8"></path>
+                                    </svg>
+                                    <span>Carousel</span>
+                                </button>
+                                <button type="button" class="btn sort-menu-toggle-btn view-mode-btn" id="menu-btn-mode-scroll" data-mode="scroll" aria-pressed="false" title="Vertical Scroll">
+                                    <svg class="menu-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <rect x="4" y="3" width="16" height="7" rx="2"></rect>
+                                        <rect x="4" y="14" width="16" height="7" rx="2"></rect>
+                                    </svg>
+                                    <span>Grid</span>
+                                </button>
+                            </div>
+                        </li>
+                        <li><hr class="dropdown-divider sort-menu-divider"></li>
+
+                        <!-- Sort By Criteria -->
+                        <li class="dropdown-header sort-menu-header">SORT BY</li>
+                        <li>
+                            <button type="button" class="dropdown-item sort-menu-item active" data-sort="release" role="menuitemradio" aria-checked="true">
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <polyline points="12 6 12 12 16 14"></polyline>
+                                    </svg>
+                                    <span>Release Date</span>
+                                </span>
+                                <svg class="item-check" viewBox="0 0 24 24" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item sort-menu-item" data-sort="purchase" role="menuitemradio" aria-checked="false">
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                        <line x1="16" y1="2" x2="16" y2="6"></line>
+                                        <line x1="8" y1="2" x2="8" y2="6"></line>
+                                        <line x1="3" y1="10" x2="21" y2="10"></line>
+                                    </svg>
+                                    <span>Purchase Date</span>
+                                </span>
+                                <svg class="item-check" viewBox="0 0 24 24" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item sort-menu-item" data-sort="artist" role="menuitemradio" aria-checked="false">
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <span>Artist</span>
+                                </span>
+                                <svg class="item-check" viewBox="0 0 24 24" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </li>
+                        <li>
+                            <button type="button" class="dropdown-item sort-menu-item" data-sort="album" role="menuitemradio" aria-checked="false">
+                                <span class="d-inline-flex align-items-center gap-2">
+                                    <svg class="item-icon" viewBox="0 0 24 24" aria-hidden="true">
+                                        <circle cx="12" cy="12" r="10"></circle>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <span>Album Title</span>
+                                </span>
+                                <svg class="item-check" viewBox="0 0 24 24" aria-hidden="true">
+                                    <polyline points="20 6 9 17 4 12"></polyline>
+                                </svg>
+                            </button>
+                        </li>
+
+                        <!-- Integrated Order Segmented Buttons -->
+                        <li><hr class="dropdown-divider sort-menu-divider"></li>
+                        <li class="dropdown-header sort-menu-header">ORDER</li>
+                        <li class="px-2 pt-1 pb-1">
+                            <div class="sort-menu-btn-group" role="group" aria-label="Sort order">
+                                <button type="button" class="btn sort-menu-toggle-btn sort-order-item active" id="menu-order-asc" data-dir="1" role="menuitemradio" aria-checked="true" aria-pressed="true">
+                                    <svg class="menu-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <line x1="12" y1="19" x2="12" y2="5"></line>
+                                        <polyline points="5 12 12 5 19 12"></polyline>
+                                    </svg>
+                                    <span id="sort-order-asc-text">Oldest</span>
+                                </button>
+                                <button type="button" class="btn sort-menu-toggle-btn sort-order-item" id="menu-order-desc" data-dir="-1" role="menuitemradio" aria-checked="false" aria-pressed="false">
+                                    <svg class="menu-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                                        <polyline points="19 12 12 19 5 12"></polyline>
+                                    </svg>
+                                    <span id="sort-order-desc-text">Newest</span>
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Total Album Badge (Automatically synced to album cards) -->
+                <span class="album-count-badge" id="album-count-badge" aria-label="Total records in collection"><span id="album-count-num">49</span> <span id="album-count-text">Albums</span></span> <span id="album-count-text">Albums</span></span>
             </div>
+
+            <!-- Standalone Mobile View Mode Toggle (Synchronized with dropdown buttons) -->
+            <div class="view-mode-toggle-wrapper d-flex d-md-none justify-content-center">
+                <div class="view-mode-toggle" role="group" aria-label="Mobile album layout view">
+                    <button type="button" class="btn view-toggle-btn active" id="btn-mode-carousel" data-mode="carousel" aria-pressed="true" aria-label="Swipe Carousel View" title="Swipe Carousel">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="7" y="4" width="10" height="16" rx="2"></rect>
+                            <path d="M3 8v8"></path>
+                            <path d="M21 8v8"></path>
+                        </svg>
+                        <span class="view-mode-label">Carousel</span>
+                    </button>
+                    <button type="button" class="btn view-toggle-btn" id="btn-mode-scroll" data-mode="scroll" aria-pressed="false" aria-label="Vertical Scroll View" title="Vertical Scroll">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <rect x="4" y="3" width="16" height="7" rx="2"></rect>
+                            <rect x="4" y="14" width="16" height="7" rx="2"></rect>
+                        </svg>
+                        <span class="view-mode-label">Grid</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="sort-live-region" class="visually-hidden" aria-live="polite" role="status"></div>
         </div>
         <div id="album-cards-row" class="row justify-content-center cards-carousel">
             <div class="col-md-3 mb-4">
@@ -2825,31 +3328,53 @@
                 }
             }
 
-            // Create left clones (copies of all original cards to prepend)
-            originalCards.forEach(function (card) {
-                var clone = card.cloneNode(true);
-                configureClone(clone, card);
-                albumRow.insertBefore(clone, originalCards[0]);
-                leftClones.push(clone);
-            });
+            function buildClones() {
+                leftClones.forEach(function (c) {
+                    if (c.parentNode) c.parentNode.removeChild(c);
+                });
+                rightClones.forEach(function (c) {
+                    if (c.parentNode) c.parentNode.removeChild(c);
+                });
+                leftClones = [];
+                rightClones = [];
 
-            // Create right clones (copies of all original cards to append)
-            originalCards.forEach(function (card) {
-                var clone = card.cloneNode(true);
-                configureClone(clone, card);
-                albumRow.appendChild(clone);
-                rightClones.push(clone);
-            });
+                if (originalCards.length < 2) return;
+
+                // Create left clones (copies of all original cards to prepend)
+                originalCards.forEach(function (card) {
+                    var clone = card.cloneNode(true);
+                    configureClone(clone, card);
+                    albumRow.insertBefore(clone, originalCards[0]);
+                    leftClones.push(clone);
+                });
+
+                // Create right clones (copies of all original cards to append)
+                originalCards.forEach(function (card) {
+                    var clone = card.cloneNode(true);
+                    configureClone(clone, card);
+                    albumRow.appendChild(clone);
+                    rightClones.push(clone);
+                });
+            }
+
+            buildClones();
 
             function getShiftDistance() {
                 if (!rightClones[0] || !originalCards[0]) return 0;
                 return rightClones[0].offsetLeft - originalCards[0].offsetLeft;
             }
 
-            function centerOnCard(index) {
+            function centerOnCard(index, smooth) {
                 var card = originalCards[index] || originalCards[0];
+                if (!card) return;
+                void albumRow.offsetWidth; // Force synchronous reflow of child offsets
                 var targetLeft = card.offsetLeft - (albumRow.clientWidth - card.offsetWidth) / 2;
+                albumRow.style.scrollSnapType = 'none';
+                albumRow.style.scrollBehavior = smooth ? 'smooth' : 'auto';
                 albumRow.scrollLeft = targetLeft;
+                void albumRow.offsetWidth; // Force reflow
+                albumRow.style.scrollSnapType = '';
+                albumRow.style.scrollBehavior = '';
             }
 
             function checkLoopBoundary() {
@@ -2891,24 +3416,28 @@
                 checkTimeout = setTimeout(checkLoopBoundary, 80);
             }
 
-            function initPosition() {
+            function initPosition(force) {
                 if (window.innerWidth < 768 && albumRow.classList.contains('cards-carousel')) {
+                    if (force) {
+                        centerOnCard(0, false);
+                        return;
+                    }
                     var firstCardCenter = originalCards[0].offsetLeft - (albumRow.clientWidth - originalCards[0].offsetWidth) / 2;
                     var lastCard = originalCards[originalCards.length - 1];
                     var lastCardCenter = lastCard.offsetLeft - (albumRow.clientWidth - lastCard.offsetWidth) / 2;
 
                     // Only center if uninitialized (at left clone edge or off-screen)
                     if (albumRow.scrollLeft < firstCardCenter - 50 || albumRow.scrollLeft > lastCardCenter + 50) {
-                        centerOnCard(0);
+                        centerOnCard(0, false);
                     }
                 } else if (window.innerWidth >= 768) {
                     albumRow.scrollLeft = 0;
                 }
             }
 
-            requestAnimationFrame(initPosition);
-            setTimeout(initPosition, 100);
-            window.addEventListener('load', initPosition);
+            requestAnimationFrame(function () { initPosition(false); });
+            setTimeout(function () { initPosition(false); }, 100);
+            window.addEventListener('load', function () { initPosition(false); });
 
             albumRow.addEventListener('touchstart', function () {
                 isTouchActive = true;
@@ -2948,55 +3477,98 @@
                 }, 150);
             }, { passive: true });
 
-            window.__recenterRecordkeepingCarousel = initPosition;
+            window.__recenterRecordkeepingCarousel = function (smooth) {
+                centerOnCard(0, smooth !== false);
+            };
+
+            window.__updateRecordkeepingCarouselOrder = function (newCards) {
+                originalCards = newCards;
+                buildClones();
+                // Immediately snap to the new Card 0 of the sorted collection
+                centerOnCard(0, false);
+                requestAnimationFrame(function () {
+                    centerOnCard(0, false);
+                    if (originalCards[0]) {
+                        originalCards[0].classList.remove('card-sorting-anim');
+                        void originalCards[0].offsetWidth;
+                        originalCards[0].classList.add('card-sorting-anim');
+                    }
+                });
+                setTimeout(function () {
+                    centerOnCard(0, false);
+                }, 60);
+            };
         });
     })();
 </script>
 
 <script>
-    // Mobile View Mode Toggle (Swipe Carousel vs Vertical Scroll)
+    // Mobile & Dropdown View Mode Controller (Swipe Carousel vs Vertical Scroll)
     (function () {
         document.addEventListener('DOMContentLoaded', function () {
             var STORAGE_KEY = 'recordkeeping_mobile_view';
             var albumRow = document.getElementById('album-cards-row');
             var hint = document.getElementById('carousel-swipe-hint');
-            var btnCarousel = document.getElementById('btn-mode-carousel');
-            var btnScroll = document.getElementById('btn-mode-scroll');
+            var carouselBtns = document.querySelectorAll('#btn-mode-carousel, #menu-btn-mode-carousel');
+            var scrollBtns = document.querySelectorAll('#btn-mode-scroll, #menu-btn-mode-scroll');
 
-            if (!albumRow || !btnCarousel || !btnScroll) return;
+            if (!albumRow) return;
 
             function setViewMode(mode) {
-                if (mode === 'scroll') {
+                var isScroll = (mode === 'scroll');
+                if (isScroll) {
                     albumRow.classList.remove('cards-carousel');
                     albumRow.classList.add('cards-scroll-view');
-                    btnScroll.classList.add('active');
-                    btnScroll.setAttribute('aria-pressed', 'true');
-                    btnCarousel.classList.remove('active');
-                    btnCarousel.setAttribute('aria-pressed', 'false');
                     if (hint) hint.style.display = 'none';
                 } else {
                     albumRow.classList.add('cards-carousel');
                     albumRow.classList.remove('cards-scroll-view');
-                    btnCarousel.classList.add('active');
-                    btnCarousel.setAttribute('aria-pressed', 'true');
-                    btnScroll.classList.remove('active');
-                    btnScroll.setAttribute('aria-pressed', 'false');
                     if (hint) hint.style.display = 'block';
-                    if (window.__recenterRecordkeepingCarousel) {
-                        window.__recenterRecordkeepingCarousel();
-                    }
+                    requestAnimationFrame(function () {
+                        if (window.__recenterRecordkeepingCarousel) {
+                            window.__recenterRecordkeepingCarousel(false);
+                        }
+                    });
                 }
+
+                carouselBtns.forEach(function (btn) {
+                    btn.classList.toggle('active', !isScroll);
+                    btn.setAttribute('aria-pressed', !isScroll ? 'true' : 'false');
+                });
+
+                scrollBtns.forEach(function (btn) {
+                    btn.classList.toggle('active', isScroll);
+                    btn.setAttribute('aria-pressed', isScroll ? 'true' : 'false');
+                });
+
                 try {
                     localStorage.setItem(STORAGE_KEY, mode);
                 } catch (e) {}
             }
 
-            btnCarousel.addEventListener('click', function () {
-                setViewMode('carousel');
+            carouselBtns.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    if (btn.id === 'menu-btn-mode-carousel') {
+                        e.stopPropagation();
+                    }
+                    if (!albumRow.classList.contains('cards-carousel')) {
+                        setViewMode('carousel');
+                    } else {
+                        // Smoothly jump back to first card if already in carousel mode
+                        if (window.__recenterRecordkeepingCarousel) {
+                            window.__recenterRecordkeepingCarousel(true);
+                        }
+                    }
+                });
             });
 
-            btnScroll.addEventListener('click', function () {
-                setViewMode('scroll');
+            scrollBtns.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    if (btn.id === 'menu-btn-mode-scroll') {
+                        e.stopPropagation();
+                    }
+                    setViewMode('scroll');
+                });
             });
 
             // Restore saved preference (default to carousel)
@@ -3005,6 +3577,345 @@
                 savedMode = localStorage.getItem(STORAGE_KEY) || 'carousel';
             } catch (e) {}
             setViewMode(savedMode);
+        });
+    })();
+</script>
+
+<script>
+    // Recordkeeping Album Sorting Controller
+    (function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            var albumRow = document.getElementById('album-cards-row');
+            if (!albumRow) return;
+
+            var sortMenuItems = document.querySelectorAll('.sort-menu-item');
+            var sortOrderItems = document.querySelectorAll('.sort-order-item');
+            var sortDisplayEl = document.getElementById('sort-current-display');
+            var dirToggleBtn = document.getElementById('sort-dir-toggle');
+            var ascOrderText = document.getElementById('sort-order-asc-text');
+            var descOrderText = document.getElementById('sort-order-desc-text');
+            var countBadge = document.getElementById('album-count-badge');
+            var liveRegion = document.getElementById('sort-live-region');
+
+            var SORT_KEY_BY = 'recordkeeping_sort_by';
+            var SORT_KEY_DIR = 'recordkeeping_sort_dir';
+
+            var sortNames = {
+                release: 'Release Date',
+                purchase: 'Purchase Date',
+                artist: 'Artist',
+                album: 'Album Title'
+            };
+
+            function getOrderLabels(sort) {
+                if (sort === 'release') {
+                    return { asc: 'Oldest', desc: 'Newest' };
+                } else if (sort === 'purchase') {
+                    return { asc: 'Earliest', desc: 'Latest' };
+                } else if (sort === 'artist' || sort === 'album') {
+                    return { asc: 'A → Z', desc: 'Z → A' };
+                }
+                return { asc: 'Ascending', desc: 'Descending' };
+            }
+
+            // 1. Get original cards (excluding clones) and extract / cache metadata
+            var originalCards = [];
+
+            function extractCardMetadata(card, index) {
+                var titleEl = card.querySelector('.card-title');
+                var title = titleEl ? titleEl.textContent.trim() : '';
+
+                var artist = '';
+                var year = 0;
+                var purchaseDateStr = '';
+                var purchaseTime = 0;
+
+                var listItems = card.querySelectorAll('ul.card-text li');
+                listItems.forEach(function (li) {
+                    var txt = li.textContent.trim();
+                    if (/^Artist:\s*/i.test(txt)) {
+                        artist = txt.replace(/^Artist:\s*/i, '').trim();
+                    } else if (/^Year:\s*/i.test(txt)) {
+                        var yMatch = txt.match(/\d{4}/);
+                        if (yMatch) year = parseInt(yMatch[0], 10);
+                    } else if (/^Date of Purchase:\s*/i.test(txt)) {
+                        purchaseDateStr = txt.replace(/^Date of Purchase:\s*/i, '').trim();
+                        var parts = purchaseDateStr.split('/');
+                        if (parts.length === 3) {
+                            var m = parseInt(parts[0], 10);
+                            var d = parseInt(parts[1], 10);
+                            var y = parseInt(parts[2], 10);
+                            if (!isNaN(m) && !isNaN(d) && !isNaN(y)) {
+                                purchaseTime = new Date(y, m - 1, d).getTime();
+                            }
+                        }
+                    }
+                });
+
+                card.dataset.title = title;
+                card.dataset.artist = artist;
+                card.dataset.year = year;
+                card.dataset.purchaseTime = purchaseTime;
+                card.dataset.purchaseDate = purchaseDateStr;
+                if (!card.dataset.defaultOrder) {
+                    card.dataset.defaultOrder = index !== undefined ? index : originalCards.length;
+                }
+            }
+
+            function updateAlbumCountBadge() {
+                originalCards = Array.from(albumRow.children).filter(function (el) {
+                    return el.classList.contains('col-md-3') && !el.classList.contains('carousel-clone');
+                });
+
+                originalCards.forEach(function (card, index) {
+                    extractCardMetadata(card, index);
+                });
+
+                var count = originalCards.length;
+                var label = count === 1 ? 'Album' : 'Albums';
+                var numEl = document.getElementById('album-count-num');
+                var textEl = document.getElementById('album-count-text');
+
+                if (numEl && textEl) {
+                    numEl.textContent = count;
+                    textEl.textContent = label;
+                } else if (countBadge) {
+                    countBadge.textContent = count + ' ' + label;
+                }
+
+                if (countBadge) {
+                    countBadge.setAttribute('aria-label', count + ' ' + label + ' in collection');
+                }
+
+                return count;
+            }
+
+            // Initial automatic count and metadata extraction
+            updateAlbumCountBadge();
+            if (!originalCards.length) return;
+
+            // Automatic MutationObserver: Watches #album-cards-row for any added or removed records
+            var isMutating = false;
+            var albumMutationObserver = new MutationObserver(function (mutations) {
+                if (isMutating) return;
+                var hasCardChange = false;
+                for (var i = 0; i < mutations.length; i++) {
+                    var m = mutations[i];
+                    if (m.type === 'childList') {
+                        var added = Array.from(m.addedNodes);
+                        var removed = Array.from(m.removedNodes);
+                        var allChanged = added.concat(removed);
+                        for (var j = 0; j < allChanged.length; j++) {
+                            var node = allChanged[j];
+                            if (node.nodeType === 1 && node.classList && node.classList.contains('col-md-3') && !node.classList.contains('carousel-clone')) {
+                                hasCardChange = true;
+                                break;
+                            }
+                        }
+                    }
+                    if (hasCardChange) break;
+                }
+
+                if (hasCardChange) {
+                    isMutating = true;
+                    updateAlbumCountBadge();
+                    if (window.__updateRecordkeepingCarouselOrder) {
+                        window.__updateRecordkeepingCarouselOrder(originalCards);
+                    }
+                    setTimeout(function () {
+                        isMutating = false;
+                    }, 50);
+                }
+            });
+
+            albumMutationObserver.observe(albumRow, { childList: true });
+
+            // Expose globally for external scripts or testing
+            window.__updateRecordkeepingAlbumCount = updateAlbumCountBadge;
+
+            // Current sort state
+            var currentSort = 'release';
+            var currentDir = 1; // 1 = asc, -1 = desc
+
+            try {
+                var savedSort = localStorage.getItem(SORT_KEY_BY);
+                if (savedSort && ['release', 'purchase', 'artist', 'album'].indexOf(savedSort) !== -1) {
+                    currentSort = savedSort;
+                }
+                var savedDir = localStorage.getItem(SORT_KEY_DIR);
+                if (savedDir === 'desc' || savedDir === '-1') {
+                    currentDir = -1;
+                }
+            } catch (e) {}
+
+            function updateUI() {
+                if (sortDisplayEl) {
+                    sortDisplayEl.textContent = sortNames[currentSort] || currentSort;
+                }
+
+                sortMenuItems.forEach(function (item) {
+                    var mode = item.getAttribute('data-sort');
+                    var isActive = mode === currentSort;
+                    item.classList.toggle('active', isActive);
+                    item.setAttribute('aria-checked', isActive ? 'true' : 'false');
+                });
+
+                var orderLabels = getOrderLabels(currentSort);
+                if (ascOrderText) ascOrderText.textContent = orderLabels.asc;
+                if (descOrderText) descOrderText.textContent = orderLabels.desc;
+
+                sortOrderItems.forEach(function (item) {
+                    var dir = parseInt(item.getAttribute('data-dir'), 10);
+                    var isActive = dir === currentDir;
+                    item.classList.toggle('active', isActive);
+                    item.setAttribute('aria-checked', isActive ? 'true' : 'false');
+                    item.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+                });
+
+                if (dirToggleBtn) {
+                    dirToggleBtn.setAttribute('data-dir', currentDir === 1 ? 'asc' : 'desc');
+                    var orderText = currentDir === 1 ? orderLabels.asc : orderLabels.desc;
+                    dirToggleBtn.setAttribute('aria-label', 'Sort direction: ' + orderText + ' (click to reverse)');
+                    dirToggleBtn.setAttribute('title', 'Reverse sort: currently ' + orderText);
+                }
+
+                try {
+                    localStorage.setItem(SORT_KEY_BY, currentSort);
+                    localStorage.setItem(SORT_KEY_DIR, currentDir === 1 ? 'asc' : 'desc');
+                } catch (e) {}
+            }
+
+            function applySort(animate) {
+                // Preserve actively playing audio state across DOM reparenting
+                var playingAudio = null;
+                var playingTime = 0;
+                var allAudios = albumRow.querySelectorAll('audio');
+                allAudios.forEach(function (a) {
+                    if (!a.paused && a.currentTime > 0) {
+                        playingAudio = a;
+                        playingTime = a.currentTime;
+                    }
+                });
+
+                var sorted = originalCards.slice().sort(function (a, b) {
+                    var orderA = parseInt(a.dataset.defaultOrder, 10);
+                    var orderB = parseInt(b.dataset.defaultOrder, 10);
+
+                    if (currentSort === 'release') {
+                        return (orderA - orderB) * currentDir;
+                    } else if (currentSort === 'purchase') {
+                        var timeA = parseInt(a.dataset.purchaseTime, 10) || 0;
+                        var timeB = parseInt(b.dataset.purchaseTime, 10) || 0;
+                        if (timeA !== timeB) {
+                            return (timeA - timeB) * currentDir;
+                        }
+                        return orderA - orderB;
+                    } else if (currentSort === 'artist') {
+                        var artistA = a.dataset.artist || '';
+                        var artistB = b.dataset.artist || '';
+                        var cmp = artistA.localeCompare(artistB, undefined, { sensitivity: 'base', numeric: true });
+                        if (cmp !== 0) {
+                            return cmp * currentDir;
+                        }
+                        return orderA - orderB;
+                    } else if (currentSort === 'album') {
+                        var titleA = a.dataset.title || '';
+                        var titleB = b.dataset.title || '';
+                        var cmpT = titleA.localeCompare(titleB, undefined, { sensitivity: 'base', numeric: true });
+                        if (cmpT !== 0) {
+                            return cmpT * currentDir;
+                        }
+                        return orderA - orderB;
+                    }
+                    return 0;
+                });
+
+                originalCards = sorted;
+
+                // Re-append original cards in sorted order
+                sorted.forEach(function (card) {
+                    albumRow.appendChild(card);
+                    if (animate) {
+                        card.classList.remove('card-sorting-anim');
+                        void card.offsetWidth; // Force reflow
+                        card.classList.add('card-sorting-anim');
+                    }
+                });
+
+                if (animate) {
+                    setTimeout(function () {
+                        sorted.forEach(function (card) {
+                            card.classList.remove('card-sorting-anim');
+                        });
+                    }, 400);
+                }
+
+                // Update mobile carousel clones and position
+                if (window.__updateRecordkeepingCarouselOrder) {
+                    window.__updateRecordkeepingCarouselOrder(sorted);
+                } else if (window.__recenterRecordkeepingCarousel) {
+                    window.__recenterRecordkeepingCarousel();
+                }
+
+                // Resume audio if it was interrupted by node movement
+                if (playingAudio && playingAudio.paused) {
+                    try {
+                        playingAudio.currentTime = playingTime;
+                        playingAudio.play().catch(function () {});
+                    } catch (e) {}
+                }
+
+                updateUI();
+
+                // Live announcement for assistive technologies
+                if (liveRegion) {
+                    var orderLabels = getOrderLabels(currentSort);
+                    var currentOrderName = currentDir === 1 ? orderLabels.asc : orderLabels.desc;
+                    liveRegion.textContent = 'Albums sorted by ' + (sortNames[currentSort] || currentSort) + ', ' + currentOrderName;
+                }
+            }
+
+            // Wire up Dropdown Sort Menu Items
+            sortMenuItems.forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var newSort = btn.getAttribute('data-sort');
+                    if (newSort === currentSort) {
+                        // Re-clicking active sort criterion reverses order
+                        currentDir = -currentDir;
+                    } else {
+                        currentSort = newSort;
+                        currentDir = 1; // Default to ascending on new criterion
+                    }
+                    applySort(true);
+                });
+            });
+
+            // Wire up Dropdown Order Items
+            sortOrderItems.forEach(function (btn) {
+                btn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var dirVal = parseInt(btn.getAttribute('data-dir'), 10);
+                    if (currentDir !== dirVal) {
+                        currentDir = dirVal;
+                        applySort(true);
+                    }
+                });
+            });
+
+            // Wire up Quick Direction Toggle Button
+            if (dirToggleBtn) {
+                dirToggleBtn.addEventListener('click', function () {
+                    currentDir = -currentDir;
+                    applySort(true);
+                });
+            }
+
+            // Apply initial sort on load (without animation if default)
+            if (currentSort !== 'release' || currentDir !== 1) {
+                applySort(false);
+            } else {
+                updateUI();
+            }
         });
     })();
 </script>

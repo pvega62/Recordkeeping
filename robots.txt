@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pvega62.github.io/Recordkeeping/sitemap.xml

@@ -22,7 +22,7 @@ try {
     console.log(`Scanned index.html: Found ${count} album records.`);
 
     // Regex to update the album badge in index.html
-    const badgeRegex = /<span class="album-count-badge" id="album-count-badge"[^>]*>[\s\S]*?<\/span>/i;
+    const badgeRegex = /<span class="album-count-badge" id="album-count-badge"[^>]*>[\s\S]*?<span id="album-count-text">[\s\S]*?<\/span>\s*<\/span>/i;
     const newBadgeHtml = `<span class="album-count-badge" id="album-count-badge" aria-label="Total records in collection"><span id="album-count-num">${count}</span> <span id="album-count-text">${label}</span></span>`;
 
     if (!badgeRegex.test(content)) {

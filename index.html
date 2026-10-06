@@ -772,7 +772,7 @@
         }
 
         @media (max-width: 767.98px) {
-            .cards-carousel > .carousel-clone {
+            .cards-carousel:not(.carousel-search-active) > .carousel-clone:not(.card-search-hidden) {
                 display: block !important;
             }
             .container.mt-4 {
@@ -942,6 +942,546 @@
             justify-content: center;
             gap: 8px;
             flex-wrap: wrap;
+        }
+
+        /* Algolia Album Search Bar */
+        .album-search-row {
+            display: flex;
+            justify-content: center;
+            width: 100%;
+            margin-bottom: 12px;
+            padding: 0 10px;
+        }
+
+        .album-search-box {
+            position: relative;
+            display: flex;
+            align-items: center;
+            width: 100%;
+            max-width: 440px;
+            height: 40px;
+            background: rgba(0, 45, 85, 0.82);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px solid rgba(135, 206, 250, 0.45);
+            border-radius: 24px;
+            padding: 0 14px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 107, 182, 0.22);
+            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .album-search-box:hover {
+            border-color: rgba(135, 206, 250, 0.75);
+            background: rgba(0, 52, 98, 0.88);
+        }
+
+        .album-search-box:focus-within {
+            border-color: #0088e8;
+            background: rgba(0, 58, 110, 0.95);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.45), 0 0 20px rgba(0, 107, 182, 0.55);
+        }
+
+        .search-lead-icon {
+            width: 17px;
+            height: 17px;
+            stroke: #F58426;
+            stroke-width: 2.3;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+            margin-right: 10px;
+            transition: stroke 0.2s ease;
+        }
+
+        .album-search-box:focus-within .search-lead-icon {
+            stroke: #ff9e47;
+            filter: drop-shadow(0 0 4px rgba(245, 132, 38, 0.6));
+        }
+
+        #album-search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 500;
+            line-height: 1.2;
+            padding: 0;
+            min-width: 0;
+        }
+
+        #album-search-input::placeholder {
+            color: rgba(186, 230, 253, 0.65);
+            font-size: 0.84rem;
+        }
+
+        #album-search-input::-webkit-search-cancel-button {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .search-hotkey-badge {
+            background: rgba(0, 20, 42, 0.65);
+            border: 1px solid rgba(135, 206, 250, 0.35);
+            color: #93c5fd;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 7px;
+            border-radius: 6px;
+            line-height: 1;
+            user-select: none;
+            pointer-events: none;
+            transition: opacity 0.18s ease;
+        }
+
+        .album-search-box:focus-within .search-hotkey-badge,
+        .search-has-query .search-hotkey-badge {
+            display: none !important;
+        }
+
+        .search-clear-btn {
+            background: transparent !important;
+            border: none !important;
+            color: #F58426 !important;
+            width: 22px;
+            height: 22px;
+            padding: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 50%;
+            transition: all 0.18s ease;
+            flex-shrink: 0;
+        }
+
+        .search-clear-btn svg {
+            width: 14px;
+            height: 14px;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .search-clear-btn:hover {
+            color: #ffffff !important;
+            background: rgba(245, 132, 38, 0.4) !important;
+            transform: scale(1.1);
+        }
+
+        /* Search Highlighting */
+        mark.search-highlight {
+            background: rgba(245, 132, 38, 0.35) !important;
+            color: #fff2e0 !important;
+            border-bottom: 2px solid #F58426 !important;
+            border-radius: 2px !important;
+            padding: 0 2px !important;
+            font-weight: 700 !important;
+        }
+
+        /* Filtered Out Cards & Clones in Search */
+        .card-search-hidden,
+        .cards-carousel > .card-search-hidden,
+        .cards-carousel > .carousel-clone.card-search-hidden,
+        .carousel-search-active .carousel-clone,
+        .cards-carousel.carousel-search-active > .carousel-clone {
+            display: none !important;
+        }
+
+        /* Search Empty State */
+        .search-empty-box {
+            background: rgba(0, 30, 60, 0.88);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1.5px dashed rgba(135, 206, 250, 0.45);
+            border-radius: 20px;
+            padding: 32px 20px;
+            max-width: 440px;
+            margin: 24px auto;
+            color: #e0f2fe;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            animation: cardSortFadeIn 0.3s ease both;
+        }
+
+        .empty-icon {
+            width: 42px;
+            height: 42px;
+            stroke: #F58426;
+            stroke-width: 2;
+            fill: none;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 12px;
+            opacity: 0.9;
+        }
+
+        .empty-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .empty-desc {
+            font-size: 0.88rem;
+            color: #bae6fd;
+            margin-bottom: 16px;
+        }
+
+        .search-reset-btn {
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 6px 18px;
+            border-color: rgba(135, 206, 250, 0.6) !important;
+            color: #93c5fd !important;
+            background: rgba(0, 45, 85, 0.6) !important;
+            transition: all 0.2s ease;
+        }
+
+        .search-reset-btn:hover {
+            background: #006BB6 !important;
+            border-color: #0088e8 !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 14px rgba(0, 107, 182, 0.6);
+        }
+
+        /* Mobile Search Button & Expandable Drawer (Underneath Ticker) */
+        @media (max-width: 767.98px) {
+            /* Hide the desktop inline search row on mobile */
+            .album-search-row {
+                display: none !important;
+            }
+
+            .mobile-search-container {
+                position: relative;
+                z-index: 1040;
+            }
+
+            /* Floating Trigger Pill Button in Upper Right Corner */
+            .mobile-search-trigger-btn {
+                position: fixed;
+                top: calc(2.5rem + 8px); /* Right underneath the 2.5rem ticker */
+                right: 14px;
+                height: 35px;
+                padding: 0 14px 0 11px !important;
+                border-radius: 9999px !important;
+                background: rgba(0, 45, 85, 0.88) !important;
+                backdrop-filter: blur(14px);
+                -webkit-backdrop-filter: blur(14px);
+                border: 1.5px solid rgba(245, 132, 38, 0.85) !important;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 0 12px rgba(245, 132, 38, 0.3);
+                color: #ffffff !important;
+                display: inline-flex !important;
+                align-items: center;
+                justify-content: center;
+                gap: 7px;
+                cursor: pointer;
+                z-index: 1040;
+                transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+                user-select: none;
+            }
+
+            .mobile-search-trigger-btn:hover,
+            .mobile-search-trigger-btn:active,
+            .mobile-search-trigger-btn.active {
+                background: rgba(0, 60, 115, 0.96) !important;
+                border-color: #ff9e47 !important;
+                color: #ffffff !important;
+                transform: scale(1.05);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 18px rgba(245, 132, 38, 0.6);
+            }
+
+            .mobile-search-trigger-icon {
+                width: 15px;
+                height: 15px;
+                stroke: #F58426;
+                stroke-width: 2.3;
+                fill: none;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                flex-shrink: 0;
+                transition: stroke 0.2s ease;
+            }
+
+            .mobile-search-trigger-btn:hover .mobile-search-trigger-icon,
+            .mobile-search-trigger-btn:active .mobile-search-trigger-icon,
+            .mobile-search-trigger-btn.active .mobile-search-trigger-icon {
+                stroke: #ff9e47;
+            }
+
+            .mobile-search-pill-text {
+                font-size: 0.82rem;
+                font-weight: 700;
+                color: #ffffff;
+                letter-spacing: 0.02em;
+                line-height: 1;
+            }
+
+            /* Small badge indicating match count inside the pill */
+            .mobile-search-badge {
+                background: #F58426;
+                color: #002244;
+                font-size: 0.68rem;
+                font-weight: 800;
+                min-width: 18px;
+                height: 18px;
+                border-radius: 9999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 5px;
+                margin-left: 1px;
+                border: 1px solid rgba(0, 34, 68, 0.8);
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                line-height: 1;
+            }
+
+            /* Live match count badge inside the search drawer input */
+            .mobile-drawer-match-badge {
+                background: #F58426;
+                color: #002244;
+                font-size: 0.68rem;
+                font-weight: 800;
+                min-width: 18px;
+                height: 18px;
+                border-radius: 9999px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                padding: 0 5px;
+                margin-right: 2px;
+                border: 1px solid rgba(0, 34, 68, 0.8);
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+                line-height: 1;
+                flex-shrink: 0;
+            }
+
+            /* Full-width expandable search drawer underneath ticker */
+            .mobile-search-drawer {
+                position: fixed;
+                top: calc(2.5rem + 6px);
+                left: 10px;
+                right: 10px;
+                z-index: 1050;
+                animation: mobileSearchSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1) both;
+            }
+
+            @keyframes mobileSearchSlideDown {
+                from {
+                    opacity: 0;
+                    transform: translateY(-8px) scale(0.98);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+
+            .mobile-search-drawer-inner {
+                display: flex;
+                align-items: center;
+                height: 44px;
+                background: rgba(0, 36, 72, 0.95);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1.5px solid #0088e8;
+                border-radius: 24px;
+                padding: 0 12px;
+                box-shadow: 0 10px 32px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 107, 182, 0.55);
+                gap: 8px;
+            }
+
+            .mobile-search-lead-icon {
+                width: 17px;
+                height: 17px;
+                stroke: #F58426;
+                stroke-width: 2.3;
+                fill: none;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+                flex-shrink: 0;
+            }
+
+            .mobile-search-input {
+                flex: 1;
+                background: transparent;
+                border: none;
+                outline: none;
+                color: #ffffff;
+                font-size: 0.88rem;
+                font-weight: 500;
+                line-height: 1.2;
+                padding: 0;
+                min-width: 0;
+            }
+
+            .mobile-search-input::placeholder {
+                color: rgba(186, 230, 253, 0.65);
+                font-size: 0.84rem;
+            }
+
+            .mobile-search-input::-webkit-search-cancel-button {
+                -webkit-appearance: none;
+                appearance: none;
+            }
+
+            .mobile-search-clear-btn {
+                background: transparent !important;
+                border: none !important;
+                color: #F58426 !important;
+                width: 22px;
+                height: 22px;
+                padding: 0;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                border-radius: 50%;
+                flex-shrink: 0;
+            }
+
+            .mobile-search-clear-btn svg {
+                width: 14px;
+                height: 14px;
+                stroke: currentColor;
+                stroke-width: 2.5;
+                stroke-linecap: round;
+                stroke-linejoin: round;
+            }
+
+            .mobile-search-close-btn {
+                background: rgba(0, 107, 182, 0.35) !important;
+                border: 1px solid rgba(135, 206, 250, 0.45) !important;
+                color: #bae6fd !important;
+                border-radius: 14px !important;
+                font-size: 0.76rem !important;
+                font-weight: 700 !important;
+                padding: 4px 10px !important;
+                line-height: 1.2 !important;
+                cursor: pointer;
+                flex-shrink: 0;
+                transition: all 0.18s ease;
+            }
+
+            .mobile-search-close-btn:hover,
+            .mobile-search-close-btn:active {
+                background: #006BB6 !important;
+                color: #ffffff !important;
+                border-color: #0088e8 !important;
+            }
+
+            /* When mobile search is active, collapse header, intro text, and controls so results dock directly under search bar and stay above keyboard */
+            body.mobile-search-active .container > h1,
+            body.mobile-search-active .container > p.text-center,
+            body.mobile-search-active .recordkeeping-controls-wrapper {
+                display: none !important;
+            }
+
+            body.mobile-search-active .container {
+                margin-top: calc(2.5rem + 54px) !important; /* ~94px: directly under fixed search drawer */
+                padding-top: 0 !important;
+            }
+
+            body.mobile-search-active .cards-carousel > [class*="col-"] {
+                flex: 0 0 85vw !important;
+                max-width: 85vw !important;
+                min-width: 85vw !important;
+                width: 85vw !important;
+            }
+
+            body.mobile-search-active .card .cover-container {
+                height: 140px !important;
+                transition: height 0.22s ease;
+            }
+
+            body.mobile-search-active .card .card-img-top {
+                height: 128px !important;
+                transition: height 0.22s ease;
+            }
+
+            body.mobile-search-active .card .card-body {
+                padding: 0.5rem 0.75rem !important;
+            }
+
+            body.mobile-search-active .card .card-title {
+                font-size: 0.95rem !important;
+                margin-bottom: 0.2rem !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            body.mobile-search-active .card ul.card-text {
+                font-size: 0.76rem !important;
+                line-height: 1.3 !important;
+                margin-bottom: 0.15rem !important;
+            }
+
+            body.mobile-search-active .card ul.card-text li {
+                margin-bottom: 1px !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+            }
+
+            body.mobile-search-active .card .card-body p {
+                display: none !important;
+            }
+
+            body.mobile-search-active .card .play-pause-btn {
+                width: 38px !important;
+                height: 38px !important;
+                font-size: 1.2rem !important;
+            }
+
+            /* Compact empty state on mobile search */
+            body.mobile-search-active .search-empty-box {
+                margin: 10px auto !important;
+                padding: 16px 14px !important;
+                border-radius: 16px !important;
+            }
+
+            body.mobile-search-active .empty-icon {
+                width: 32px !important;
+                height: 32px !important;
+                margin-bottom: 6px !important;
+            }
+
+            body.mobile-search-active .empty-title {
+                font-size: 0.95rem !important;
+                margin-bottom: 4px !important;
+            }
+
+            body.mobile-search-active .empty-desc {
+                font-size: 0.78rem !important;
+                margin-bottom: 12px !important;
+            }
+        }
+
+        /* Spotlight glow effect when carousel moves to search result */
+        .search-result-focus .card {
+            border-color: #F58426 !important;
+            box-shadow: 0 0 28px rgba(245, 132, 38, 0.85), 0 10px 36px rgba(0, 0, 0, 0.5) !important;
+            animation: searchCardPulse 1.2s cubic-bezier(0.16, 1, 0.3, 1) both;
+        }
+
+        @keyframes searchCardPulse {
+            0% {
+                transform: scale(0.97);
+                box-shadow: 0 0 8px rgba(245, 132, 38, 0.4);
+            }
+            50% {
+                transform: scale(1.025);
+                box-shadow: 0 0 32px rgba(245, 132, 38, 0.95), 0 12px 40px rgba(0, 0, 0, 0.55);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 24px rgba(245, 132, 38, 0.75), 0 10px 32px rgba(0, 0, 0, 0.45);
+            }
         }
 
         /* Integrated Split Dropdown & Sort Controls */
@@ -1753,6 +2293,54 @@
         </div>
     </a>
 
+    <!-- Mobile Search Floating Button & Expandable Drawer (Underneath Ticker) -->
+    <div class="mobile-search-container d-md-none" id="mobile-search-container">
+        <!-- Floating Trigger Pill Button in Upper Right Corner -->
+        <button type="button" class="btn mobile-search-trigger-btn" id="mobile-search-trigger-btn" aria-label="Search record collection" title="Search albums">
+            <svg class="mobile-search-trigger-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <span class="mobile-search-pill-text">Search</span>
+            <span class="mobile-search-badge d-none" id="mobile-search-badge" aria-label="Matches found">0</span>
+        </button>
+
+        <!-- Expandable Search Drawer Underneath Ticker -->
+        <div class="mobile-search-drawer d-none" id="mobile-search-drawer" role="search" aria-label="Mobile record search">
+            <div class="mobile-search-drawer-inner">
+                <svg class="mobile-search-lead-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="search"
+                       id="mobile-album-search-input"
+                       class="mobile-search-input"
+                       placeholder="Search albums, artists, years, tracks, notes..."
+                       autocomplete="off"
+                       autocapitalize="off"
+                       spellcheck="false"
+                       aria-label="Search record collection" />
+                <span class="mobile-drawer-match-badge d-none" id="mobile-drawer-match-badge" aria-label="Matches found">0</span>
+                <button type="button"
+                        id="mobile-album-search-clear"
+                        class="mobile-search-clear-btn d-none"
+                        aria-label="Clear search"
+                        title="Clear search">
+                    <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+                <button type="button"
+                        id="mobile-search-close-btn"
+                        class="mobile-search-close-btn"
+                        aria-label="Close search">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
+
     <div class="container mt-4">
         <h1 class="text-center">Recordkeeping</h1>
         <p class="text-center">This page is an online copy of my record collection. It was supposed to be a simple list
@@ -1764,6 +2352,35 @@
 
         <!-- Album Sorting & View Controls -->
         <div class="recordkeeping-controls-wrapper">
+            <!-- Album Live Search Row -->
+            <div class="album-search-row">
+                <div class="album-search-box" id="album-search-box">
+                    <svg class="search-lead-icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="search"
+                           id="album-search-input"
+                           placeholder="Search albums, artists, years, tracks, notes..."
+                           autocomplete="off"
+                           autocapitalize="off"
+                           spellcheck="false"
+                           aria-label="Search record collection"
+                           aria-controls="album-cards-row" />
+                    <span class="search-hotkey-badge" id="search-hotkey-badge" title="Press / to search" aria-hidden="true">/</span>
+                    <button type="button"
+                            id="album-search-clear"
+                            class="search-clear-btn d-none"
+                            aria-label="Clear search"
+                            title="Clear search">
+                        <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <line x1="18" y1="6" x2="6" y2="18"></line>
+                            <line x1="6" y1="6" x2="18" y2="18"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
             <!-- Streamlined Sorting & Count Row -->
             <div class="controls-action-row">
                 <!-- Dropdown with Integrated Split Button Design -->
@@ -1924,6 +2541,17 @@
             <div id="sort-live-region" class="visually-hidden" aria-live="polite" role="status"></div>
         </div>
         <div id="album-cards-row" class="row justify-content-center cards-carousel">
+            <!-- No Search Results Fallback State -->
+            <div id="album-search-empty" class="col-12 text-center search-empty-box d-none" role="status" aria-live="polite">
+                <svg class="empty-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    <line x1="8" y1="11" x2="14" y2="11"></line>
+                </svg>
+                <div class="empty-title">No matching records found</div>
+                <div class="empty-desc">No albums match &ldquo;<span id="search-empty-query"></span>&rdquo;. Try searching by artist, title, genre, year, or purchase date.</div>
+                <button type="button" class="btn btn-outline-light btn-sm search-reset-btn" id="search-empty-reset">Clear Search</button>
+            </div>
             <div class="col-md-3 mb-4">
                 <div class="card h-100">
                     <div class="cover-container" style="position: relative;">
@@ -3081,6 +3709,7 @@
             if (img && img.dataset.audio && !container.querySelector('.audio-player')) {
                 const audio = document.createElement('audio');
                 audio.className = 'audio-player';
+                audio.preload = 'none';
                 const source = document.createElement('source');
                 source.src = img.dataset.audio;
                 source.type = 'audio/mp4';
@@ -3380,6 +4009,7 @@
             function checkLoopBoundary() {
                 if (window.innerWidth >= 768) return;
                 if (!albumRow.classList.contains('cards-carousel')) return;
+                if (albumRow.classList.contains('carousel-search-active')) return;
                 if (isTouchActive || isDown) return;
 
                 var shift = getShiftDistance();
@@ -3916,6 +4546,596 @@
             } else {
                 updateUI();
             }
+        });
+    })();
+</script>
+
+<script>
+    // Native High-Performance Client-Side Album Search Controller
+    (function () {
+        document.addEventListener('DOMContentLoaded', function () {
+            var searchInput = document.getElementById('album-search-input');
+            var searchBox = document.getElementById('album-search-box');
+            var clearBtn = document.getElementById('album-search-clear');
+            var emptyBox = document.getElementById('album-search-empty');
+            var emptyQuerySpan = document.getElementById('search-empty-query');
+            var emptyResetBtn = document.getElementById('search-empty-reset');
+            var albumRow = document.getElementById('album-cards-row');
+            var countBadge = document.getElementById('album-count-badge');
+            var countNum = document.getElementById('album-count-num');
+            var countText = document.getElementById('album-count-text');
+
+            // Mobile search corner elements
+            var mobileTriggerBtn = document.getElementById('mobile-search-trigger-btn');
+            var mobileDrawer = document.getElementById('mobile-search-drawer');
+            var mobileInput = document.getElementById('mobile-album-search-input');
+            var mobileClearBtn = document.getElementById('mobile-album-search-clear');
+            var mobileCloseBtn = document.getElementById('mobile-search-close-btn');
+            var mobileBadge = document.getElementById('mobile-search-badge');
+            var mobileDrawerBadge = document.getElementById('mobile-drawer-match-badge');
+
+            if (!albumRow) return;
+
+            function slugify(text) {
+                return (text || '').toString().toLowerCase()
+                    .replace(/\s+/g, '-')
+                    .replace(/[^\w\-]+/g, '')
+                    .replace(/\-\-+/g, '-')
+                    .replace(/^-+/, '')
+                    .replace(/-+$/, '');
+            }
+
+            function escapeHtml(str) {
+                return (str || '').replace(/[&<>"']/g, function (m) {
+                    switch (m) {
+                        case '&': return '&amp;';
+                        case '<': return '&lt;';
+                        case '>': return '&gt;';
+                        case '"': return '&quot;';
+                        case "'": return '&#39;';
+                        default: return m;
+                    }
+                });
+            }
+
+            function escapeRegExp(string) {
+                return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+            }
+
+            // Index local card metadata and cache original HTML
+            var cardsData = [];
+
+            function indexLocalCards() {
+                var cards = Array.from(albumRow.querySelectorAll('.col-md-3:not(.carousel-clone)'));
+                cardsData = cards.map(function (card, index) {
+                    var titleEl = card.querySelector('.card-title');
+                    var title = titleEl ? titleEl.textContent.trim() : '';
+                    var titleRawHtml = titleEl ? titleEl.innerHTML : '';
+
+                    var listEl = card.querySelector('ul.card-text');
+                    var listRawHtml = listEl ? listEl.innerHTML : '';
+
+                    var artist = '';
+                    var year = '';
+                    var purchasePlace = '';
+                    var purchaseDate = '';
+                    var featuredSong = '';
+                    var lps = '';
+
+                    var listItems = card.querySelectorAll('ul.card-text li');
+                    var itemsData = [];
+                    listItems.forEach(function (li) {
+                        var txt = li.textContent.trim();
+                        var html = li.innerHTML;
+                        itemsData.push({ el: li, text: txt, originalHtml: html });
+
+                        if (/^Artist:\s*/i.test(txt)) {
+                            artist = txt.replace(/^Artist:\s*/i, '').trim();
+                        } else if (/^Year:\s*/i.test(txt)) {
+                            year = txt.replace(/^Year:\s*/i, '').trim();
+                        } else if (/^Place of Purchase:\s*/i.test(txt)) {
+                            purchasePlace = txt.replace(/^Place of Purchase:\s*/i, '').trim();
+                        } else if (/^Date of Purchase:\s*/i.test(txt)) {
+                            purchaseDate = txt.replace(/^Date of Purchase:\s*/i, '').trim();
+                        } else if (/^Featured Song:\s*/i.test(txt)) {
+                            featuredSong = txt.replace(/^Featured Song:\s*/i, '').trim();
+                        } else if (/^# of LPs:\s*/i.test(txt)) {
+                            lps = txt.replace(/^# of LPs:\s*/i, '').trim();
+                        }
+                    });
+
+                    var objectId = slugify(artist) + '-' + slugify(title);
+                    card.dataset.objectId = objectId;
+
+                    var altText = '';
+                    var img = card.querySelector('img.card-img-top');
+                    if (img) altText = img.getAttribute('alt') || '';
+
+                    // Construct searchable text blob
+                    var searchBlob = [
+                        title,
+                        artist,
+                        year,
+                        purchasePlace,
+                        purchaseDate,
+                        featuredSong,
+                        lps,
+                        altText
+                    ].join(' ').toLowerCase();
+
+                    return {
+                        card: card,
+                        index: index,
+                        objectId: objectId,
+                        title: title,
+                        artist: artist,
+                        year: year,
+                        purchasePlace: purchasePlace,
+                        purchaseDate: purchaseDate,
+                        featuredSong: featuredSong,
+                        titleEl: titleEl,
+                        titleRawHtml: titleRawHtml,
+                        listEl: listEl,
+                        listRawHtml: listRawHtml,
+                        itemsData: itemsData,
+                        searchBlob: searchBlob
+                    };
+                });
+            }
+
+            indexLocalCards();
+
+            // Clear search highlights from all cards
+            function clearHighlights() {
+                cardsData.forEach(function (item) {
+                    if (item.titleEl && item.titleRawHtml) {
+                        item.titleEl.innerHTML = item.titleRawHtml;
+                    }
+                    if (item.itemsData && item.itemsData.length) {
+                        item.itemsData.forEach(function (iData) {
+                            iData.el.innerHTML = iData.originalHtml;
+                        });
+                    }
+                    item.card.classList.remove('search-result-focus');
+                });
+            }
+
+            // Apply highlights to matching terms
+            function highlightTerms(item, terms) {
+                if (!terms || !terms.length) return;
+                var patternStr = terms.map(escapeRegExp).join('|');
+                var regex = new RegExp('(' + patternStr + ')', 'gi');
+
+                if (item.titleEl) {
+                    var safeTitle = escapeHtml(item.title);
+                    item.titleEl.innerHTML = safeTitle.replace(regex, '<mark class="search-highlight">$1</mark>');
+                }
+
+                if (item.itemsData && item.itemsData.length) {
+                    item.itemsData.forEach(function (iData) {
+                        var colonIdx = iData.text.indexOf(':');
+                        if (colonIdx !== -1) {
+                            var prefix = iData.text.substring(0, colonIdx + 1);
+                            var val = iData.text.substring(colonIdx + 1);
+                            var highlightedVal = escapeHtml(val).replace(regex, '<mark class="search-highlight">$1</mark>');
+                            iData.el.innerHTML = escapeHtml(prefix) + highlightedVal;
+                        } else {
+                            iData.el.innerHTML = escapeHtml(iData.text).replace(regex, '<mark class="search-highlight">$1</mark>');
+                        }
+                    });
+                }
+            }
+
+            function openMobileSearch() {
+                if (!mobileDrawer) return;
+                mobileDrawer.classList.remove('d-none');
+                document.body.classList.add('mobile-search-active');
+                if (mobileTriggerBtn) mobileTriggerBtn.classList.add('active');
+
+                // Instantly pin scroll to top so results are anchored right below the search drawer
+                window.scrollTo(0, 0);
+
+                if (mobileInput) {
+                    mobileInput.focus();
+                    mobileInput.select();
+                }
+            }
+
+            function closeMobileSearch() {
+                if (!mobileDrawer) return;
+                mobileDrawer.classList.add('d-none');
+                document.body.classList.remove('mobile-search-active');
+                if (mobileTriggerBtn) mobileTriggerBtn.classList.remove('active');
+                if (mobileInput) mobileInput.blur();
+            }
+
+            // Smoothly move the carousel to a specific search result card
+            function moveCarouselToCard(card, smooth) {
+                if (!card || !albumRow) return;
+                var isCarousel = albumRow.classList.contains('cards-carousel');
+                if (!isCarousel && window.innerWidth >= 768) return;
+
+                if (window.innerWidth < 768 && document.body.classList.contains('mobile-search-active')) {
+                    window.scrollTo(0, 0);
+                }
+
+                requestAnimationFrame(function () {
+                    void albumRow.offsetWidth; // Force synchronous reflow of child offsets
+                    var targetLeft = card.offsetLeft - (albumRow.clientWidth - card.offsetWidth) / 2;
+                    if (targetLeft < 0) targetLeft = 0;
+
+                    albumRow.style.scrollSnapType = 'none';
+                    albumRow.style.scrollBehavior = smooth !== false ? 'smooth' : 'auto';
+                    albumRow.scrollLeft = targetLeft;
+
+                    // Spotlight animation: pulse glowing border on matched card
+                    card.classList.remove('search-result-focus');
+                    void card.offsetWidth;
+                    card.classList.add('search-result-focus');
+
+                    setTimeout(function () {
+                        albumRow.style.scrollSnapType = '';
+                        albumRow.style.scrollBehavior = '';
+                    }, 500);
+                });
+            }
+
+            window.__moveRecordkeepingCarouselToCard = moveCarouselToCard;
+
+            // Fast Levenshtein distance helper for fuzzy typo tolerance
+            function levenshteinDistance(s1, s2) {
+                if (s1 === s2) return 0;
+                if (!s1.length) return s2.length;
+                if (!s2.length) return s1.length;
+                var v0 = new Array(s2.length + 1);
+                var v1 = new Array(s2.length + 1);
+                for (var i = 0; i <= s2.length; i++) v0[i] = i;
+                for (var i = 0; i < s1.length; i++) {
+                    v1[0] = i + 1;
+                    for (var j = 0; j < s2.length; j++) {
+                        var cost = s1[i] === s2[j] ? 0 : 1;
+                        v1[j + 1] = Math.min(v1[j] + 1, v0[j + 1] + 1, v0[j] + cost);
+                    }
+                    for (var j = 0; j <= s2.length; j++) v0[j] = v1[j];
+                }
+                return v1[s2.length];
+            }
+
+            // Checks whether any token in words matches the query term (exact, substring, or fuzzy)
+            function matchesTermFuzzy(words, term) {
+                if (!words || !words.length) return { match: false, exact: false, dist: 99 };
+                for (var i = 0; i < words.length; i++) {
+                    var w = words[i];
+                    if (w === term) return { match: true, exact: true, dist: 0 };
+                    if (w.indexOf(term) !== -1) return { match: true, exact: false, dist: 0 };
+                }
+                if (term.length >= 4) {
+                    var maxDist = term.length >= 7 ? 2 : 1;
+                    for (var i = 0; i < words.length; i++) {
+                        var w = words[i];
+                        var testWord = w.length > term.length ? w.substring(0, term.length) : w;
+                        if (Math.abs(testWord.length - term.length) <= maxDist) {
+                            var d = levenshteinDistance(testWord, term);
+                            if (d <= maxDist) {
+                                return { match: true, exact: false, dist: d };
+                            }
+                        }
+                    }
+                }
+                return { match: false, exact: false, dist: 99 };
+            }
+
+            // Computes weighted relevance score for an album item given query terms
+            function scoreItem(item, terms) {
+                var titleWords = (item.title || '').toLowerCase().split(/\W+/).filter(Boolean);
+                var artistWords = (item.artist || '').toLowerCase().split(/\W+/).filter(Boolean);
+                var songWords = (item.featuredSong || '').toLowerCase().split(/\W+/).filter(Boolean);
+                var allWords = (item.searchBlob || '').toLowerCase().split(/\W+/).filter(Boolean);
+
+                var totalScore = 0;
+
+                for (var t = 0; t < terms.length; t++) {
+                    var term = terms[t];
+                    var termScore = 0;
+
+                    // Title check (highest relevance)
+                    var titleMatch = matchesTermFuzzy(titleWords, term);
+                    if (titleMatch.match) {
+                        termScore += titleMatch.exact ? 120 : (80 - titleMatch.dist * 20);
+                    }
+
+                    // Artist check (second highest relevance)
+                    var artistMatch = matchesTermFuzzy(artistWords, term);
+                    if (artistMatch.match) {
+                        termScore += artistMatch.exact ? 90 : (60 - artistMatch.dist * 15);
+                    }
+
+                    // Featured Song check
+                    var songMatch = matchesTermFuzzy(songWords, term);
+                    if (songMatch.match) {
+                        termScore += songMatch.exact ? 60 : (40 - songMatch.dist * 10);
+                    }
+
+                    // General metadata check (Year, Purchase Place, Notes, Alt text)
+                    var genMatch = matchesTermFuzzy(allWords, term);
+                    if (genMatch.match) {
+                        termScore += Math.max(10, 25 - genMatch.dist * 5);
+                    }
+
+                    if (termScore === 0) {
+                        return 0; // All terms must match for conjunction query
+                    }
+                    totalScore += termScore;
+                }
+
+                return totalScore;
+            }
+
+            var debounceTimer = null;
+
+            function getActiveQuery() {
+                if (mobileInput && document.activeElement === mobileInput) {
+                    return mobileInput.value.trim();
+                }
+                if (searchInput) {
+                    return searchInput.value.trim();
+                }
+                return mobileInput ? mobileInput.value.trim() : '';
+            }
+
+            function syncInputValues(val) {
+                if (searchInput && searchInput.value !== val) {
+                    searchInput.value = val;
+                }
+                if (mobileInput && mobileInput.value !== val) {
+                    mobileInput.value = val;
+                }
+            }
+
+            function performSearch() {
+                var query = getActiveQuery();
+                var hasQuery = query.length > 0;
+
+                syncInputValues(query);
+
+                // Toggle Clear Button & Search Box classes
+                if (clearBtn) {
+                    clearBtn.classList.toggle('d-none', !hasQuery);
+                }
+                if (mobileClearBtn) {
+                    mobileClearBtn.classList.toggle('d-none', !hasQuery);
+                }
+                if (searchBox) {
+                    searchBox.classList.toggle('search-has-query', hasQuery);
+                }
+
+                if (!hasQuery) {
+                    albumRow.classList.remove('carousel-search-active');
+                    clearHighlights();
+                    cardsData.forEach(function (item) {
+                        item.card.classList.remove('card-search-hidden');
+                    });
+
+                    // Restore carousel clones if in carousel mode
+                    var clones = albumRow.querySelectorAll('.carousel-clone');
+                    clones.forEach(function (clone) {
+                        clone.classList.remove('card-search-hidden');
+                    });
+
+                    if (emptyBox) {
+                        emptyBox.classList.add('d-none');
+                    }
+
+                    // Reset Album Count Badge to original total
+                    var totalCount = cardsData.length;
+                    if (countNum) countNum.textContent = totalCount;
+                    if (countText) countText.textContent = totalCount === 1 ? 'Album' : 'Albums';
+                    if (countBadge) {
+                        countBadge.setAttribute('aria-label', totalCount + ' ' + (totalCount === 1 ? 'Album' : 'Albums') + ' in collection');
+                    }
+
+                    // Reset mobile button badge
+                    if (mobileBadge) {
+                        mobileBadge.classList.add('d-none');
+                        mobileBadge.textContent = '0';
+                    }
+                    if (mobileDrawerBadge) {
+                        mobileDrawerBadge.classList.add('d-none');
+                        mobileDrawerBadge.textContent = '0';
+                    }
+
+                    // Smoothly recenter carousel to first card
+                    if (window.__recenterRecordkeepingCarousel) {
+                        window.__recenterRecordkeepingCarousel(true);
+                    } else if (cardsData[0] && cardsData[0].card) {
+                        moveCarouselToCard(cardsData[0].card, true);
+                    }
+                    return;
+                }
+
+                // Activate search mode on carousel: hide all clones to reduce carousel strictly to matching results
+                albumRow.classList.add('carousel-search-active');
+                var carouselClones = albumRow.querySelectorAll('.carousel-clone');
+                carouselClones.forEach(function (clone) {
+                    clone.classList.add('card-search-hidden');
+                });
+
+                clearHighlights();
+
+                var terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+                var scoredMatches = [];
+
+                cardsData.forEach(function (item) {
+                    var score = scoreItem(item, terms);
+                    if (score > 0) {
+                        scoredMatches.push({ item: item, score: score });
+                        item.card.classList.remove('card-search-hidden');
+                        highlightTerms(item, terms);
+                    } else {
+                        item.card.classList.add('card-search-hidden');
+                    }
+                });
+
+                // Rank best matches first
+                scoredMatches.sort(function (a, b) {
+                    return b.score - a.score;
+                });
+
+                var matchCount = scoredMatches.length;
+                var firstMatchItem = matchCount > 0 ? scoredMatches[0].item : null;
+
+                // Update Count Badge (e.g. "3 of 49 Albums")
+                var total = cardsData.length;
+                if (countNum) countNum.textContent = matchCount;
+                if (countText) countText.textContent = 'of ' + total + ' ' + (total === 1 ? 'Album' : 'Albums');
+                if (countBadge) {
+                    countBadge.setAttribute('aria-label', matchCount + ' of ' + total + ' albums matching "' + query + '"');
+                }
+
+                // Update mobile badge indicator
+                if (mobileBadge) {
+                    mobileBadge.textContent = matchCount;
+                    mobileBadge.classList.remove('d-none');
+                }
+                if (mobileDrawerBadge) {
+                    mobileDrawerBadge.textContent = matchCount;
+                    mobileDrawerBadge.classList.remove('d-none');
+                }
+
+                // Handle Empty State
+                if (matchCount === 0) {
+                    if (emptyBox) {
+                        emptyBox.classList.remove('d-none');
+                        if (emptyQuerySpan) emptyQuerySpan.textContent = query;
+                    }
+                } else {
+                    if (emptyBox) {
+                        emptyBox.classList.add('d-none');
+                    }
+
+                    // Move carousel to first search result
+                    if (firstMatchItem && firstMatchItem.card) {
+                        moveCarouselToCard(firstMatchItem.card, true);
+                    }
+                }
+            }
+
+            // Desktop Event Listeners
+            if (searchInput) {
+                searchInput.addEventListener('input', function () {
+                    if (debounceTimer) clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(performSearch, 40);
+                });
+            }
+
+            if (clearBtn) {
+                clearBtn.addEventListener('click', function () {
+                    syncInputValues('');
+                    performSearch();
+                    if (searchInput) searchInput.focus();
+                });
+            }
+
+            if (emptyResetBtn) {
+                emptyResetBtn.addEventListener('click', function () {
+                    syncInputValues('');
+                    performSearch();
+                    if (mobileDrawer && !mobileDrawer.classList.contains('d-none')) {
+                        if (mobileInput) mobileInput.focus();
+                    } else if (searchInput) {
+                        searchInput.focus();
+                    }
+                });
+            }
+
+            // Mobile Event Listeners
+            if (mobileTriggerBtn && mobileDrawer) {
+                mobileTriggerBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    var isHidden = mobileDrawer.classList.contains('d-none');
+                    if (isHidden) {
+                        openMobileSearch();
+                    } else {
+                        closeMobileSearch();
+                    }
+                });
+            }
+
+            if (mobileCloseBtn) {
+                mobileCloseBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    closeMobileSearch();
+                });
+            }
+
+            if (mobileClearBtn) {
+                mobileClearBtn.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    syncInputValues('');
+                    performSearch();
+                    if (mobileInput) mobileInput.focus();
+                });
+            }
+
+            if (mobileInput) {
+                mobileInput.addEventListener('input', function () {
+                    if (debounceTimer) clearTimeout(debounceTimer);
+                    debounceTimer = setTimeout(performSearch, 40);
+                });
+
+                mobileInput.addEventListener('focus', function () {
+                    document.body.classList.add('mobile-search-active');
+                    window.scrollTo(0, 0);
+                });
+
+                // Pressing Enter or Search on mobile virtual keyboard dismisses keyboard so results are fully visible
+                mobileInput.addEventListener('keydown', function (e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        mobileInput.blur();
+                    }
+                });
+            }
+
+            // Dismiss mobile virtual keyboard when user taps or swipes on album cards row
+            if (albumRow) {
+                albumRow.addEventListener('touchstart', function () {
+                    if (mobileInput && document.activeElement === mobileInput) {
+                        mobileInput.blur();
+                    }
+                }, { passive: true });
+            }
+
+            // Close mobile drawer on outside tap
+            document.addEventListener('click', function (e) {
+                if (!mobileDrawer || mobileDrawer.classList.contains('d-none')) return;
+                if (!mobileDrawer.contains(e.target) && (!mobileTriggerBtn || !mobileTriggerBtn.contains(e.target))) {
+                    closeMobileSearch();
+                }
+            });
+
+            // Hotkeys: '/' to focus, 'Escape' to clear/close
+            document.addEventListener('keydown', function (e) {
+                var activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+                var isEditable = document.activeElement && document.activeElement.isContentEditable;
+
+                if (e.key === '/' && activeTag !== 'input' && activeTag !== 'textarea' && !isEditable) {
+                    e.preventDefault();
+                    if (window.innerWidth < 768) {
+                        openMobileSearch();
+                    } else if (searchInput) {
+                        searchInput.focus();
+                        searchInput.select();
+                    }
+                } else if (e.key === 'Escape') {
+                    closeMobileSearch();
+                    if ((document.activeElement === searchInput || document.activeElement === mobileInput) || getActiveQuery().length > 0) {
+                        syncInputValues('');
+                        performSearch();
+                        if (document.activeElement) document.activeElement.blur();
+                    }
+                }
+            });
         });
     })();
 </script>

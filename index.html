@@ -611,6 +611,75 @@
             color: var(--nav-text-color, #ffffff) !important;
         }
 
+        /* Technical writing dropdown: nested Software/Dev Docs submenu */
+        .navbar .dropend > .dropdown-toggle::after {
+            margin-left: 0.5rem;
+            vertical-align: 0.255em;
+            content: "";
+            border-top: 0.3em solid transparent;
+            border-right: 0;
+            border-bottom: 0.3em solid transparent;
+            border-left: 0.3em solid;
+            transition: transform 0.2s ease;
+        }
+
+        .dropdown-menu .dropend > .dropdown-menu {
+            display: none;
+        }
+
+        .dropdown-menu .dropend > .dropdown-menu.show {
+            display: block;
+        }
+
+        @media (min-width: 992px) {
+            .dropdown-menu .dropend > .dropdown-menu {
+                position: absolute;
+                top: -8px;
+                left: 100%;
+                margin-left: 6px;
+                min-width: 280px;
+                z-index: 1060;
+            }
+
+            /* Buffer hit-area so the cursor can travel to the flyout */
+            .dropdown-menu .dropend > .dropdown-menu::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: -12px;
+                width: 12px;
+                height: 100%;
+            }
+        }
+
+        @media (min-width: 992px) and (hover: hover) {
+            .dropdown-menu .dropend:hover > .dropdown-menu {
+                display: block;
+            }
+
+            .dropdown-menu .dropend:hover > .dropdown-toggle::after {
+                transform: translateX(2px);
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .mobile-nav .dropdown-menu {
+                max-height: calc(100vh - 160px);
+                overflow-y: auto;
+            }
+
+            /* Expand the nested submenu inline inside the bottom dropup */
+            .mobile-nav .dropdown-menu .dropend > .dropdown-menu {
+                position: static;
+                margin: 4px 0 4px 10px;
+                max-height: 240px;
+                overflow-y: auto;
+                border-left: 2px solid rgba(255, 255, 255, 0.35);
+                border-radius: 12px;
+                background-color: rgba(255, 255, 255, 0.08);
+            }
+        }
+
 
         /* Knicks Ticker Styles */
         .knicks-ticker {
@@ -2041,11 +2110,25 @@
                                 Technical writing
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownDesktop1">
-                                <li><a class="dropdown-item"
-                                        href="https://pvega62.github.io/technical-writing-hardware.html">Hardware</a>
+                                <li class="dropend position-relative">
+                                    <a class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center"
+                                        href="#" role="button" aria-expanded="false">Software/Dev Docs</a>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/intro">Introduction</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/sweepy/intro">Sweepy</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/cloud-data-pipeline-documentation">Cloud Data Pipelines</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/typescript-sdk-sui-blockchain-documentation">TypeScript Tutorial</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/stripe-api-documentation">Stripe API</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/pet-store-api-documentation">Pet Store API</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/commit-messages-and-pull-requests">Commit Messages and Pull Requests</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/artie-case-study">Ask Artie AI Assistant Case Study</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/google-chrome-theme-installation">Google Chrome Theme</a></li>
+                                        <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/word-github-wiki-writage">Writage Workflow</a></li>
+                                    </ul>
                                 </li>
-                                <li><a class="dropdown-item" href="https://pvega62.github.io/software"
-                                        target="_self">Software</a></li>
+                                <li><a class="dropdown-item" href="https://pvega62.github.io/technical-writing-hardware">Hardware Samples</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="https://pvega62.github.io/software/blog">Blog</a></li>
                             </ul>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="https://pvega62.github.io/uxwriting.html">UX
@@ -2087,10 +2170,25 @@
                             <img src="images/icon-tech-writing.svg" alt="" class="mobile-nav-icon">
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown1">
-                            <li><a class="dropdown-item"
-                                    href="https://pvega62.github.io/technical-writing-hardware.html">Hardware</a></li>
-                            <li><a class="dropdown-item" href="https://pvega62.github.io/software"
-                                    target="_self">Software</a></li>
+                            <li class="dropend position-relative">
+                                <a class="dropdown-item dropdown-toggle d-flex justify-content-between align-items-center"
+                                    href="#" role="button" aria-expanded="false">Software/Dev Docs</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/intro">Introduction</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/sweepy/intro">Sweepy</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/cloud-data-pipeline-documentation">Cloud Data Pipelines</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/typescript-sdk-sui-blockchain-documentation">TypeScript Tutorial</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/stripe-api-documentation">Stripe API</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/pet-store-api-documentation">Pet Store API</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/category/commit-messages-and-pull-requests">Commit Messages and Pull Requests</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/artie-case-study">Ask Artie AI Assistant Case Study</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/google-chrome-theme-installation">Google Chrome Theme</a></li>
+                                    <li><a class="dropdown-item" href="https://pvega62.github.io/software/docs/word-github-wiki-writage">Writage Workflow</a></li>
+                                </ul>
+                            </li>
+                            <li><a class="dropdown-item" href="https://pvega62.github.io/technical-writing-hardware">Hardware Samples</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="https://pvega62.github.io/software/blog">Blog</a></li>
                         </ul>
                     </li>
                     <li class="nav-item d-flex align-items-center">
@@ -3844,7 +3942,7 @@
 
             nav.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.55)';
 
-            document.querySelectorAll('.mobile-nav .dropdown-menu').forEach(function (m) {
+            document.querySelectorAll('.mobile-nav .navbar-nav > li > .dropdown-menu').forEach(function (m) {
                 m.style.backgroundColor = 'rgba(' + r + ',' + g + ',' + b + ',0.75)';
             });
         }
@@ -3853,6 +3951,32 @@
         window.addEventListener('resize', updateNavColor, { passive: true });
         document.addEventListener('DOMContentLoaded', updateNavColor);
         updateNavColor();
+    })();
+</script>
+
+<script>
+    // Click/tap support for the nested Software/Dev Docs submenu
+    (function () {
+        document.querySelectorAll('.navbar .dropend > .dropdown-toggle').forEach(function (toggle) {
+            var submenu = toggle.nextElementSibling;
+            if (!submenu) return;
+
+            toggle.addEventListener('click', function (e) {
+                e.preventDefault();
+                // Keep Bootstrap from closing the parent dropdown on this click
+                e.stopPropagation();
+                var isOpen = submenu.classList.toggle('show');
+                toggle.setAttribute('aria-expanded', String(isOpen));
+            });
+
+            var rootDropdown = toggle.closest('.dropdown');
+            if (rootDropdown) {
+                rootDropdown.addEventListener('hidden.bs.dropdown', function () {
+                    submenu.classList.remove('show');
+                    toggle.setAttribute('aria-expanded', 'false');
+                });
+            }
+        });
     })();
 </script>
 
